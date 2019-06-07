@@ -74,7 +74,7 @@ order_data = {
 }
 ```
 
-# Submit the order.
+Submit the order.
 ```
 client.orders.create(order_data)
 ```
