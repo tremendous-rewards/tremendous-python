@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import tremendous
 
 
-url = 'https://github.com/GiftRocket/tremendous-python'
+url = ''
 
 setup(
     name='tremendous-python',
@@ -12,8 +12,8 @@ setup(
     keywords='api, gift cards, rewards, incentives, tremendous',
     author='Tremendous',
     author_email='developers@tremendous.com',
-    url=url,
-    download_url='{}/tarball/v{}'.format(url, tremendous.__version__),
+    url='https://github.com/GiftRocket/tremendous-python',
+    download_url='https://github.com/GiftRocket/tremendous-python/archive/v2.tar.gz',
     license='MIT',
     packages=find_packages(exclude='tests'),
     package_data={'README': ['README.md']},
