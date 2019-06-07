@@ -25,23 +25,33 @@ client = Tremendous("[SANDBOX_ACCESS_TOKEN]", "https://testflight.tremendous.com
 client = Tremendous("[PRODUCTION_ACCESS_TOKEN]", "https://www.tremendous.com/api/v2")
 ```
 
-# Campaigns are created within the dashboard by team admins.
-# They define the catalog and presentation of your reward.
-# API requests can always override these settings
-# within the specific reward object by specifying the catalog, message, etc.
+Campaigns are created within the dashboard by team admins.
+They define the catalog and presentation of your reward.
+API requests can always override these settings
+within the specific reward object by specifying the catalog, message, etc.
+
+```python
 campaigns = client.campaigns.list()
 campaign_id = campaigns[0]["id"]
+```
 
-# The funding source you select is how you are charged for the order.
+The funding source you select is how you are charged for the order.
+
+```python
 funding_sources = client.funding_sources.list()
 funding_source_id = funding_sources[0]["id"]
+```
 
+Optionally pass a unique external_id for each order create call
+to guarantee that your order is idempotent and not executed multiple times.
 
-# Optionally pass a unique external_id for each order create call
-# to guarantee that your order is idempotent and not executed multiple times.
+```python
 external_id = "[ID FROM YOUR SYSTEM]"
+```
 
-# An array data representing the rewards you'd like to send.
+An array data representing the rewards you'd like to send.
+
+```python
 order_data = {
   "external_id": external_id,
   "payment": {
@@ -62,11 +72,12 @@ order_data = {
     }
   }
 }
+```
 
 # Submit the order.
+```
 client.orders.create(order_data)
-
-
+```
 
 [1]: https://tremendous.com/docs/v2
 [2]: https://tremendous.com/rewards
