@@ -19,62 +19,55 @@ All API requests require an access token.  A sandbox access token is assigned up
 from tremendous import Tremendous
 
 # Sandbox environment
-client = Tremendous("[SANDBOX_ACCESS_TOKEN]", "https://testflight.tremendous.com")
+client = Tremendous("[SANDBOX_ACCESS_TOKEN]", "https://testflight.tremendous.com/api/v2")
 
 # Production environment
-client = Tremendous("[PRODUCTION_ACCESS_TOKEN]", "https://www.tremendous.com")
+client = Tremendous("[PRODUCTION_ACCESS_TOKEN]", "https://www.tremendous.com/api/v2")
 ```
 
-### Orders
+# Campaigns are created within the dashboard by team admins.
+# They define the catalog and presentation of your reward.
+# API requests can always override these settings
+# within the specific reward object by specifying the catalog, message, etc.
+campaigns = client.campaigns.list()
+campaign_id = campaigns[0]["id"]
 
-See [API documentation][3] for all Order options.  Use the FoundingSources resource to look up a valid method for your payment (i.e. credit card, ACH, etc).
+# The funding source you select is how you are charged for the order.
+funding_sources = client.funding_sources.list()
+funding_source_id = funding_sources[0]["id"]
 
-```python
-# Create a new order, specifying your gift options
-# as an array of objects.
-response = client.create_order({
-  "funding_source_id": "[FUNDING_SOURCE_ID]",
-  "gifts": [
-    {
-      "amount": 40,
-      "message": "Such a great way to show appreciation to others!",
-      "recipient": {
-        "deliver_method": "EMAIL",
-        "email": "person@yourteam.com",
-        "name": "Person Example"
-      }
+
+# Optionally pass a unique external_id for each order create call
+# to guarantee that your order is idempotent and not executed multiple times.
+external_id = "[ID FROM YOUR SYSTEM]"
+
+# An array data representing the rewards you'd like to send.
+order_data = {
+  "external_id": external_id,
+  "payment": {
+    "funding_source_id": funding_source_id,
+  },
+  "reward": {
+    "value": {
+      "denomination": 20,
+      "currency_code": "USD"
+    },
+    "campaign_id": campaign_id,
+    "delivery": {
+      "method": "EMAIL",
+    },
+    "recipient": {
+      "email": "sam@yourdomain.com",
+      "name": "Sam Stevens"
     }
-  ]
-})
+  }
+}
 
-if response.ok:
-    order = response.to_json()["order"]
+# Submit the order.
+client.orders.create(order_data)
 
 
-# Return historical orders, optionally passing a starting offset for results.
-response = client.get_orders({offset: 10})
 
-# Return a order by order_id
-response = client.get_order("[ORDER_ID]")
-```
-
-### Funding Sources
-Production funding sources must be added through the web dashboard. A sandbox funding source is provided during development.
-
-```python
-# Retrieve a list of your funding sources (credit card, ach, etc).
-response = client.get_funding_sources()
-```
-
-### Gifts
-Retrieve a single or many historical gifts sent by your account.
-
-```python
-response = client.get_gifts({offset: 10})
-
-response = client.get_gift("[GIFT_ID]")
-```
-
-[1]: https://tremendous.com/docs
+[1]: https://tremendous.com/docs/v2
 [2]: https://tremendous.com/rewards
-[3]: https://tremendous.com/docs
+[3]: https://tremendous.com/docs/v2

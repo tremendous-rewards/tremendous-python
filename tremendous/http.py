@@ -4,6 +4,7 @@
 ##############################################################################
 import os
 import json
+import pdb
 
 try:
     from urllib.parse import urlencode
@@ -15,15 +16,22 @@ __version__ = '2.0.0'
 ALLOWED_METHODS = {'delete', 'get', 'patch', 'post', 'put'}
 
 
-def _requests(url, method, data):
+def _requests(url, access_token, method, data):
     import requests
 
     normalized_method = method.lower()
     if normalized_method in ALLOWED_METHODS:
-        return getattr(requests, normalized_method)(url, data=json.dumps(data), headers={
+        response = getattr(requests, normalized_method)(url, data=json.dumps(data), headers={
             'User-Agent': 'Tremendous Python v{}'.format(__version__),
-            'Content-type': 'application/json', 'Accept': 'text/plain'
+            'Content-type': 'application/json', 'Accept': 'text/plain',
+            'authorization': 'Bearer {}'.format(access_token)
         })
+
+        if response.ok:
+            return json.loads(response.text)
+        else:
+            raise ValueError(response.text)
+
     else:
         raise ValueError(
             'Invalid request method {}'.format(method)
@@ -31,7 +39,7 @@ def _requests(url, method, data):
 
 
 # Google App Engine
-def _urlfetch(url, method, data):
+def _urlfetch(url, access_token, method, data):
     from google.appengine.api import urlfetch
 
     method = method.upper()
@@ -43,7 +51,8 @@ def _urlfetch(url, method, data):
         url += '?' + qs
 
     headers = {
-        'User-Agent': 'Tremendous Python v{}'.format(__version__)
+        'User-Agent': 'Tremendous Python v{}'.format(__version__),
+        'authorization': 'Bearer {}'.format(access_token)
     }
 
     res = urlfetch.fetch(
@@ -61,7 +70,7 @@ def _urlfetch(url, method, data):
     return res
 
 
-def to_requests(base_url, auth):
+def to_request(access_token, base_url):
     # _is_appengine caches one time computation of os.environ.get().
     # Closure means that _is_appengine is not a file scope variable
     _is_appengine = os.environ.get('SERVER_SOFTWARE', '').split('/')[0] in (
@@ -71,10 +80,23 @@ def to_requests(base_url, auth):
 
     req = _urlfetch if _is_appengine else _requests
 
-    def inner(path, method, data=None):
+    def inner(method, path, data=None):
         return req(
             "{}/{}".format(base_url, path),
+            access_token,
             method,
-            dict(data or {}, **auth)
+            dict(data or {})
         )
     return inner
+
+
+class AuthenticatedRequest(object):
+    def __init__(self, access_token, uri="https://testflight.tremendous.com/api/v2/"):
+        if not access_token:
+            raise Exception("Access token required for Tremendous API")
+
+        self.requester = to_request(access_token, uri)
+        self.uri = uri
+
+    def request(self, method, path, data={}):
+        return self.requester(method, path, data)
