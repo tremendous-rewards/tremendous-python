@@ -22,7 +22,7 @@ from tremendous import Tremendous
 client = Tremendous("[SANDBOX_ACCESS_TOKEN]", "https://testflight.tremendous.com/api/v2")
 
 # Production environment
-client = Tremendous("[PRODUCTION_ACCESS_TOKEN]", "https://www.tremendous.com/api/v2")
+client = Tremendous("[SANDBOX_API_KEY]", "https://testflight.tremendous.com/api/v2")
 ```
 
 Campaigns are created within the dashboard by team admins.
