@@ -2,8 +2,6 @@ from setuptools import setup, find_packages
 import tremendous
 
 
-url = ''
-
 setup(
     name='tremendous-python',
     version=tremendous.__version__,

@@ -1,4 +1,4 @@
-from http import AuthenticatedRequest
+from tremendous.http import AuthenticatedRequest
 
 class Organization(AuthenticatedRequest):
 

@@ -1,10 +1,10 @@
-from campaign import Campaign
-from funding_source import FundingSource
-from member import Member
-from order import Order
-from organization import Organization
-from product import Product
-from reward import Reward
+from tremendous.campaign import Campaign
+from tremendous.funding_source import FundingSource
+from tremendous.member import Member
+from tremendous.order import Order
+from tremendous.organization import Organization
+from tremendous.product import Product
+from tremendous.reward import Reward
 
 class Tremendous(object):
 
