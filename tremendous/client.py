@@ -5,6 +5,7 @@ from tremendous.order import Order
 from tremendous.organization import Organization
 from tremendous.product import Product
 from tremendous.reward import Reward
+from tremendous.webhook import Webhook
 
 class Tremendous(object):
 
@@ -19,3 +20,4 @@ class Tremendous(object):
         self.products = Product(access_token, domain)
         self.rewards = Reward(access_token, domain)
         self.funding_sources = FundingSource(access_token, domain)
+        self.webhooks = Webhook(access_token, domain)
