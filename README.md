@@ -77,6 +77,5 @@ Submit the order.
 client.orders.create(order_data)
 ```
 
-[1]: https://tremendous.com/docs/v2
-[2]: https://tremendous.com/rewards
-[3]: https://tremendous.com/docs/v2
+[1]: https://www.tremendous.com/docs
+[2]: https://testflight.tremendous.com/login
