@@ -10,7 +10,7 @@ setup(
     keywords='api, gift cards, rewards, incentives, tremendous',
     author='Tremendous',
     author_email='developers@tremendous.com',
-    url='https://github.com/GiftRocket/tremendous-python/',
+    url='https://github.com/tremendous-rewards/tremendous-python/',
     license='MIT',
     packages=find_packages(exclude='tests'),
     package_data={'README': ['README.md']},
