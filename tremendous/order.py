@@ -6,5 +6,5 @@ class Order(AuthenticatedRequest):
         return self.request("POST", "orders", data)["order"]
 
     def show(self, id):
-        return self.request("GET", "orders/{}".format(id), data)["order"]
+        return self.request("GET", "orders/{}".format(id))["order"]
 
