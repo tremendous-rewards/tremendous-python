@@ -21,7 +21,14 @@ def _requests(url, access_token, method, data):
 
     normalized_method = method.lower()
     if normalized_method in ALLOWED_METHODS:
-        response = getattr(requests, normalized_method)(url, data=json.dumps(data), headers={
+        payload = json.dumps(data)
+        if normalized_method == 'get':
+            if not bool(data):
+                payload = None
+            else:
+                raise ValueError('GET request with body not accepted')
+
+        response = getattr(requests, normalized_method)(url, data=payload, headers={
             'User-Agent': 'Tremendous Python v{}'.format(__version__),
             'Content-type': 'application/json', 'Accept': 'text/plain',
             'authorization': 'Bearer {}'.format(access_token)
