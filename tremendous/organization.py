@@ -3,7 +3,7 @@ from tremendous.http import AuthenticatedRequest
 class Organization(AuthenticatedRequest):
 
     def create(self, data):
-      return self.request("POST", "organizations", data)["organization"]
+        return self.request("POST", "organizations", data)["organization"]
 
     def list(self):
         return self.request("GET", "organizations")["organizations"]

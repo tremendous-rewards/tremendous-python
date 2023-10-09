@@ -4,11 +4,11 @@ class Webhook(AuthenticatedRequest):
 
     def create(self, url, data={}):
         return self.request("POST", "webhooks", {
-          "url": url
+            "url": url
         })["webhook"]
 
     def list(self):
-        return self.request("GET", "webhooks".format(id))["webhooks"]
+        return self.request("GET", "webhooks")["webhooks"]
 
     def show(self, id):
         return self.request("GET", "webhooks/{}".format(id))["webhook"]
