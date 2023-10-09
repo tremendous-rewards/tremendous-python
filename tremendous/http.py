@@ -5,12 +5,12 @@
 import os
 import json
 
+from tremendous.version import __version__
+
 try:
     from urllib.parse import urlencode
 except ImportError:
     from urllib import urlencode
-
-__version__ = '2.0.0'
 
 ALLOWED_METHODS = {'delete', 'get', 'patch', 'post', 'put'}
 
