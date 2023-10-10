@@ -6,6 +6,7 @@ from tremendous.organization import Organization
 from tremendous.product import Product
 from tremendous.reward import Reward
 from tremendous.webhook import Webhook
+from tremendous.invoice import Invoice
 
 class Tremendous(object):
 
@@ -21,3 +22,4 @@ class Tremendous(object):
         self.rewards = Reward(access_token, domain)
         self.funding_sources = FundingSource(access_token, domain)
         self.webhooks = Webhook(access_token, domain)
+        self.invoice = Invoice(access_token, domain)
