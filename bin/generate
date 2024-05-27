@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+test -f "$1" && spec="$1" || spec=$(./bin/download-spec)
+
+# update the yml file in place, swaping all operation's `tags` to "Tremendous",
+# so a single TremendousApi class is generated
+yq -i '.paths.*.*.tags = ["Tremendous"]' "$spec"
+
+docker run --rm \
+  -v ./:/output \
+  -v $(realpath $spec):/spec.yml \
+  -v ~/tmp:/input \
+  openapitools/openapi-generator-cli:v7.5.0 generate \
+  -i /spec.yml \
+  -g python \
+  -o /output \
+  -p packageName=tremendous,projectName=tremendous-python \
+  -t /output/templates/python \
+
+# Adds missing escaping to `Diner's Club` enum value
+grep -rl "'Diner's Club'" ./tremendous/**/*.py | xargs sed -i "" "s/Diner's Club/Diner\\\'s Club/g"

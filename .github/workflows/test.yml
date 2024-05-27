@@ -1,0 +1,42 @@
+name: Run tests
+
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+    tags-ignore:
+      - 'v*'
+  pull_request_target:
+    branches:
+      - 'main'
+
+jobs:
+  test:
+    if: github.repository == 'tremendous-rewards/tremendous-python'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install flake8 pytest
+          pip install -r requirements.txt
+          pip install -r test-requirements.txt
+      - name: Test with pytest
+        env:
+          SANDBOX_API_TOKEN:  ${{ secrets.SANDBOX_API_TOKEN }}
+          TEST_CAMPAIGN_ID:  ${{ secrets.TEST_CAMPAIGN_ID }}
+          TEST_PRODUCT_ID:  ${{ secrets.TEST_PRODUCT_ID }}
+          TEST_RECIPIENT_EMAIL:  ${{ secrets.TEST_RECIPIENT_EMAIL }}
+        run: |
+          pytest
