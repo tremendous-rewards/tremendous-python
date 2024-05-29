@@ -1,12 +1,19 @@
 # coding: utf-8
+import os
+
 from setuptools import setup, find_packages
-from tremendous import __version__
 
 PYTHON_REQUIRES = ">=3.7"
 
+data = {}
+root = os.path.abspath(os.path.dirname(__file__))
+
+with open(os.path.join(root, "tremendous", "version.py")) as f:
+    exec(f.read(), data)
+
 setup(
     name="tremendous-python",
-    version=__version__,
+    version=data["__version__"],
     description="Python API client for Tremendous",
     author="Tremendous",
     author_email="developers@tremendous.com",
