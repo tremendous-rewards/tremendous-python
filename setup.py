@@ -15,6 +15,7 @@ setup(
     name="tremendous-python",
     version=data["__version__"],
     description="Python API client for Tremendous",
+    long_description="",
     author="Tremendous",
     author_email="developers@tremendous.com",
     url="https://github.com/tremendous-rewards/tremendous-python",
