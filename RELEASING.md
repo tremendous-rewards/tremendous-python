@@ -10,9 +10,9 @@ After that, please review the changes to double check that the changes to the AP
 generated correctly. Please open a Pull Request with the file changes and wait for the test pipeline
 before merging it to main.
 
-## Step 2 - Update the version on `lib/tremendous/version.py` and `pyproject.yml`
+## Step 2 - Update the version
 
-The Pull Request with the changes to the generated files should update the version on `lib/tremendous/version.py` and `pyproject.yml`
+The Pull Request with the changes to the generated files should update the version on `tremendous/version.py` and `pyproject.toml`
 following [Semantic Versioning][2] practices - most changes here should be backwards compatible and
 deserve a MINOR version update
 
