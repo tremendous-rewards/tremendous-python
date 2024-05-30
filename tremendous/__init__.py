@@ -34,6 +34,7 @@ from tremendous.exceptions import ApiException
 # import models into sdk package
 from tremendous.models.balance_transaction import BalanceTransaction
 from tremendous.models.campaign import Campaign
+from tremendous.models.campaign_base import CampaignBase
 from tremendous.models.create_api_key200_response import CreateApiKey200Response
 from tremendous.models.create_campaign201_response import CreateCampaign201Response
 from tremendous.models.create_campaign_request import CreateCampaignRequest
@@ -89,6 +90,7 @@ from tremendous.models.list_campaigns200_response_campaigns_inner_email_style im
 from tremendous.models.list_campaigns200_response_campaigns_inner_webpage_style import ListCampaigns200ResponseCampaignsInnerWebpageStyle
 from tremendous.models.list_fields200_response import ListFields200Response
 from tremendous.models.list_fields200_response_fields_inner import ListFields200ResponseFieldsInner
+from tremendous.models.list_forex_response import ListForexResponse
 from tremendous.models.list_funding_sources200_response import ListFundingSources200Response
 from tremendous.models.list_funding_sources200_response_funding_sources_inner import ListFundingSources200ResponseFundingSourcesInner
 from tremendous.models.list_funding_sources200_response_funding_sources_inner_meta import ListFundingSources200ResponseFundingSourcesInnerMeta
@@ -153,5 +155,7 @@ from tremendous.models.reward_with_link_delivery import RewardWithLinkDelivery
 from tremendous.models.reward_without_link import RewardWithoutLink
 from tremendous.models.reward_without_link_delivery import RewardWithoutLinkDelivery
 from tremendous.models.simulate_webhook_request import SimulateWebhookRequest
+from tremendous.models.update_campaign import UpdateCampaign
+from tremendous.models.update_campaign_request import UpdateCampaignRequest
 from tremendous.models.webhook import Webhook
 from tremendous.models.webhook_post import WebhookPost

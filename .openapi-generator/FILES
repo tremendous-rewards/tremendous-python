@@ -10,6 +10,7 @@ tremendous/exceptions.py
 tremendous/models/__init__.py
 tremendous/models/balance_transaction.py
 tremendous/models/campaign.py
+tremendous/models/campaign_base.py
 tremendous/models/create_api_key200_response.py
 tremendous/models/create_campaign201_response.py
 tremendous/models/create_campaign_request.py
@@ -65,6 +66,7 @@ tremendous/models/list_campaigns200_response_campaigns_inner_email_style.py
 tremendous/models/list_campaigns200_response_campaigns_inner_webpage_style.py
 tremendous/models/list_fields200_response.py
 tremendous/models/list_fields200_response_fields_inner.py
+tremendous/models/list_forex_response.py
 tremendous/models/list_funding_sources200_response.py
 tremendous/models/list_funding_sources200_response_funding_sources_inner.py
 tremendous/models/list_funding_sources200_response_funding_sources_inner_meta.py
@@ -129,6 +131,8 @@ tremendous/models/reward_with_link_delivery.py
 tremendous/models/reward_without_link.py
 tremendous/models/reward_without_link_delivery.py
 tremendous/models/simulate_webhook_request.py
+tremendous/models/update_campaign.py
+tremendous/models/update_campaign_request.py
 tremendous/models/webhook.py
 tremendous/models/webhook_post.py
 tremendous/py.typed
