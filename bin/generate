@@ -19,5 +19,12 @@ docker run --rm \
   -p packageName=tremendous,projectName=tremendous-python \
   -t /output/templates/python \
 
+
+
 # Adds missing escaping to `Diner's Club` enum value
-grep -rl "'Diner's Club'" ./tremendous/**/*.py | xargs sed -i "" "s/Diner's Club/Diner\\\'s Club/g"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  grep -rl "'Diner's Club'" ./tremendous/**/*.py | xargs sed -i "" -e "s/Diner's Club/Diner\\\'s Club/g"
+else
+  grep -rl "'Diner's Club'" ./tremendous/**/*.py | xargs sed -i -e "s/Diner's Club/Diner\\\'s Club/g"
+fi
+
