@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,15 +28,8 @@ class CreateMember(BaseModel):
     CreateMember
     """ # noqa: E501
     email: StrictStr = Field(description="Email address of the member")
-    role: StrictStr = Field(description="Role of the member within the organization.  <table>   <thead>     <tr>       <th>Role</th>       <th>Description</th>     </tr>   </thead>     <tr>       <td><code>MEMBER</code></td>       <td>Limited permissions. Can view their own reward and order histories only.</td>     </tr>     <tr>       <td><code>ADMIN</code></td>       <td>Update organization settings, invite other members to the organization, and view all member order and reward histories within their organization.</td>     </tr>   <tbody> </table> ")
+    role: StrictStr = Field(description="The role ID of the member within the organization. ")
     __properties: ClassVar[List[str]] = ["email", "role"]
-
-    @field_validator('role')
-    def role_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['MEMBER', 'ADMIN']):
-            raise ValueError("must be one of enum values ('MEMBER', 'ADMIN')")
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

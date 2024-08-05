@@ -18,18 +18,31 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateMemberRequest(BaseModel):
+class PublicKey(BaseModel):
     """
-    CreateMemberRequest
+    To authenticate your requests using asymmetric key pairs (e.g., for signing  embed requests), you need to share your public key with us. The public key  resource allows you to manage your active public keys and track their last  usage. 
     """ # noqa: E501
-    email: StrictStr = Field(description="Email address of the member")
-    role: StrictStr = Field(description="The role ID of the member within the organization. ")
-    __properties: ClassVar[List[str]] = ["email", "role"]
+    id: Optional[Annotated[str, Field(strict=True)]] = None
+    pem: Optional[StrictStr] = Field(default=None, description="Your public key, PEM encoded")
+    last_used_at: Optional[datetime] = Field(default=None, description="The last time your public key was used to sign a request")
+    __properties: ClassVar[List[str]] = ["id", "pem", "last_used_at"]
+
+    @field_validator('id')
+    def id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"[A-Z0-9]{4,20}", value):
+            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +62,7 @@ class CreateMemberRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateMemberRequest from a JSON string"""
+        """Create an instance of PublicKey from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -61,8 +74,10 @@ class CreateMemberRequest(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
         ])
 
         _dict = self.model_dump(
@@ -70,11 +85,16 @@ class CreateMemberRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if last_used_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.last_used_at is None and "last_used_at" in self.model_fields_set:
+            _dict['last_used_at'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateMemberRequest from a dict"""
+        """Create an instance of PublicKey from a dict"""
         if obj is None:
             return None
 
@@ -82,8 +102,9 @@ class CreateMemberRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "email": obj.get("email"),
-            "role": obj.get("role")
+            "id": obj.get("id"),
+            "pem": obj.get("pem"),
+            "last_used_at": obj.get("last_used_at")
         })
         return _obj
 

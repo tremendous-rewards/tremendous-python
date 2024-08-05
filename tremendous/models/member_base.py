@@ -32,7 +32,7 @@ class MemberBase(BaseModel):
     email: StrictStr = Field(description="Email address of the member")
     name: Optional[StrictStr] = Field(description="Full name of the member")
     active: Optional[StrictBool] = Field(default=None, description="Is this member currently active in the organization. If `false`, the member will not be able to access the organization. ")
-    role: StrictStr = Field(description="Role of the member within the organization.  <table>   <thead>     <tr>       <th>Role</th>       <th>Description</th>     </tr>   </thead>     <tr>       <td><code>MEMBER</code></td>       <td>Limited permissions. Can view their own reward and order histories only.</td>     </tr>     <tr>       <td><code>ADMIN</code></td>       <td>Update organization settings, invite other members to the organization, and view all member order and reward histories within their organization.</td>     </tr>   <tbody>   </tbody> </table> ")
+    role: Optional[StrictStr] = Field(default=None, description="The role ID associated with the member within the organization. ")
     status: StrictStr = Field(description="Current status of the member's account.  When creating a member it starts out in the status `INVITED`. As soon as that member open the invitation link and registers an account, the status switches to `REGISTERED`. ")
     __properties: ClassVar[List[str]] = ["id", "email", "name", "active", "role", "status"]
 
@@ -41,13 +41,6 @@ class MemberBase(BaseModel):
         """Validates the regular expression"""
         if not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
-        return value
-
-    @field_validator('role')
-    def role_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['MEMBER', 'ADMIN']):
-            raise ValueError("must be one of enum values ('MEMBER', 'ADMIN')")
         return value
 
     @field_validator('status')
@@ -104,6 +97,11 @@ class MemberBase(BaseModel):
         # and model_fields_set contains the field
         if self.name is None and "name" in self.model_fields_set:
             _dict['name'] = None
+
+        # set to None if role (nullable) is None
+        # and model_fields_set contains the field
+        if self.role is None and "role" in self.model_fields_set:
+            _dict['role'] = None
 
         return _dict
 

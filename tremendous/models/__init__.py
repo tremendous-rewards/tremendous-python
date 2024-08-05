@@ -42,6 +42,9 @@ from tremendous.models.create_organization200_response import CreateOrganization
 from tremendous.models.create_organization200_response_organization import CreateOrganization200ResponseOrganization
 from tremendous.models.create_organization_request import CreateOrganizationRequest
 from tremendous.models.create_organization_request_copy_settings import CreateOrganizationRequestCopySettings
+from tremendous.models.create_public_key import CreatePublicKey
+from tremendous.models.create_public_key200_response import CreatePublicKey200Response
+from tremendous.models.create_public_key_request import CreatePublicKeyRequest
 from tremendous.models.create_webhook200_response import CreateWebhook200Response
 from tremendous.models.create_webhook_request import CreateWebhookRequest
 from tremendous.models.currency_codes import CurrencyCodes
@@ -101,6 +104,8 @@ from tremendous.models.list_rewards200_response_rewards_inner_value import ListR
 from tremendous.models.list_rewards401_response import ListRewards401Response
 from tremendous.models.list_rewards401_response_errors import ListRewards401ResponseErrors
 from tremendous.models.list_rewards429_response import ListRewards429Response
+from tremendous.models.list_roles200_response import ListRoles200Response
+from tremendous.models.list_roles200_response_roles_inner import ListRoles200ResponseRolesInner
 from tremendous.models.list_webhook_events200_response import ListWebhookEvents200Response
 from tremendous.models.list_webhooks200_response import ListWebhooks200Response
 from tremendous.models.list_webhooks200_response_webhooks_inner import ListWebhooks200ResponseWebhooksInner
@@ -123,6 +128,9 @@ from tremendous.models.organization import Organization
 from tremendous.models.payment_details import PaymentDetails
 from tremendous.models.payment_details_refund import PaymentDetailsRefund
 from tremendous.models.product import Product
+from tremendous.models.public_key import PublicKey
+from tremendous.models.public_keys_response import PublicKeysResponse
+from tremendous.models.public_keys_response_public_keys_inner import PublicKeysResponsePublicKeysInner
 from tremendous.models.recipient import Recipient
 from tremendous.models.refund_details import RefundDetails
 from tremendous.models.resend_reward422_response import ResendReward422Response
@@ -137,7 +145,10 @@ from tremendous.models.reward_with_link import RewardWithLink
 from tremendous.models.reward_with_link_delivery import RewardWithLinkDelivery
 from tremendous.models.reward_without_link import RewardWithoutLink
 from tremendous.models.reward_without_link_delivery import RewardWithoutLinkDelivery
+from tremendous.models.role import Role
 from tremendous.models.simulate_webhook_request import SimulateWebhookRequest
+from tremendous.models.test_public_key import TestPublicKey
+from tremendous.models.test_public_key_request import TestPublicKeyRequest
 from tremendous.models.update_campaign import UpdateCampaign
 from tremendous.models.update_campaign_request import UpdateCampaignRequest
 from tremendous.models.webhook import Webhook
