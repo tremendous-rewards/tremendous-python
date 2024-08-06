@@ -18,18 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
+from tremendous.models.public_keys_response_public_keys_inner import PublicKeysResponsePublicKeysInner
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateMemberRequest(BaseModel):
+class CreatePublicKey200Response(BaseModel):
     """
-    CreateMemberRequest
+    CreatePublicKey200Response
     """ # noqa: E501
-    email: StrictStr = Field(description="Email address of the member")
-    role: StrictStr = Field(description="The role ID of the member within the organization. ")
-    __properties: ClassVar[List[str]] = ["email", "role"]
+    public_key: PublicKeysResponsePublicKeysInner
+    __properties: ClassVar[List[str]] = ["public_key"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +49,7 @@ class CreateMemberRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateMemberRequest from a JSON string"""
+        """Create an instance of CreatePublicKey200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -70,11 +70,14 @@ class CreateMemberRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of public_key
+        if self.public_key:
+            _dict['public_key'] = self.public_key.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateMemberRequest from a dict"""
+        """Create an instance of CreatePublicKey200Response from a dict"""
         if obj is None:
             return None
 
@@ -82,8 +85,7 @@ class CreateMemberRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "email": obj.get("email"),
-            "role": obj.get("role")
+            "public_key": PublicKeysResponsePublicKeysInner.from_dict(obj["public_key"]) if obj.get("public_key") is not None else None
         })
         return _obj
 

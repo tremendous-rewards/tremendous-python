@@ -23,13 +23,12 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateMemberRequest(BaseModel):
+class TestPublicKeyRequest(BaseModel):
     """
-    CreateMemberRequest
+    TestPublicKeyRequest
     """ # noqa: E501
-    email: StrictStr = Field(description="Email address of the member")
-    role: StrictStr = Field(description="The role ID of the member within the organization. ")
-    __properties: ClassVar[List[str]] = ["email", "role"]
+    jwt: StrictStr = Field(description="A JWT token encoded with RS256, signed using the RSA private key corresponding to your public key.")
+    __properties: ClassVar[List[str]] = ["jwt"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +48,7 @@ class CreateMemberRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateMemberRequest from a JSON string"""
+        """Create an instance of TestPublicKeyRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,7 +73,7 @@ class CreateMemberRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateMemberRequest from a dict"""
+        """Create an instance of TestPublicKeyRequest from a dict"""
         if obj is None:
             return None
 
@@ -82,8 +81,7 @@ class CreateMemberRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "email": obj.get("email"),
-            "role": obj.get("role")
+            "jwt": obj.get("jwt")
         })
         return _obj
 

@@ -18,18 +18,27 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateMemberRequest(BaseModel):
+class ListRoles200ResponseRolesInner(BaseModel):
     """
-    CreateMemberRequest
+    Each organization member is assigned a role that defines the permissions they have within the organization. 
     """ # noqa: E501
-    email: StrictStr = Field(description="Email address of the member")
-    role: StrictStr = Field(description="The role ID of the member within the organization. ")
-    __properties: ClassVar[List[str]] = ["email", "role"]
+    id: Annotated[str, Field(strict=True)]
+    title: StrictStr
+    description: StrictStr
+    __properties: ClassVar[List[str]] = ["id", "title", "description"]
+
+    @field_validator('id')
+    def id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if not re.match(r"[A-Z0-9]{4,20}", value):
+            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +58,7 @@ class CreateMemberRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateMemberRequest from a JSON string"""
+        """Create an instance of ListRoles200ResponseRolesInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,7 +83,7 @@ class CreateMemberRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateMemberRequest from a dict"""
+        """Create an instance of ListRoles200ResponseRolesInner from a dict"""
         if obj is None:
             return None
 
@@ -82,8 +91,9 @@ class CreateMemberRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "email": obj.get("email"),
-            "role": obj.get("role")
+            "id": obj.get("id"),
+            "title": obj.get("title"),
+            "description": obj.get("description")
         })
         return _obj
 

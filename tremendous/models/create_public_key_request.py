@@ -23,13 +23,12 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateMemberRequest(BaseModel):
+class CreatePublicKeyRequest(BaseModel):
     """
-    CreateMemberRequest
+    CreatePublicKeyRequest
     """ # noqa: E501
-    email: StrictStr = Field(description="Email address of the member")
-    role: StrictStr = Field(description="The role ID of the member within the organization. ")
-    __properties: ClassVar[List[str]] = ["email", "role"]
+    public_key: StrictStr = Field(description="Base64 encoded (public) PEM file")
+    __properties: ClassVar[List[str]] = ["public_key"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +48,7 @@ class CreateMemberRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateMemberRequest from a JSON string"""
+        """Create an instance of CreatePublicKeyRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,7 +73,7 @@ class CreateMemberRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateMemberRequest from a dict"""
+        """Create an instance of CreatePublicKeyRequest from a dict"""
         if obj is None:
             return None
 
@@ -82,8 +81,7 @@ class CreateMemberRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "email": obj.get("email"),
-            "role": obj.get("role")
+            "public_key": obj.get("public_key")
         })
         return _obj
 

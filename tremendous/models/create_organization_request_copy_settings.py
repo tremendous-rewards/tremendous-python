@@ -32,9 +32,10 @@ class CreateOrganizationRequestCopySettings(BaseModel):
     order_approvals: Optional[StrictBool] = Field(default=False, description="Copy over the order approvals settings from the current organization to the new organization. Defaults to `false`.")
     payment_methods: Optional[StrictBool] = Field(default=False, description="Copy over the payment methods from the current organization to the new organization. Defaults to `false`.")
     security_settings: Optional[StrictBool] = Field(default=True, description="Copy over the security settings from the current organization to the new organization. Defaults to `true`.")
-    users: Optional[StrictBool] = Field(default=False, description="Copy over the users from the current organization to the new organization. Defaults to `false`.")
+    users: Optional[StrictBool] = Field(default=False, description="Copy over the users and custom roles from the current organization to the new organization. Defaults to `false`.")
+    custom_roles: Optional[StrictBool] = Field(default=False, description="Copy over the custom roles from the current organization to the new organization. Custom roles are always copied if `users` is `true`. Defaults to `false`.")
     fraud_prevention: Optional[StrictBool] = Field(default=False, description="Copy over the fraud prevention settings and rules from the current organization to the new organization. Defaults to `false`.")
-    __properties: ClassVar[List[str]] = ["campaigns", "custom_fields", "order_approvals", "payment_methods", "security_settings", "users", "fraud_prevention"]
+    __properties: ClassVar[List[str]] = ["campaigns", "custom_fields", "order_approvals", "payment_methods", "security_settings", "users", "custom_roles", "fraud_prevention"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,6 +94,7 @@ class CreateOrganizationRequestCopySettings(BaseModel):
             "payment_methods": obj.get("payment_methods") if obj.get("payment_methods") is not None else False,
             "security_settings": obj.get("security_settings") if obj.get("security_settings") is not None else True,
             "users": obj.get("users") if obj.get("users") is not None else False,
+            "custom_roles": obj.get("custom_roles") if obj.get("custom_roles") is not None else False,
             "fraud_prevention": obj.get("fraud_prevention") if obj.get("fraud_prevention") is not None else False
         })
         return _obj

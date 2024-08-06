@@ -35,6 +35,9 @@ tremendous/models/create_organization200_response.py
 tremendous/models/create_organization200_response_organization.py
 tremendous/models/create_organization_request.py
 tremendous/models/create_organization_request_copy_settings.py
+tremendous/models/create_public_key.py
+tremendous/models/create_public_key200_response.py
+tremendous/models/create_public_key_request.py
 tremendous/models/create_webhook200_response.py
 tremendous/models/create_webhook_request.py
 tremendous/models/currency_codes.py
@@ -94,6 +97,8 @@ tremendous/models/list_rewards200_response_rewards_inner_value.py
 tremendous/models/list_rewards401_response.py
 tremendous/models/list_rewards401_response_errors.py
 tremendous/models/list_rewards429_response.py
+tremendous/models/list_roles200_response.py
+tremendous/models/list_roles200_response_roles_inner.py
 tremendous/models/list_webhook_events200_response.py
 tremendous/models/list_webhooks200_response.py
 tremendous/models/list_webhooks200_response_webhooks_inner.py
@@ -116,6 +121,9 @@ tremendous/models/organization.py
 tremendous/models/payment_details.py
 tremendous/models/payment_details_refund.py
 tremendous/models/product.py
+tremendous/models/public_key.py
+tremendous/models/public_keys_response.py
+tremendous/models/public_keys_response_public_keys_inner.py
 tremendous/models/recipient.py
 tremendous/models/refund_details.py
 tremendous/models/resend_reward422_response.py
@@ -130,7 +138,10 @@ tremendous/models/reward_with_link.py
 tremendous/models/reward_with_link_delivery.py
 tremendous/models/reward_without_link.py
 tremendous/models/reward_without_link_delivery.py
+tremendous/models/role.py
 tremendous/models/simulate_webhook_request.py
+tremendous/models/test_public_key.py
+tremendous/models/test_public_key_request.py
 tremendous/models/update_campaign.py
 tremendous/models/update_campaign_request.py
 tremendous/models/webhook.py
