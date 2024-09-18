@@ -22,10 +22,10 @@ class TestOrders:
 
     assert len(orders) > 0
 
-    for campaign in orders[:10]:
-        assert hasattr(campaign, "id")
-        assert hasattr(campaign, "created_at")
-        assert hasattr(campaign, "payment")
+    for order in orders[:10]:
+        assert hasattr(order, "id")
+        assert hasattr(order, "created_at")
+        assert hasattr(order, "payment")
 
   def test_submit_order(self):
     request = CreateOrderRequest(
