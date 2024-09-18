@@ -18,31 +18,17 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class PublicKeysResponsePublicKeysInner(BaseModel):
+class SingleRewardOrder1Payment(BaseModel):
     """
-    To authenticate your requests using asymmetric key pairs (e.g., for signing embed requests), you need to share your public key with us. The public key resource allows you to manage your active public keys and track their last usage. 
+    SingleRewardOrder1Payment
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = None
-    pem: Optional[StrictStr] = Field(default=None, description="Your public key, PEM encoded")
-    last_used_at: Optional[datetime] = Field(default=None, description="The last time your public key was used to sign a request")
-    __properties: ClassVar[List[str]] = ["id", "pem", "last_used_at"]
-
-    @field_validator('id')
-    def id_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"[A-Z0-9]{4,20}", value):
-            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
-        return value
+    funding_source_id: StrictStr = Field(description="Tremendous ID of the funding source that will be used to pay for the order. Use `balance` to use your Tremendous's balance.")
+    __properties: ClassVar[List[str]] = ["funding_source_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -62,7 +48,7 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PublicKeysResponsePublicKeysInner from a JSON string"""
+        """Create an instance of SingleRewardOrder1Payment from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,16 +69,11 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if last_used_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.last_used_at is None and "last_used_at" in self.model_fields_set:
-            _dict['last_used_at'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PublicKeysResponsePublicKeysInner from a dict"""
+        """Create an instance of SingleRewardOrder1Payment from a dict"""
         if obj is None:
             return None
 
@@ -100,9 +81,7 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "pem": obj.get("pem"),
-            "last_used_at": obj.get("last_used_at")
+            "funding_source_id": obj.get("funding_source_id")
         })
         return _obj
 

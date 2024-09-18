@@ -18,17 +18,25 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateOrderRequestPayment(BaseModel):
+class FraudConfigCountry(BaseModel):
     """
-    CreateOrderRequestPayment
+    FraudConfigCountry
     """ # noqa: E501
-    funding_source_id: StrictStr = Field(description="Tremendous ID of the funding source that will be used to pay for the order. Use `balance` to use your Tremendous's balance.")
-    __properties: ClassVar[List[str]] = ["funding_source_id"]
+    type: StrictStr = Field(description="When type is `whitelist`, it flags any countries that *are not* present in the list. When type is `blacklist`, it flags any countries that *are* present in the list. ")
+    countries: List[StrictStr] = Field(description="An array of country codes (ISO-3166 alpha-2 character code)")
+    __properties: ClassVar[List[str]] = ["type", "countries"]
+
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['whitelist', 'blacklist']):
+            raise ValueError("must be one of enum values ('whitelist', 'blacklist')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -48,7 +56,7 @@ class CreateOrderRequestPayment(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateOrderRequestPayment from a JSON string"""
+        """Create an instance of FraudConfigCountry from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,7 +81,7 @@ class CreateOrderRequestPayment(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateOrderRequestPayment from a dict"""
+        """Create an instance of FraudConfigCountry from a dict"""
         if obj is None:
             return None
 
@@ -81,7 +89,8 @@ class CreateOrderRequestPayment(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "funding_source_id": obj.get("funding_source_id")
+            "type": obj.get("type"),
+            "countries": obj.get("countries")
         })
         return _obj
 

@@ -27,7 +27,7 @@ from typing_extensions import Self
 
 class PublicKey(BaseModel):
     """
-    To authenticate your requests using asymmetric key pairs (e.g., for signing  embed requests), you need to share your public key with us. The public key  resource allows you to manage your active public keys and track their last  usage. 
+    To authenticate your requests using asymmetric key pairs (e.g., for signing embed requests), you need to share your public key with us. The public key resource allows you to manage your active public keys and track their last usage. 
     """ # noqa: E501
     id: Optional[Annotated[str, Field(strict=True)]] = None
     pem: Optional[StrictStr] = Field(default=None, description="Your public key, PEM encoded")

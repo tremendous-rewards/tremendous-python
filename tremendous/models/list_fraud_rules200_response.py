@@ -18,31 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from pydantic import BaseModel, ConfigDict
+from typing import Any, ClassVar, Dict, List
+from tremendous.models.list_fraud_rules200_response_fraud_rules_inner import ListFraudRules200ResponseFraudRulesInner
 from typing import Optional, Set
 from typing_extensions import Self
 
-class PublicKeysResponsePublicKeysInner(BaseModel):
+class ListFraudRules200Response(BaseModel):
     """
-    To authenticate your requests using asymmetric key pairs (e.g., for signing embed requests), you need to share your public key with us. The public key resource allows you to manage your active public keys and track their last usage. 
+    ListFraudRules200Response
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = None
-    pem: Optional[StrictStr] = Field(default=None, description="Your public key, PEM encoded")
-    last_used_at: Optional[datetime] = Field(default=None, description="The last time your public key was used to sign a request")
-    __properties: ClassVar[List[str]] = ["id", "pem", "last_used_at"]
-
-    @field_validator('id')
-    def id_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"[A-Z0-9]{4,20}", value):
-            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
-        return value
+    fraud_rules: List[ListFraudRules200ResponseFraudRulesInner]
+    __properties: ClassVar[List[str]] = ["fraud_rules"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -62,7 +49,7 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PublicKeysResponsePublicKeysInner from a JSON string"""
+        """Create an instance of ListFraudRules200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,16 +70,18 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if last_used_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.last_used_at is None and "last_used_at" in self.model_fields_set:
-            _dict['last_used_at'] = None
-
+        # override the default output from pydantic by calling `to_dict()` of each item in fraud_rules (list)
+        _items = []
+        if self.fraud_rules:
+            for _item in self.fraud_rules:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['fraud_rules'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PublicKeysResponsePublicKeysInner from a dict"""
+        """Create an instance of ListFraudRules200Response from a dict"""
         if obj is None:
             return None
 
@@ -100,9 +89,7 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "pem": obj.get("pem"),
-            "last_used_at": obj.get("last_used_at")
+            "fraud_rules": [ListFraudRules200ResponseFraudRulesInner.from_dict(_item) for _item in obj["fraud_rules"]] if obj.get("fraud_rules") is not None else None
         })
         return _obj
 
