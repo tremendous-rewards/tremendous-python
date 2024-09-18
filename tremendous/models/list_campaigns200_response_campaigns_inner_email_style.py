@@ -74,6 +74,16 @@ class ListCampaigns200ResponseCampaignsInnerEmailStyle(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if sender_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.sender_name is None and "sender_name" in self.model_fields_set:
+            _dict['sender_name'] = None
+
+        # set to None if subject_line (nullable) is None
+        # and model_fields_set contains the field
+        if self.subject_line is None and "subject_line" in self.model_fields_set:
+            _dict['subject_line'] = None
+
         # set to None if logo_image_url (nullable) is None
         # and model_fields_set contains the field
         if self.logo_image_url is None and "logo_image_url" in self.model_fields_set:

@@ -22,12 +22,12 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from tremendous.models.create_order200_response_order_rewards_inner import CreateOrder200ResponseOrderRewardsInner
-from tremendous.models.list_orders200_response_orders_inner_payment import ListOrders200ResponseOrdersInnerPayment
+from tremendous.models.order_base_payment import OrderBasePayment
+from tremendous.models.order_without_link_reward import OrderWithoutLinkReward
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateOrder200ResponseOrder(BaseModel):
+class SingleRewardOrderWithoutLinkOrder(BaseModel):
     """
     An order wraps around the fulfilment of one or more rewards.
     """ # noqa: E501
@@ -36,10 +36,10 @@ class CreateOrder200ResponseOrder(BaseModel):
     campaign_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. ")
     created_at: datetime = Field(description="Date the order has been created")
     status: StrictStr = Field(description="Execution status of a given order  <table>   <thead>     <tr>       <th>         Status       </th>       <th>         Description       </th>     </tr>   </thead>   <tbody>     <tr>       <td>         <code>           CANCELED         </code>       </td>       <td>         The order and all of its rewards were canceled.       </td>     </tr>     <tr>       <td>         <code>           CART         </code>       </td>       <td>         The order has been created, but hasn't yet been processed.       </td>     </tr>     <tr>       <td>         <code>           EXECUTED         </code>       </td>       <td>         The order has been executed. Payment has been handled and rewards are being delivered (if applicable).       </td>     </tr>     <tr>       <td>         <code>           FAILED         </code>       </td>       <td>         The order could not be processed due to an error. E.g. due to insufficient funds in the account.       </td>     </tr>     <tr>       <td>         <code>           PENDING APPROVAL         </code>       </td>       <td>         The order has been created but needs approval to be executed.       </td>     </tr>     <tr>       <td>         <code>           PENDING INTERNAL PAYMENT APPROVAL         </code>       </td>       <td>         The order has been created but it is under review and requires approval from our team.       </td>     </tr>    </tbody> </table> ")
-    payment: Optional[ListOrders200ResponseOrdersInnerPayment] = None
+    payment: Optional[OrderBasePayment] = None
     invoice_id: Optional[StrictStr] = Field(default=None, description="The ID for the invoice associated with this order")
-    rewards: Optional[Annotated[List[CreateOrder200ResponseOrderRewardsInner], Field(min_length=1)]] = None
-    __properties: ClassVar[List[str]] = ["id", "external_id", "campaign_id", "created_at", "status", "payment", "invoice_id", "rewards"]
+    reward: Optional[OrderWithoutLinkReward] = None
+    __properties: ClassVar[List[str]] = ["id", "external_id", "campaign_id", "created_at", "status", "payment", "invoice_id", "reward"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -83,7 +83,7 @@ class CreateOrder200ResponseOrder(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateOrder200ResponseOrder from a JSON string"""
+        """Create an instance of SingleRewardOrderWithoutLinkOrder from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -95,8 +95,18 @@ class CreateOrder200ResponseOrder(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
+            "campaign_id",
+            "created_at",
+            "status",
+            "invoice_id",
         ])
 
         _dict = self.model_dump(
@@ -107,13 +117,9 @@ class CreateOrder200ResponseOrder(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of payment
         if self.payment:
             _dict['payment'] = self.payment.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in rewards (list)
-        _items = []
-        if self.rewards:
-            for _item in self.rewards:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['rewards'] = _items
+        # override the default output from pydantic by calling `to_dict()` of reward
+        if self.reward:
+            _dict['reward'] = self.reward.to_dict()
         # set to None if external_id (nullable) is None
         # and model_fields_set contains the field
         if self.external_id is None and "external_id" in self.model_fields_set:
@@ -128,7 +134,7 @@ class CreateOrder200ResponseOrder(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateOrder200ResponseOrder from a dict"""
+        """Create an instance of SingleRewardOrderWithoutLinkOrder from a dict"""
         if obj is None:
             return None
 
@@ -141,9 +147,9 @@ class CreateOrder200ResponseOrder(BaseModel):
             "campaign_id": obj.get("campaign_id"),
             "created_at": obj.get("created_at"),
             "status": obj.get("status"),
-            "payment": ListOrders200ResponseOrdersInnerPayment.from_dict(obj["payment"]) if obj.get("payment") is not None else None,
+            "payment": OrderBasePayment.from_dict(obj["payment"]) if obj.get("payment") is not None else None,
             "invoice_id": obj.get("invoice_id"),
-            "rewards": [CreateOrder200ResponseOrderRewardsInner.from_dict(_item) for _item in obj["rewards"]] if obj.get("rewards") is not None else None
+            "reward": OrderWithoutLinkReward.from_dict(obj["reward"]) if obj.get("reward") is not None else None
         })
         return _obj
 

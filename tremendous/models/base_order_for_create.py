@@ -18,31 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from tremendous.models.single_reward_order1_payment import SingleRewardOrder1Payment
 from typing import Optional, Set
 from typing_extensions import Self
 
-class PublicKeysResponsePublicKeysInner(BaseModel):
+class BaseOrderForCreate(BaseModel):
     """
-    To authenticate your requests using asymmetric key pairs (e.g., for signing embed requests), you need to share your public key with us. The public key resource allows you to manage your active public keys and track their last usage. 
+    BaseOrderForCreate
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = None
-    pem: Optional[StrictStr] = Field(default=None, description="Your public key, PEM encoded")
-    last_used_at: Optional[datetime] = Field(default=None, description="The last time your public key was used to sign a request")
-    __properties: ClassVar[List[str]] = ["id", "pem", "last_used_at"]
-
-    @field_validator('id')
-    def id_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"[A-Z0-9]{4,20}", value):
-            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
-        return value
+    external_id: Optional[StrictStr] = Field(default=None, description="Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. ")
+    payment: SingleRewardOrder1Payment
+    __properties: ClassVar[List[str]] = ["external_id", "payment"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -62,7 +50,7 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PublicKeysResponsePublicKeysInner from a JSON string"""
+        """Create an instance of BaseOrderForCreate from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,16 +71,19 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if last_used_at (nullable) is None
+        # override the default output from pydantic by calling `to_dict()` of payment
+        if self.payment:
+            _dict['payment'] = self.payment.to_dict()
+        # set to None if external_id (nullable) is None
         # and model_fields_set contains the field
-        if self.last_used_at is None and "last_used_at" in self.model_fields_set:
-            _dict['last_used_at'] = None
+        if self.external_id is None and "external_id" in self.model_fields_set:
+            _dict['external_id'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PublicKeysResponsePublicKeysInner from a dict"""
+        """Create an instance of BaseOrderForCreate from a dict"""
         if obj is None:
             return None
 
@@ -100,9 +91,8 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "pem": obj.get("pem"),
-            "last_used_at": obj.get("last_used_at")
+            "external_id": obj.get("external_id"),
+            "payment": SingleRewardOrder1Payment.from_dict(obj["payment"]) if obj.get("payment") is not None else None
         })
         return _obj
 

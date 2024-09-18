@@ -18,29 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateOrderRequestRewardCustomFieldsInner(BaseModel):
+class ReviewEmail(BaseModel):
     """
-    Reward custom data for searching, tracking or copy (see [Adding custom fields to orders](https://developers.tremendous.com/reference/using-custom-fields-to-add-custom-data-to-rewards).)
+    Flag rewards with an email or domain matching this list.
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the custom field")
-    value: Optional[StrictStr] = Field(default=None, description="Value of the custom field")
-    __properties: ClassVar[List[str]] = ["id", "value"]
-
-    @field_validator('id')
-    def id_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"[A-Z0-9]{4,20}", value):
-            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
-        return value
+    emails: Optional[List[StrictStr]] = Field(default=None, description="The list of emails.")
+    domains: Optional[List[StrictStr]] = Field(default=None, description="The list of domains. Any subdomains will also be matched against each entry in the list.")
+    __properties: ClassVar[List[str]] = ["emails", "domains"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -60,7 +49,7 @@ class CreateOrderRequestRewardCustomFieldsInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateOrderRequestRewardCustomFieldsInner from a JSON string"""
+        """Create an instance of ReviewEmail from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,16 +70,11 @@ class CreateOrderRequestRewardCustomFieldsInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if value (nullable) is None
-        # and model_fields_set contains the field
-        if self.value is None and "value" in self.model_fields_set:
-            _dict['value'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateOrderRequestRewardCustomFieldsInner from a dict"""
+        """Create an instance of ReviewEmail from a dict"""
         if obj is None:
             return None
 
@@ -98,8 +82,8 @@ class CreateOrderRequestRewardCustomFieldsInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "value": obj.get("value")
+            "emails": obj.get("emails"),
+            "domains": obj.get("domains")
         })
         return _obj
 

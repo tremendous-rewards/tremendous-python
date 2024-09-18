@@ -19,20 +19,20 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.create_order_request_payment import CreateOrderRequestPayment
-from tremendous.models.order_for_create_reward import OrderForCreateReward
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class OrderForCreate(BaseModel):
+class GetFraudReview200ResponseFraudReviewRelatedRewards(BaseModel):
     """
-    OrderForCreate
+    The related rewards associated with the fraud review.
     """ # noqa: E501
-    external_id: Optional[StrictStr] = Field(default=None, description="Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. ")
-    payment: CreateOrderRequestPayment
-    reward: OrderForCreateReward
-    __properties: ClassVar[List[str]] = ["external_id", "payment", "reward"]
+    ids: Optional[List[StrictStr]] = Field(default=None, description="The IDs of rewards that have similar attributes to the fraud reward. A maximum of 100 IDs is returned. ")
+    count: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="How many related rewards were found in total.")
+    blocked_count: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="How many related rewards have been blocked.")
+    aggregated_value: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total amount claimed by the related rewards (in USD).")
+    __properties: ClassVar[List[str]] = ["ids", "count", "blocked_count", "aggregated_value"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +52,7 @@ class OrderForCreate(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of OrderForCreate from a JSON string"""
+        """Create an instance of GetFraudReview200ResponseFraudReviewRelatedRewards from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,22 +73,11 @@ class OrderForCreate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of payment
-        if self.payment:
-            _dict['payment'] = self.payment.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of reward
-        if self.reward:
-            _dict['reward'] = self.reward.to_dict()
-        # set to None if external_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.external_id is None and "external_id" in self.model_fields_set:
-            _dict['external_id'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of OrderForCreate from a dict"""
+        """Create an instance of GetFraudReview200ResponseFraudReviewRelatedRewards from a dict"""
         if obj is None:
             return None
 
@@ -96,9 +85,10 @@ class OrderForCreate(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "external_id": obj.get("external_id"),
-            "payment": CreateOrderRequestPayment.from_dict(obj["payment"]) if obj.get("payment") is not None else None,
-            "reward": OrderForCreateReward.from_dict(obj["reward"]) if obj.get("reward") is not None else None
+            "ids": obj.get("ids"),
+            "count": obj.get("count"),
+            "blocked_count": obj.get("blocked_count"),
+            "aggregated_value": obj.get("aggregated_value")
         })
         return _obj
 

@@ -75,16 +75,6 @@ class RewardWithoutLink(BaseModel):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('deliver_at')
-    def deliver_at_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"YYYY-MM-DD", value):
-            raise ValueError(r"must validate the regular expression /YYYY-MM-DD/")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

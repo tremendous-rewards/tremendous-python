@@ -20,16 +20,16 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_orders200_response_orders_inner import ListOrders200ResponseOrdersInner
+from tremendous.models.list_rewards401_response_errors import ListRewards401ResponseErrors
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateOrder201Response(BaseModel):
+class FraudRule400Response(BaseModel):
     """
-    CreateOrder201Response
+    FraudRule400Response
     """ # noqa: E501
-    order: ListOrders200ResponseOrdersInner
-    __properties: ClassVar[List[str]] = ["order"]
+    errors: ListRewards401ResponseErrors
+    __properties: ClassVar[List[str]] = ["errors"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +49,7 @@ class CreateOrder201Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateOrder201Response from a JSON string"""
+        """Create an instance of FraudRule400Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -70,14 +70,14 @@ class CreateOrder201Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of order
-        if self.order:
-            _dict['order'] = self.order.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of errors
+        if self.errors:
+            _dict['errors'] = self.errors.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateOrder201Response from a dict"""
+        """Create an instance of FraudRule400Response from a dict"""
         if obj is None:
             return None
 
@@ -85,7 +85,7 @@ class CreateOrder201Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "order": ListOrders200ResponseOrdersInner.from_dict(obj["order"]) if obj.get("order") is not None else None
+            "errors": ListRewards401ResponseErrors.from_dict(obj["errors"]) if obj.get("errors") is not None else None
         })
         return _obj
 

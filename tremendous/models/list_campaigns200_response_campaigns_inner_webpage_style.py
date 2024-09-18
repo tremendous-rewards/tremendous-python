@@ -74,6 +74,11 @@ class ListCampaigns200ResponseCampaignsInnerWebpageStyle(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if headline (nullable) is None
+        # and model_fields_set contains the field
+        if self.headline is None and "headline" in self.model_fields_set:
+            _dict['headline'] = None
+
         # set to None if logo_image_url (nullable) is None
         # and model_fields_set contains the field
         if self.logo_image_url is None and "logo_image_url" in self.model_fields_set:

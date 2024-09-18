@@ -18,30 +18,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class PublicKeysResponsePublicKeysInner(BaseModel):
+class ReviewCountry(BaseModel):
     """
-    To authenticate your requests using asymmetric key pairs (e.g., for signing embed requests), you need to share your public key with us. The public key resource allows you to manage your active public keys and track their last usage. 
+    Flag rewards redeemed in these countries.
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = None
-    pem: Optional[StrictStr] = Field(default=None, description="Your public key, PEM encoded")
-    last_used_at: Optional[datetime] = Field(default=None, description="The last time your public key was used to sign a request")
-    __properties: ClassVar[List[str]] = ["id", "pem", "last_used_at"]
+    type: StrictStr = Field(description="When type is `whitelist`, it flags any countries that *are not* present in the list. When type is `blacklist`, it flags any countries that *are* present in the list. ")
+    countries: List[StrictStr] = Field(description="An array of country codes (ISO-3166 alpha-2 character code)")
+    __properties: ClassVar[List[str]] = ["type", "countries"]
 
-    @field_validator('id')
-    def id_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"[A-Z0-9]{4,20}", value):
-            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['whitelist', 'blacklist']):
+            raise ValueError("must be one of enum values ('whitelist', 'blacklist')")
         return value
 
     model_config = ConfigDict(
@@ -62,7 +56,7 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PublicKeysResponsePublicKeysInner from a JSON string"""
+        """Create an instance of ReviewCountry from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,16 +77,11 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if last_used_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.last_used_at is None and "last_used_at" in self.model_fields_set:
-            _dict['last_used_at'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PublicKeysResponsePublicKeysInner from a dict"""
+        """Create an instance of ReviewCountry from a dict"""
         if obj is None:
             return None
 
@@ -100,9 +89,8 @@ class PublicKeysResponsePublicKeysInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "pem": obj.get("pem"),
-            "last_used_at": obj.get("last_used_at")
+            "type": obj.get("type"),
+            "countries": obj.get("countries")
         })
         return _obj
 

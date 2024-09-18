@@ -28,7 +28,6 @@ from tremendous.models.create_invoice_request import CreateInvoiceRequest
 from tremendous.models.create_member200_response import CreateMember200Response
 from tremendous.models.create_member_request import CreateMemberRequest
 from tremendous.models.create_order200_response import CreateOrder200Response
-from tremendous.models.create_order201_response import CreateOrder201Response
 from tremendous.models.create_order_request import CreateOrderRequest
 from tremendous.models.create_organization200_response import CreateOrganization200Response
 from tremendous.models.create_organization_request import CreateOrganizationRequest
@@ -36,8 +35,12 @@ from tremendous.models.create_public_key200_response import CreatePublicKey200Re
 from tremendous.models.create_public_key_request import CreatePublicKeyRequest
 from tremendous.models.create_webhook200_response import CreateWebhook200Response
 from tremendous.models.create_webhook_request import CreateWebhookRequest
+from tremendous.models.delete_fraud_rule200_response import DeleteFraudRule200Response
+from tremendous.models.fraud_rule200_response import FraudRule200Response
+from tremendous.models.fraud_rule_request import FraudRuleRequest
 from tremendous.models.generate_reward_link200_response import GenerateRewardLink200Response
 from tremendous.models.generate_reward_token200_response import GenerateRewardToken200Response
+from tremendous.models.get_fraud_review200_response import GetFraudReview200Response
 from tremendous.models.get_funding_source200_response import GetFundingSource200Response
 from tremendous.models.get_member200_response import GetMember200Response
 from tremendous.models.get_organization200_response import GetOrganization200Response
@@ -47,6 +50,8 @@ from tremendous.models.list_balance_transactions200_response import ListBalanceT
 from tremendous.models.list_campaigns200_response import ListCampaigns200Response
 from tremendous.models.list_fields200_response import ListFields200Response
 from tremendous.models.list_forex_response import ListForexResponse
+from tremendous.models.list_fraud_reviews200_response import ListFraudReviews200Response
+from tremendous.models.list_fraud_rules200_response import ListFraudRules200Response
 from tremendous.models.list_funding_sources200_response import ListFundingSources200Response
 from tremendous.models.list_invoices200_response import ListInvoices200Response
 from tremendous.models.list_members200_response import ListMembers200Response
@@ -61,6 +66,8 @@ from tremendous.models.public_keys_response import PublicKeysResponse
 from tremendous.models.simulate_webhook_request import SimulateWebhookRequest
 from tremendous.models.test_public_key_request import TestPublicKeyRequest
 from tremendous.models.update_campaign_request import UpdateCampaignRequest
+from tremendous.models.update_fraud_rule_list200_response import UpdateFraudRuleList200Response
+from tremendous.models.update_fraud_rule_list_request import UpdateFraudRuleListRequest
 
 from tremendous.api_client import ApiClient, RequestSerialized
 from tremendous.api_response import ApiResponse
@@ -96,7 +103,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateOrder201Response:
+    ) -> CreateOrder200Response:
         """Approve order
 
         Approves an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -134,7 +141,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
+            '200': "CreateOrder200Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
@@ -170,7 +177,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateOrder201Response]:
+    ) -> ApiResponse[CreateOrder200Response]:
         """Approve order
 
         Approves an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -208,7 +215,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
+            '200': "CreateOrder200Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
@@ -282,7 +289,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
+            '200': "CreateOrder200Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
@@ -344,6 +351,276 @@ class TremendousApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/order_approvals/{id}/approve',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def block_fraud_review(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the reward that should be blocked.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetFraudReview200Response:
+        """Block fraud review
+
+        Completes the fraud review identified by the given `id` in the URL, and blocks the reward. The reward is canceled and the amount refunded. 
+
+        :param id: The ID of the reward that should be blocked. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._block_fraud_review_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetFraudReview200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def block_fraud_review_with_http_info(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the reward that should be blocked.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetFraudReview200Response]:
+        """Block fraud review
+
+        Completes the fraud review identified by the given `id` in the URL, and blocks the reward. The reward is canceled and the amount refunded. 
+
+        :param id: The ID of the reward that should be blocked. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._block_fraud_review_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetFraudReview200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def block_fraud_review_without_preload_content(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the reward that should be blocked.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Block fraud review
+
+        Completes the fraud review identified by the given `id` in the URL, and blocks the reward. The reward is canceled and the amount refunded. 
+
+        :param id: The ID of the reward that should be blocked. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._block_fraud_review_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetFraudReview200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _block_fraud_review_serialize(
+        self,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PUT',
+            resource_path='/fraud_reviews/{id}/block',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1515,8 +1792,7 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrder200Response",
-            '201': "CreateOrder201Response",
-            '202': "CreateOrder200Response",
+            '201': "CreateOrder200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
@@ -1590,8 +1866,7 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrder200Response",
-            '201': "CreateOrder201Response",
-            '202': "CreateOrder200Response",
+            '201': "CreateOrder200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
@@ -1665,8 +1940,7 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrder200Response",
-            '201': "CreateOrder201Response",
-            '202': "CreateOrder200Response",
+            '201': "CreateOrder200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
@@ -2589,6 +2863,276 @@ class TremendousApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/webhooks',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def delete_fraud_rule(
+        self,
+        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DeleteFraudRule200Response:
+        """Delete fraud rule
+
+        Deletes the rule of the type passed in the URL. 
+
+        :param rule_type: The rule type to create or update. (required)
+        :type rule_type: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_fraud_rule_serialize(
+            rule_type=rule_type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeleteFraudRule200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def delete_fraud_rule_with_http_info(
+        self,
+        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DeleteFraudRule200Response]:
+        """Delete fraud rule
+
+        Deletes the rule of the type passed in the URL. 
+
+        :param rule_type: The rule type to create or update. (required)
+        :type rule_type: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_fraud_rule_serialize(
+            rule_type=rule_type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeleteFraudRule200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def delete_fraud_rule_without_preload_content(
+        self,
+        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete fraud rule
+
+        Deletes the rule of the type passed in the URL. 
+
+        :param rule_type: The rule type to create or update. (required)
+        :type rule_type: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_fraud_rule_serialize(
+            rule_type=rule_type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeleteFraudRule200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _delete_fraud_rule_serialize(
+        self,
+        rule_type,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if rule_type is not None:
+            _path_params['rule_type'] = rule_type
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/fraud_rules/{rule_type}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3960,6 +4504,310 @@ class TremendousApi:
 
 
     @validate_call
+    def fraud_rule(
+        self,
+        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> FraudRule200Response:
+        """Configure fraud rule
+
+        Configure a fraud rule of the type passed in the URL. If a rule of the same type already exists, it will be overwritten. 
+
+        :param rule_type: The rule type to create or update. (required)
+        :type rule_type: str
+        :param fraud_rule_request: Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.
+        :type fraud_rule_request: FraudRuleRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._fraud_rule_serialize(
+            rule_type=rule_type,
+            fraud_rule_request=fraud_rule_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "FraudRule200Response",
+            '400': "FraudRule400Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '422': "FraudRule422Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def fraud_rule_with_http_info(
+        self,
+        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[FraudRule200Response]:
+        """Configure fraud rule
+
+        Configure a fraud rule of the type passed in the URL. If a rule of the same type already exists, it will be overwritten. 
+
+        :param rule_type: The rule type to create or update. (required)
+        :type rule_type: str
+        :param fraud_rule_request: Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.
+        :type fraud_rule_request: FraudRuleRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._fraud_rule_serialize(
+            rule_type=rule_type,
+            fraud_rule_request=fraud_rule_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "FraudRule200Response",
+            '400': "FraudRule400Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '422': "FraudRule422Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def fraud_rule_without_preload_content(
+        self,
+        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Configure fraud rule
+
+        Configure a fraud rule of the type passed in the URL. If a rule of the same type already exists, it will be overwritten. 
+
+        :param rule_type: The rule type to create or update. (required)
+        :type rule_type: str
+        :param fraud_rule_request: Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.
+        :type fraud_rule_request: FraudRuleRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._fraud_rule_serialize(
+            rule_type=rule_type,
+            fraud_rule_request=fraud_rule_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "FraudRule200Response",
+            '400': "FraudRule400Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '422': "FraudRule422Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _fraud_rule_serialize(
+        self,
+        rule_type,
+        fraud_rule_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if rule_type is not None:
+            _path_params['rule_type'] = rule_type
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if fraud_rule_request is not None:
+            _body_params = fraud_rule_request
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/fraud_rules/{rule_type}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def generate_reward_link(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the reward")],
@@ -4757,6 +5605,276 @@ class TremendousApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/campaigns/{id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_fraud_review(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the reward that should be retrieved.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetFraudReview200Response:
+        """Retrieve single fraud review
+
+        Retrieve the details of a fraud review, identified by the given `id` in the URL. Returns additional details regarding the fraud review beyond what's provided in the List fraud reviews endpoint, including reward details, recipient geolocation, etc. 
+
+        :param id: The ID of the reward that should be retrieved. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_fraud_review_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetFraudReview200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_fraud_review_with_http_info(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the reward that should be retrieved.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetFraudReview200Response]:
+        """Retrieve single fraud review
+
+        Retrieve the details of a fraud review, identified by the given `id` in the URL. Returns additional details regarding the fraud review beyond what's provided in the List fraud reviews endpoint, including reward details, recipient geolocation, etc. 
+
+        :param id: The ID of the reward that should be retrieved. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_fraud_review_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetFraudReview200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_fraud_review_without_preload_content(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the reward that should be retrieved.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Retrieve single fraud review
+
+        Retrieve the details of a fraud review, identified by the given `id` in the URL. Returns additional details regarding the fraud review beyond what's provided in the List fraud reviews endpoint, including reward details, recipient geolocation, etc. 
+
+        :param id: The ID of the reward that should be retrieved. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_fraud_review_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetFraudReview200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_fraud_review_serialize(
+        self,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/fraud_reviews/{id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5595,7 +6713,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateOrder201Response:
+    ) -> CreateOrder200Response:
         """Retrieve order
 
         Retrieve the order, identified by the given `id` in the URL 
@@ -5633,7 +6751,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
+            '200': "CreateOrder200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
@@ -5666,7 +6784,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateOrder201Response]:
+    ) -> ApiResponse[CreateOrder200Response]:
         """Retrieve order
 
         Retrieve the order, identified by the given `id` in the URL 
@@ -5704,7 +6822,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
+            '200': "CreateOrder200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
@@ -5775,7 +6893,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
+            '200': "CreateOrder200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
@@ -8277,6 +9395,629 @@ class TremendousApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/forex',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_fraud_reviews(
+        self,
+        offset: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Offsets the returned list by the given number of records. The returned fraud reviews are ordered (and offsetted) by their redemption date (DESC).")] = None,
+        limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Limits the number of fraud reviews listed. The default value is 10.")] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Filters fraud reviews by status. Can be `flagged`, `blocked` or `released`.")] = None,
+        created_at_gte: Annotated[Optional[StrictStr], Field(description="Return results where the created_at field is >= to the supplied value. Expects an ISO 8601 datetime.")] = None,
+        created_at_lte: Annotated[Optional[StrictStr], Field(description="Return results where the created_at field is <= to the supplied value. Expects an ISO 8601 datetime.")] = None,
+        redeemed_at_gte: Annotated[Optional[StrictStr], Field(description="Return results where the redeemed_at field is >= the supplied value. Expects an ISO 8601 datetime.")] = None,
+        redeemed_at_lte: Annotated[Optional[StrictStr], Field(description="Return results where the redeemed_at field is <= the supplied value. Expects an ISO 8601 datetime.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListFraudReviews200Response:
+        """List fraud reviews
+
+        Retrieve a paginated list of all fraud reviews. List can be filtered by status, created or redeemed at dates. 
+
+        :param offset: Offsets the returned list by the given number of records. The returned fraud reviews are ordered (and offsetted) by their redemption date (DESC).
+        :type offset: int
+        :param limit: Limits the number of fraud reviews listed. The default value is 10.
+        :type limit: int
+        :param status: Filters fraud reviews by status. Can be `flagged`, `blocked` or `released`.
+        :type status: str
+        :param created_at_gte: Return results where the created_at field is >= to the supplied value. Expects an ISO 8601 datetime.
+        :type created_at_gte: str
+        :param created_at_lte: Return results where the created_at field is <= to the supplied value. Expects an ISO 8601 datetime.
+        :type created_at_lte: str
+        :param redeemed_at_gte: Return results where the redeemed_at field is >= the supplied value. Expects an ISO 8601 datetime.
+        :type redeemed_at_gte: str
+        :param redeemed_at_lte: Return results where the redeemed_at field is <= the supplied value. Expects an ISO 8601 datetime.
+        :type redeemed_at_lte: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_fraud_reviews_serialize(
+            offset=offset,
+            limit=limit,
+            status=status,
+            created_at_gte=created_at_gte,
+            created_at_lte=created_at_lte,
+            redeemed_at_gte=redeemed_at_gte,
+            redeemed_at_lte=redeemed_at_lte,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListFraudReviews200Response",
+            '401': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def list_fraud_reviews_with_http_info(
+        self,
+        offset: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Offsets the returned list by the given number of records. The returned fraud reviews are ordered (and offsetted) by their redemption date (DESC).")] = None,
+        limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Limits the number of fraud reviews listed. The default value is 10.")] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Filters fraud reviews by status. Can be `flagged`, `blocked` or `released`.")] = None,
+        created_at_gte: Annotated[Optional[StrictStr], Field(description="Return results where the created_at field is >= to the supplied value. Expects an ISO 8601 datetime.")] = None,
+        created_at_lte: Annotated[Optional[StrictStr], Field(description="Return results where the created_at field is <= to the supplied value. Expects an ISO 8601 datetime.")] = None,
+        redeemed_at_gte: Annotated[Optional[StrictStr], Field(description="Return results where the redeemed_at field is >= the supplied value. Expects an ISO 8601 datetime.")] = None,
+        redeemed_at_lte: Annotated[Optional[StrictStr], Field(description="Return results where the redeemed_at field is <= the supplied value. Expects an ISO 8601 datetime.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListFraudReviews200Response]:
+        """List fraud reviews
+
+        Retrieve a paginated list of all fraud reviews. List can be filtered by status, created or redeemed at dates. 
+
+        :param offset: Offsets the returned list by the given number of records. The returned fraud reviews are ordered (and offsetted) by their redemption date (DESC).
+        :type offset: int
+        :param limit: Limits the number of fraud reviews listed. The default value is 10.
+        :type limit: int
+        :param status: Filters fraud reviews by status. Can be `flagged`, `blocked` or `released`.
+        :type status: str
+        :param created_at_gte: Return results where the created_at field is >= to the supplied value. Expects an ISO 8601 datetime.
+        :type created_at_gte: str
+        :param created_at_lte: Return results where the created_at field is <= to the supplied value. Expects an ISO 8601 datetime.
+        :type created_at_lte: str
+        :param redeemed_at_gte: Return results where the redeemed_at field is >= the supplied value. Expects an ISO 8601 datetime.
+        :type redeemed_at_gte: str
+        :param redeemed_at_lte: Return results where the redeemed_at field is <= the supplied value. Expects an ISO 8601 datetime.
+        :type redeemed_at_lte: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_fraud_reviews_serialize(
+            offset=offset,
+            limit=limit,
+            status=status,
+            created_at_gte=created_at_gte,
+            created_at_lte=created_at_lte,
+            redeemed_at_gte=redeemed_at_gte,
+            redeemed_at_lte=redeemed_at_lte,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListFraudReviews200Response",
+            '401': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def list_fraud_reviews_without_preload_content(
+        self,
+        offset: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Offsets the returned list by the given number of records. The returned fraud reviews are ordered (and offsetted) by their redemption date (DESC).")] = None,
+        limit: Annotated[Optional[Annotated[int, Field(le=100, strict=True, ge=1)]], Field(description="Limits the number of fraud reviews listed. The default value is 10.")] = None,
+        status: Annotated[Optional[StrictStr], Field(description="Filters fraud reviews by status. Can be `flagged`, `blocked` or `released`.")] = None,
+        created_at_gte: Annotated[Optional[StrictStr], Field(description="Return results where the created_at field is >= to the supplied value. Expects an ISO 8601 datetime.")] = None,
+        created_at_lte: Annotated[Optional[StrictStr], Field(description="Return results where the created_at field is <= to the supplied value. Expects an ISO 8601 datetime.")] = None,
+        redeemed_at_gte: Annotated[Optional[StrictStr], Field(description="Return results where the redeemed_at field is >= the supplied value. Expects an ISO 8601 datetime.")] = None,
+        redeemed_at_lte: Annotated[Optional[StrictStr], Field(description="Return results where the redeemed_at field is <= the supplied value. Expects an ISO 8601 datetime.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List fraud reviews
+
+        Retrieve a paginated list of all fraud reviews. List can be filtered by status, created or redeemed at dates. 
+
+        :param offset: Offsets the returned list by the given number of records. The returned fraud reviews are ordered (and offsetted) by their redemption date (DESC).
+        :type offset: int
+        :param limit: Limits the number of fraud reviews listed. The default value is 10.
+        :type limit: int
+        :param status: Filters fraud reviews by status. Can be `flagged`, `blocked` or `released`.
+        :type status: str
+        :param created_at_gte: Return results where the created_at field is >= to the supplied value. Expects an ISO 8601 datetime.
+        :type created_at_gte: str
+        :param created_at_lte: Return results where the created_at field is <= to the supplied value. Expects an ISO 8601 datetime.
+        :type created_at_lte: str
+        :param redeemed_at_gte: Return results where the redeemed_at field is >= the supplied value. Expects an ISO 8601 datetime.
+        :type redeemed_at_gte: str
+        :param redeemed_at_lte: Return results where the redeemed_at field is <= the supplied value. Expects an ISO 8601 datetime.
+        :type redeemed_at_lte: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_fraud_reviews_serialize(
+            offset=offset,
+            limit=limit,
+            status=status,
+            created_at_gte=created_at_gte,
+            created_at_lte=created_at_lte,
+            redeemed_at_gte=redeemed_at_gte,
+            redeemed_at_lte=redeemed_at_lte,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListFraudReviews200Response",
+            '401': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_fraud_reviews_serialize(
+        self,
+        offset,
+        limit,
+        status,
+        created_at_gte,
+        created_at_lte,
+        redeemed_at_gte,
+        redeemed_at_lte,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if offset is not None:
+            
+            _query_params.append(('offset', offset))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        if status is not None:
+            
+            _query_params.append(('status', status))
+            
+        if created_at_gte is not None:
+            
+            _query_params.append(('created_at[gte]', created_at_gte))
+            
+        if created_at_lte is not None:
+            
+            _query_params.append(('created_at[lte]', created_at_lte))
+            
+        if redeemed_at_gte is not None:
+            
+            _query_params.append(('redeemed_at[gte]', redeemed_at_gte))
+            
+        if redeemed_at_lte is not None:
+            
+            _query_params.append(('redeemed_at[lte]', redeemed_at_lte))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/fraud_reviews',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_fraud_rules(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListFraudRules200Response:
+        """List fraud rules
+
+        List active fraud rules associated with the organization tied to your API key. 
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_fraud_rules_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListFraudRules200Response",
+            '401': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def list_fraud_rules_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListFraudRules200Response]:
+        """List fraud rules
+
+        List active fraud rules associated with the organization tied to your API key. 
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_fraud_rules_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListFraudRules200Response",
+            '401': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def list_fraud_rules_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List fraud rules
+
+        List active fraud rules associated with the organization tied to your API key. 
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_fraud_rules_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListFraudRules200Response",
+            '401': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_fraud_rules_serialize(
+        self,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/fraud_rules',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -11285,7 +13026,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateOrder201Response:
+    ) -> CreateOrder200Response:
         """Reject order
 
         Rejects an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -11323,7 +13064,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
+            '200': "CreateOrder200Response",
             '401': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
@@ -11358,7 +13099,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateOrder201Response]:
+    ) -> ApiResponse[CreateOrder200Response]:
         """Reject order
 
         Rejects an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -11396,7 +13137,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
+            '200': "CreateOrder200Response",
             '401': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
@@ -11469,7 +13210,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
+            '200': "CreateOrder200Response",
             '401': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
@@ -11530,6 +13271,276 @@ class TremendousApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/order_approvals/{id}/reject',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def release_fraud_review(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the reward that should be released.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> GetFraudReview200Response:
+        """Release fraud review
+
+        Completes the fraud review identified by the given `id` in the URL, and releases the associated reward to the recipient. 
+
+        :param id: The ID of the reward that should be released. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._release_fraud_review_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetFraudReview200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def release_fraud_review_with_http_info(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the reward that should be released.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[GetFraudReview200Response]:
+        """Release fraud review
+
+        Completes the fraud review identified by the given `id` in the URL, and releases the associated reward to the recipient. 
+
+        :param id: The ID of the reward that should be released. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._release_fraud_review_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetFraudReview200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def release_fraud_review_without_preload_content(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the reward that should be released.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Release fraud review
+
+        Completes the fraud review identified by the given `id` in the URL, and releases the associated reward to the recipient. 
+
+        :param id: The ID of the reward that should be released. (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._release_fraud_review_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetFraudReview200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _release_fraud_review_serialize(
+        self,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PUT',
+            resource_path='/fraud_reviews/{id}/release',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -12701,6 +14712,307 @@ class TremendousApi:
         return self.api_client.param_serialize(
             method='PUT',
             resource_path='/campaigns/{id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def update_fraud_rule_list(
+        self,
+        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        update_fraud_rule_list_request: Annotated[UpdateFraudRuleListRequest, Field(description="The lists to add or remove from the current configuration")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UpdateFraudRuleList200Response:
+        """Update fraud rule list
+
+        Use this endpoint to modify a list associated with an already-configured rule. Add and remove operations supported.  For example, to append new IPs to the `review_ip` rule, a valid JSON body would be: ```json   {     \"operation\": \"add\",     \"config\": {       \"ips\": [\"123.123.123.123\"]     }   } ``` 
+
+        :param rule_type: The rule type to create or update. (required)
+        :type rule_type: str
+        :param update_fraud_rule_list_request: The lists to add or remove from the current configuration (required)
+        :type update_fraud_rule_list_request: UpdateFraudRuleListRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_fraud_rule_list_serialize(
+            rule_type=rule_type,
+            update_fraud_rule_list_request=update_fraud_rule_list_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateFraudRuleList200Response",
+            '400': "FraudRule400Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def update_fraud_rule_list_with_http_info(
+        self,
+        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        update_fraud_rule_list_request: Annotated[UpdateFraudRuleListRequest, Field(description="The lists to add or remove from the current configuration")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UpdateFraudRuleList200Response]:
+        """Update fraud rule list
+
+        Use this endpoint to modify a list associated with an already-configured rule. Add and remove operations supported.  For example, to append new IPs to the `review_ip` rule, a valid JSON body would be: ```json   {     \"operation\": \"add\",     \"config\": {       \"ips\": [\"123.123.123.123\"]     }   } ``` 
+
+        :param rule_type: The rule type to create or update. (required)
+        :type rule_type: str
+        :param update_fraud_rule_list_request: The lists to add or remove from the current configuration (required)
+        :type update_fraud_rule_list_request: UpdateFraudRuleListRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_fraud_rule_list_serialize(
+            rule_type=rule_type,
+            update_fraud_rule_list_request=update_fraud_rule_list_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateFraudRuleList200Response",
+            '400': "FraudRule400Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def update_fraud_rule_list_without_preload_content(
+        self,
+        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        update_fraud_rule_list_request: Annotated[UpdateFraudRuleListRequest, Field(description="The lists to add or remove from the current configuration")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update fraud rule list
+
+        Use this endpoint to modify a list associated with an already-configured rule. Add and remove operations supported.  For example, to append new IPs to the `review_ip` rule, a valid JSON body would be: ```json   {     \"operation\": \"add\",     \"config\": {       \"ips\": [\"123.123.123.123\"]     }   } ``` 
+
+        :param rule_type: The rule type to create or update. (required)
+        :type rule_type: str
+        :param update_fraud_rule_list_request: The lists to add or remove from the current configuration (required)
+        :type update_fraud_rule_list_request: UpdateFraudRuleListRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_fraud_rule_list_serialize(
+            rule_type=rule_type,
+            update_fraud_rule_list_request=update_fraud_rule_list_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateFraudRuleList200Response",
+            '400': "FraudRule400Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _update_fraud_rule_list_serialize(
+        self,
+        rule_type,
+        update_fraud_rule_list_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if rule_type is not None:
+            _path_params['rule_type'] = rule_type
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if update_fraud_rule_list_request is not None:
+            _body_params = update_fraud_rule_list_request
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/fraud_rules/{rule_type}/update_list',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
