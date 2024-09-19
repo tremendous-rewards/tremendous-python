@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.order_without_link_reward import OrderWithoutLinkReward
+from tremendous.models.order_without_link_rewards_inner import OrderWithoutLinkRewardsInner
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +30,7 @@ class FraudReviewListItem(BaseModel):
     """ # noqa: E501
     status: Optional[StrictStr] = Field(default=None, description="The current status of the fraud review:  * `flagged` - The reward has been flagged for and waiting manual review. * `blocked` - The reward was reviewed and blocked. * `released` - The reward was reviewed and released. ")
     reasons: Optional[List[StrictStr]] = Field(default=None, description="The array may contain multiple reasons, depending on which rule(s) flagged the reward for review. Reasons can be any of the following:  * `Disallowed IP` * `Disallowed email` * `Disallowed country` * `Over reward dollar limit` * `Over reward count limit` * `VPN detected` * `Device related to multiple emails` * `Device or account related to multiple emails` * `IP on a Tremendous fraud list` * `Bank account on a Tremendous fraud list` * `Fingerprint on a Tremendous fraud list` * `Email on a Tremendous fraud list` * `Phone on a Tremendous fraud list` * `IP related to a blocked reward` * `Bank account related to a blocked reward` * `Fingerprint related to a blocked reward` * `Email related to a blocked reward` * `Phone related to a blocked reward` * `Allowed IP` * `Allowed email` ")
-    reward: Optional[OrderWithoutLinkReward] = None
+    reward: Optional[OrderWithoutLinkRewardsInner] = None
     __properties: ClassVar[List[str]] = ["status", "reasons", "reward"]
 
     @field_validator('status')
@@ -114,7 +114,7 @@ class FraudReviewListItem(BaseModel):
         _obj = cls.model_validate({
             "status": obj.get("status"),
             "reasons": obj.get("reasons"),
-            "reward": OrderWithoutLinkReward.from_dict(obj["reward"]) if obj.get("reward") is not None else None
+            "reward": OrderWithoutLinkRewardsInner.from_dict(obj["reward"]) if obj.get("reward") is not None else None
         })
         return _obj
 

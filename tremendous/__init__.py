@@ -40,6 +40,7 @@ from tremendous.models.balance_transaction import BalanceTransaction
 from tremendous.models.base_order_for_create import BaseOrderForCreate
 from tremendous.models.campaign import Campaign
 from tremendous.models.campaign_base import CampaignBase
+from tremendous.models.channel import Channel
 from tremendous.models.create_api_key200_response import CreateApiKey200Response
 from tremendous.models.create_campaign201_response import CreateCampaign201Response
 from tremendous.models.create_campaign_request import CreateCampaignRequest
@@ -109,7 +110,7 @@ from tremendous.models.get_product_response import GetProductResponse
 from tremendous.models.get_reward200_response import GetReward200Response
 from tremendous.models.invoice import Invoice
 from tremendous.models.list_balance_transactions200_response import ListBalanceTransactions200Response
-from tremendous.models.list_balance_transactions200_response_invoices_inner import ListBalanceTransactions200ResponseInvoicesInner
+from tremendous.models.list_balance_transactions200_response_transactions_inner import ListBalanceTransactions200ResponseTransactionsInner
 from tremendous.models.list_campaigns200_response import ListCampaigns200Response
 from tremendous.models.list_campaigns200_response_campaigns_inner import ListCampaigns200ResponseCampaignsInner
 from tremendous.models.list_campaigns200_response_campaigns_inner_email_style import ListCampaigns200ResponseCampaignsInnerEmailStyle
@@ -163,7 +164,7 @@ from tremendous.models.order_base import OrderBase
 from tremendous.models.order_base_payment import OrderBasePayment
 from tremendous.models.order_status import OrderStatus
 from tremendous.models.order_without_link import OrderWithoutLink
-from tremendous.models.order_without_link_reward import OrderWithoutLinkReward
+from tremendous.models.order_without_link_rewards_inner import OrderWithoutLinkRewardsInner
 from tremendous.models.organization import Organization
 from tremendous.models.payment_details import PaymentDetails
 from tremendous.models.payment_details_refund import PaymentDetailsRefund

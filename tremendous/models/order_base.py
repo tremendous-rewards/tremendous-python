@@ -35,9 +35,10 @@ class OrderBase(BaseModel):
     campaign_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. ")
     created_at: datetime = Field(description="Date the order has been created")
     status: StrictStr = Field(description="Execution status of a given order  <table>   <thead>     <tr>       <th>         Status       </th>       <th>         Description       </th>     </tr>   </thead>   <tbody>     <tr>       <td>         <code>           CANCELED         </code>       </td>       <td>         The order and all of its rewards were canceled.       </td>     </tr>     <tr>       <td>         <code>           CART         </code>       </td>       <td>         The order has been created, but hasn't yet been processed.       </td>     </tr>     <tr>       <td>         <code>           EXECUTED         </code>       </td>       <td>         The order has been executed. Payment has been handled and rewards are being delivered (if applicable).       </td>     </tr>     <tr>       <td>         <code>           FAILED         </code>       </td>       <td>         The order could not be processed due to an error. E.g. due to insufficient funds in the account.       </td>     </tr>     <tr>       <td>         <code>           PENDING APPROVAL         </code>       </td>       <td>         The order has been created but needs approval to be executed.       </td>     </tr>     <tr>       <td>         <code>           PENDING INTERNAL PAYMENT APPROVAL         </code>       </td>       <td>         The order has been created but it is under review and requires approval from our team.       </td>     </tr>    </tbody> </table> ")
+    channel: Optional[StrictStr] = Field(default=None, description="Name of the channel in which the order was created")
     payment: Optional[OrderBasePayment] = None
     invoice_id: Optional[StrictStr] = Field(default=None, description="The ID for the invoice associated with this order")
-    __properties: ClassVar[List[str]] = ["id", "external_id", "campaign_id", "created_at", "status", "payment", "invoice_id"]
+    __properties: ClassVar[List[str]] = ["id", "external_id", "campaign_id", "created_at", "status", "channel", "payment", "invoice_id"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -61,6 +62,16 @@ class OrderBase(BaseModel):
         """Validates the enum"""
         if value not in set(['CANCELED', 'CART', 'EXECUTED', 'FAILED', 'PENDING APPROVAL', 'PENDING INTERNAL PAYMENT APPROVAL']):
             raise ValueError("must be one of enum values ('CANCELED', 'CART', 'EXECUTED', 'FAILED', 'PENDING APPROVAL', 'PENDING INTERNAL PAYMENT APPROVAL')")
+        return value
+
+    @field_validator('channel')
+    def channel_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['UI', 'API', 'EMBED', 'DECIPHER', 'QUALTRICS', 'TYPEFORM', 'SURVEY MONKEY']):
+            raise ValueError("must be one of enum values ('UI', 'API', 'EMBED', 'DECIPHER', 'QUALTRICS', 'TYPEFORM', 'SURVEY MONKEY')")
         return value
 
     model_config = ConfigDict(
@@ -98,12 +109,14 @@ class OrderBase(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
             "campaign_id",
             "created_at",
             "status",
+            "channel",
             "invoice_id",
         ])
 
@@ -142,6 +155,7 @@ class OrderBase(BaseModel):
             "campaign_id": obj.get("campaign_id"),
             "created_at": obj.get("created_at"),
             "status": obj.get("status"),
+            "channel": obj.get("channel"),
             "payment": OrderBasePayment.from_dict(obj["payment"]) if obj.get("payment") is not None else None,
             "invoice_id": obj.get("invoice_id")
         })

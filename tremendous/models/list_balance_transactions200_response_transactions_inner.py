@@ -18,21 +18,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import date
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListBalanceTransactions200ResponseInvoicesInner(BaseModel):
+class ListBalanceTransactions200ResponseTransactionsInner(BaseModel):
     """
     A balance transaction represents a specific movement or change in an account's balance. 
     """ # noqa: E501
-    created_at: Optional[date] = Field(default=None, description="Date that the transaction was created")
-    amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of the transaction in USD")
-    balance: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The updated total after the transaction. Note that this running balance may be delayed and contain `null`.")
-    action: Optional[StrictStr] = Field(default=None, description="The action that was performed")
-    description: Optional[StrictStr] = Field(default=None, description="A brief description of the transaction")
+    created_at: datetime = Field(description="Date that the transaction was created")
+    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the transaction in USD")
+    balance: Union[StrictFloat, StrictInt] = Field(description="The updated total after the transaction. Note that this running balance may be delayed and contain `null`.")
+    action: StrictStr = Field(description="The action that was performed")
+    description: StrictStr = Field(description="A brief description of the transaction")
     __properties: ClassVar[List[str]] = ["created_at", "amount", "balance", "action", "description"]
 
     model_config = ConfigDict(
@@ -53,7 +53,7 @@ class ListBalanceTransactions200ResponseInvoicesInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListBalanceTransactions200ResponseInvoicesInner from a JSON string"""
+        """Create an instance of ListBalanceTransactions200ResponseTransactionsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,7 +78,7 @@ class ListBalanceTransactions200ResponseInvoicesInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListBalanceTransactions200ResponseInvoicesInner from a dict"""
+        """Create an instance of ListBalanceTransactions200ResponseTransactionsInner from a dict"""
         if obj is None:
             return None
 

@@ -23,7 +23,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from tremendous.models.get_fraud_review200_response_fraud_review_geo import GetFraudReview200ResponseFraudReviewGeo
 from tremendous.models.get_fraud_review200_response_fraud_review_related_rewards import GetFraudReview200ResponseFraudReviewRelatedRewards
-from tremendous.models.order_without_link_reward import OrderWithoutLinkReward
+from tremendous.models.order_without_link_rewards_inner import OrderWithoutLinkRewardsInner
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -40,7 +40,7 @@ class FraudReview(BaseModel):
     redemption_method: Optional[StrictStr] = Field(default=None, description="The product selected to claim the reward")
     redeemed_at: Optional[datetime] = Field(default=None, description="Date the reward was redeemed")
     geo: Optional[GetFraudReview200ResponseFraudReviewGeo] = None
-    reward: Optional[OrderWithoutLinkReward] = None
+    reward: Optional[OrderWithoutLinkRewardsInner] = None
     __properties: ClassVar[List[str]] = ["status", "reasons", "reviewed_by", "reviewed_at", "related_rewards", "device_id", "redemption_method", "redeemed_at", "geo", "reward"]
 
     @field_validator('status')
@@ -149,7 +149,7 @@ class FraudReview(BaseModel):
             "redemption_method": obj.get("redemption_method"),
             "redeemed_at": obj.get("redeemed_at"),
             "geo": GetFraudReview200ResponseFraudReviewGeo.from_dict(obj["geo"]) if obj.get("geo") is not None else None,
-            "reward": OrderWithoutLinkReward.from_dict(obj["reward"]) if obj.get("reward") is not None else None
+            "reward": OrderWithoutLinkRewardsInner.from_dict(obj["reward"]) if obj.get("reward") is not None else None
         })
         return _obj
 

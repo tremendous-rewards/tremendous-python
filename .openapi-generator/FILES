@@ -16,6 +16,7 @@ tremendous/models/balance_transaction.py
 tremendous/models/base_order_for_create.py
 tremendous/models/campaign.py
 tremendous/models/campaign_base.py
+tremendous/models/channel.py
 tremendous/models/create_api_key200_response.py
 tremendous/models/create_campaign201_response.py
 tremendous/models/create_campaign_request.py
@@ -85,7 +86,7 @@ tremendous/models/get_product_response.py
 tremendous/models/get_reward200_response.py
 tremendous/models/invoice.py
 tremendous/models/list_balance_transactions200_response.py
-tremendous/models/list_balance_transactions200_response_invoices_inner.py
+tremendous/models/list_balance_transactions200_response_transactions_inner.py
 tremendous/models/list_campaigns200_response.py
 tremendous/models/list_campaigns200_response_campaigns_inner.py
 tremendous/models/list_campaigns200_response_campaigns_inner_email_style.py
@@ -139,7 +140,7 @@ tremendous/models/order_base.py
 tremendous/models/order_base_payment.py
 tremendous/models/order_status.py
 tremendous/models/order_without_link.py
-tremendous/models/order_without_link_reward.py
+tremendous/models/order_without_link_rewards_inner.py
 tremendous/models/organization.py
 tremendous/models/payment_details.py
 tremendous/models/payment_details_refund.py

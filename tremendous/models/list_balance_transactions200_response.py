@@ -19,8 +19,8 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.list_balance_transactions200_response_invoices_inner import ListBalanceTransactions200ResponseInvoicesInner
+from typing import Any, ClassVar, Dict, List
+from tremendous.models.list_balance_transactions200_response_transactions_inner import ListBalanceTransactions200ResponseTransactionsInner
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,8 +28,8 @@ class ListBalanceTransactions200Response(BaseModel):
     """
     ListBalanceTransactions200Response
     """ # noqa: E501
-    invoices: Optional[List[ListBalanceTransactions200ResponseInvoicesInner]] = None
-    __properties: ClassVar[List[str]] = ["invoices"]
+    transactions: List[ListBalanceTransactions200ResponseTransactionsInner]
+    __properties: ClassVar[List[str]] = ["transactions"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -70,13 +70,13 @@ class ListBalanceTransactions200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in invoices (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in transactions (list)
         _items = []
-        if self.invoices:
-            for _item in self.invoices:
+        if self.transactions:
+            for _item in self.transactions:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['invoices'] = _items
+            _dict['transactions'] = _items
         return _dict
 
     @classmethod
@@ -89,7 +89,7 @@ class ListBalanceTransactions200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "invoices": [ListBalanceTransactions200ResponseInvoicesInner.from_dict(_item) for _item in obj["invoices"]] if obj.get("invoices") is not None else None
+            "transactions": [ListBalanceTransactions200ResponseTransactionsInner.from_dict(_item) for _item in obj["transactions"]] if obj.get("transactions") is not None else None
         })
         return _obj
 
