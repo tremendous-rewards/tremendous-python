@@ -18,14 +18,14 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import date, datetime
+from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from tremendous.models.list_rewards200_response_rewards_inner_recipient import ListRewards200ResponseRewardsInnerRecipient
 from tremendous.models.list_rewards200_response_rewards_inner_value import ListRewards200ResponseRewardsInnerValue
-from tremendous.models.reward_base_custom_fields_inner import RewardBaseCustomFieldsInner
-from tremendous.models.single_reward_order1_reward_delivery import SingleRewardOrder1RewardDelivery
+from tremendous.models.single_reward_order_reward_custom_fields_inner import SingleRewardOrderRewardCustomFieldsInner
+from tremendous.models.single_reward_order_reward_delivery import SingleRewardOrderRewardDelivery
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,38 +33,15 @@ class SingleRewardOrderReward(BaseModel):
     """
     A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward")
-    order_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the order this reward is part of.")
-    created_at: Optional[datetime] = Field(default=None, description="Date the reward was created")
     campaign_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. ")
     products: Optional[Annotated[List[Annotated[str, Field(strict=True)]], Field(min_length=1)]] = Field(default=None, description="List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.  Providing a `products` array will override the products made available by the campaign specified using the `campaign_id` property unless the `products` array is empty. It will _not_ override other campaign attributes, like the message and customization of the look and feel. ")
     value: Optional[ListRewards200ResponseRewardsInnerValue] = None
     recipient: Optional[ListRewards200ResponseRewardsInnerRecipient] = None
     deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.")
-    custom_fields: Optional[List[RewardBaseCustomFieldsInner]] = None
+    custom_fields: Optional[List[SingleRewardOrderRewardCustomFieldsInner]] = None
     language: Optional[StrictStr] = Field(default=None, description="Set this to translate the redemption experience for this reward. Pass a 2-letter [ISO-639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the desired language. Defaults to `en`. ")
-    delivery: Optional[SingleRewardOrder1RewardDelivery] = None
-    __properties: ClassVar[List[str]] = ["id", "order_id", "created_at", "campaign_id", "products", "value", "recipient", "deliver_at", "custom_fields", "language", "delivery"]
-
-    @field_validator('id')
-    def id_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"[A-Z0-9]{4,20}", value):
-            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
-        return value
-
-    @field_validator('order_id')
-    def order_id_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"[A-Z0-9]{4,20}", value):
-            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
-        return value
+    delivery: Optional[SingleRewardOrderRewardDelivery] = None
+    __properties: ClassVar[List[str]] = ["campaign_id", "products", "value", "recipient", "deliver_at", "custom_fields", "language", "delivery"]
 
     @field_validator('campaign_id')
     def campaign_id_validate_regular_expression(cls, value):
@@ -106,14 +83,8 @@ class SingleRewardOrderReward(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "id",
-            "order_id",
-            "created_at",
         ])
 
         _dict = self.model_dump(
@@ -154,17 +125,14 @@ class SingleRewardOrderReward(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "order_id": obj.get("order_id"),
-            "created_at": obj.get("created_at"),
             "campaign_id": obj.get("campaign_id"),
             "products": obj.get("products"),
             "value": ListRewards200ResponseRewardsInnerValue.from_dict(obj["value"]) if obj.get("value") is not None else None,
             "recipient": ListRewards200ResponseRewardsInnerRecipient.from_dict(obj["recipient"]) if obj.get("recipient") is not None else None,
             "deliver_at": obj.get("deliver_at"),
-            "custom_fields": [RewardBaseCustomFieldsInner.from_dict(_item) for _item in obj["custom_fields"]] if obj.get("custom_fields") is not None else None,
+            "custom_fields": [SingleRewardOrderRewardCustomFieldsInner.from_dict(_item) for _item in obj["custom_fields"]] if obj.get("custom_fields") is not None else None,
             "language": obj.get("language"),
-            "delivery": SingleRewardOrder1RewardDelivery.from_dict(obj["delivery"]) if obj.get("delivery") is not None else None
+            "delivery": SingleRewardOrderRewardDelivery.from_dict(obj["delivery"]) if obj.get("delivery") is not None else None
         })
         return _obj
 

@@ -166,12 +166,10 @@ tremendous/models/reward_without_link_delivery.py
 tremendous/models/role.py
 tremendous/models/simulate_webhook_request.py
 tremendous/models/single_reward_order.py
-tremendous/models/single_reward_order1.py
-tremendous/models/single_reward_order1_payment.py
-tremendous/models/single_reward_order1_reward.py
-tremendous/models/single_reward_order1_reward_custom_fields_inner.py
-tremendous/models/single_reward_order1_reward_delivery.py
+tremendous/models/single_reward_order_payment.py
 tremendous/models/single_reward_order_reward.py
+tremendous/models/single_reward_order_reward_custom_fields_inner.py
+tremendous/models/single_reward_order_reward_delivery.py
 tremendous/models/single_reward_order_without_link.py
 tremendous/models/single_reward_order_without_link_order.py
 tremendous/models/test_public_key.py

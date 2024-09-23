@@ -2,7 +2,7 @@ import json
 import os
 
 import pytest
-from tremendous import Configuration, ApiClient, TremendousApi, CreateOrderRequest, SingleRewardOrder1
+from tremendous import Configuration, ApiClient, TremendousApi, CreateOrderRequest, SingleRewardOrder
 from tremendous.exceptions import BadRequestException
 
 CAMPAIGN_ID = os.environ["TEST_CAMPAIGN_ID"]
@@ -29,7 +29,7 @@ class TestOrders:
 
   def test_submit_order(self):
     request = CreateOrderRequest(
-      SingleRewardOrder1(
+      SingleRewardOrder(
         payment = {
           "funding_source_id": "balance"
         },
@@ -58,7 +58,7 @@ class TestOrders:
   def test_raise_validation_errors(self):
     with pytest.raises(BadRequestException) as e_info:
       request = CreateOrderRequest(
-        SingleRewardOrder1(
+        SingleRewardOrder(
           payment = {
             "funding_source_id": "NOT A VALID FUNDING SOURCE ID"
           },

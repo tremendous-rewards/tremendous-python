@@ -18,21 +18,21 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
-from tremendous.models.single_reward_order1 import SingleRewardOrder1
+from tremendous.models.single_reward_order import SingleRewardOrder
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-CREATEORDERREQUEST_ONE_OF_SCHEMAS = ["SingleRewardOrder1"]
+CREATEORDERREQUEST_ONE_OF_SCHEMAS = ["SingleRewardOrder"]
 
 class CreateOrderRequest(BaseModel):
     """
     CreateOrderRequest
     """
-    # data type: SingleRewardOrder1
-    oneof_schema_1_validator: Optional[SingleRewardOrder1] = None
-    actual_instance: Optional[Union[SingleRewardOrder1]] = None
-    one_of_schemas: Set[str] = { "SingleRewardOrder1" }
+    # data type: SingleRewardOrder
+    oneof_schema_1_validator: Optional[SingleRewardOrder] = None
+    actual_instance: Optional[Union[SingleRewardOrder]] = None
+    one_of_schemas: Set[str] = { "SingleRewardOrder" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -55,17 +55,17 @@ class CreateOrderRequest(BaseModel):
         instance = CreateOrderRequest.model_construct()
         error_messages = []
         match = 0
-        # validate data type: SingleRewardOrder1
-        if not isinstance(v, SingleRewardOrder1):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `SingleRewardOrder1`")
+        # validate data type: SingleRewardOrder
+        if not isinstance(v, SingleRewardOrder):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `SingleRewardOrder`")
         else:
             match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in CreateOrderRequest with oneOf schemas: SingleRewardOrder1. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in CreateOrderRequest with oneOf schemas: SingleRewardOrder. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in CreateOrderRequest with oneOf schemas: SingleRewardOrder1. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in CreateOrderRequest with oneOf schemas: SingleRewardOrder. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -80,19 +80,19 @@ class CreateOrderRequest(BaseModel):
         error_messages = []
         match = 0
 
-        # deserialize data into SingleRewardOrder1
+        # deserialize data into SingleRewardOrder
         try:
-            instance.actual_instance = SingleRewardOrder1.from_json(json_str)
+            instance.actual_instance = SingleRewardOrder.from_json(json_str)
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into CreateOrderRequest with oneOf schemas: SingleRewardOrder1. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into CreateOrderRequest with oneOf schemas: SingleRewardOrder. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into CreateOrderRequest with oneOf schemas: SingleRewardOrder1. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into CreateOrderRequest with oneOf schemas: SingleRewardOrder. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -106,7 +106,7 @@ class CreateOrderRequest(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], SingleRewardOrder1]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], SingleRewardOrder]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
