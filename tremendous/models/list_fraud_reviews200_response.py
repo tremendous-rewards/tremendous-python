@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List
 from tremendous.models.list_fraud_reviews200_response_fraud_reviews_inner import ListFraudReviews200ResponseFraudReviewsInner
 from typing import Optional, Set
@@ -29,7 +29,8 @@ class ListFraudReviews200Response(BaseModel):
     ListFraudReviews200Response
     """ # noqa: E501
     fraud_reviews: List[ListFraudReviews200ResponseFraudReviewsInner]
-    __properties: ClassVar[List[str]] = ["fraud_reviews"]
+    total_count: StrictInt = Field(description="The total number of fraud reviews")
+    __properties: ClassVar[List[str]] = ["fraud_reviews", "total_count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -89,7 +90,8 @@ class ListFraudReviews200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "fraud_reviews": [ListFraudReviews200ResponseFraudReviewsInner.from_dict(_item) for _item in obj["fraud_reviews"]] if obj.get("fraud_reviews") is not None else None
+            "fraud_reviews": [ListFraudReviews200ResponseFraudReviewsInner.from_dict(_item) for _item in obj["fraud_reviews"]] if obj.get("fraud_reviews") is not None else None,
+            "total_count": obj.get("total_count")
         })
         return _obj
 

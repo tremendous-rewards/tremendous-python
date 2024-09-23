@@ -20,7 +20,6 @@ tremendous/models/channel.py
 tremendous/models/create_api_key200_response.py
 tremendous/models/create_campaign201_response.py
 tremendous/models/create_campaign_request.py
-tremendous/models/create_invoice.py
 tremendous/models/create_invoice200_response.py
 tremendous/models/create_invoice_request.py
 tremendous/models/create_member.py

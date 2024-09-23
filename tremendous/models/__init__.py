@@ -27,7 +27,6 @@ from tremendous.models.channel import Channel
 from tremendous.models.create_api_key200_response import CreateApiKey200Response
 from tremendous.models.create_campaign201_response import CreateCampaign201Response
 from tremendous.models.create_campaign_request import CreateCampaignRequest
-from tremendous.models.create_invoice import CreateInvoice
 from tremendous.models.create_invoice200_response import CreateInvoice200Response
 from tremendous.models.create_invoice_request import CreateInvoiceRequest
 from tremendous.models.create_member import CreateMember

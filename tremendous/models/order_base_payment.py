@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from tremendous.models.payment_details_refund import PaymentDetailsRefund
@@ -33,18 +33,7 @@ class OrderBasePayment(BaseModel):
     total: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total price of the order including fees (in USD)")
     fees: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Fees for the order (in USD)")
     refund: Optional[PaymentDetailsRefund] = None
-    channel: Optional[StrictStr] = Field(default=None, description="Name of the channel in which the order was created")
-    __properties: ClassVar[List[str]] = ["subtotal", "total", "fees", "refund", "channel"]
-
-    @field_validator('channel')
-    def channel_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['UI', 'API', 'EMBED', 'DECIPHER', 'QUALTRICS', 'TYPEFORM', 'SURVEY MONKEY']):
-            raise ValueError("must be one of enum values ('UI', 'API', 'EMBED', 'DECIPHER', 'QUALTRICS', 'TYPEFORM', 'SURVEY MONKEY')")
-        return value
+    __properties: ClassVar[List[str]] = ["subtotal", "total", "fees", "refund"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -109,8 +98,7 @@ class OrderBasePayment(BaseModel):
             "subtotal": obj.get("subtotal"),
             "total": obj.get("total"),
             "fees": obj.get("fees"),
-            "refund": PaymentDetailsRefund.from_dict(obj["refund"]) if obj.get("refund") is not None else None,
-            "channel": obj.get("channel")
+            "refund": PaymentDetailsRefund.from_dict(obj["refund"]) if obj.get("refund") is not None else None
         })
         return _obj
 
