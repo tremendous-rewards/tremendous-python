@@ -1,6 +1,6 @@
 # Upgrading from v2
 
-The `3.x.x` releases are a full rewrite based on our [API schema][ref] docs
+The `3.x.x` and `4.x.x` releases are a full rewrite based on our [API schema][ref] docs
 
 Here we have "before and after" of how a few API calls looked like with our v2 version, and how they
 can be written using the new library.
@@ -17,7 +17,7 @@ from tremendous import Tremendous
 client = Tremendous("[SANDBOX_ACCESS_TOKEN]", "https://testflight.tremendous.com/api/v2")
 ```
 
-### `v3`
+### `v4`
 
 ```py
 from tremendous import Configuration, ApiClient, TremendousApi
@@ -57,29 +57,31 @@ order_data = {
 order = client.orders.create(order_data)
 ```
 
-### `v3`
+### `v4`
 
 ```py
-from tremendous import CreateOrderRequest
+from tremendous import CreateOrderRequest, SingleRewardOrder
 
 request = CreateOrderRequest(
-  payment = {
-    "funding_source_id": "balance"
-  },
-  reward = {
-    "value": {
-      "denomination": 20,
-      "currency_code": "USD"
+  SingleRewardOrder(
+    payment = {
+      "funding_source_id": "balance"
     },
-    "campaign_id": campaign_id,
-    "delivery": {
-      "method": "EMAIL",
-    },
-    "recipient": {
-      "email": "sam@yourdomain.com",
-      "name": "Sam Stevens"
+    reward = {
+      "value": {
+        "denomination": 20,
+        "currency_code": "USD"
+      },
+      "campaign_id": campaign_id,
+      "delivery": {
+        "method": "EMAIL",
+      },
+      "recipient": {
+        "email": "sam@yourdomain.com",
+        "name": "Sam Stevens"
+      }
     }
-  }
+  )
 )
 
 response = client.create_order(request)

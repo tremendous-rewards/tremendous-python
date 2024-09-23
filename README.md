@@ -3,7 +3,7 @@
 A Python client library for the [Tremendous API][docs].
 
 > [!NOTE]
-> This branch includes the v3 version of the Tremendous Python client, a new version based
+> This branch includes the v4 version of the Tremendous Python client, a new version based
 > on our [API schema][ref] docs. If you are using the v2 versions, please check our
 > [`UPGRADING`](UPGRADING.md) guide
 
@@ -35,26 +35,29 @@ client = TremendousApi(api)
 Submitting an order:
 
 ```py
-from tremendous import CreateOrderRequest
+from tremendous import CreateOrderRequest, SingleRewardOrder
 
 request = CreateOrderRequest(
-  payment = {
-    "funding_source_id": "balance"
-  },
-  reward = {
-    "campaign_id": "CAMPAIGN_ID",
-    "delivery": {
-        "method": "EMAIL"
+  SingleRewardOrder(
+    payment = {
+      "funding_source_id": "balance"
     },
-    "recipient": {
-      "email": "sarah@tremendous.com",
-      "name": "Sarah Smith"
-    },
-    "value": {
-        "denomination": 20,
-        "currency_code": "USD"
+    reward = {
+      "campaign_id": "CAMPAIGN_ID",
+      "delivery": {
+          "method": "EMAIL"
+      },
+      "recipient": {
+        "email": "sarah@tremendous.com",
+        "name": "Sarah Smith"
+      },
+      "value": {
+          "denomination": 20,
+          "currency_code": "USD"
+      }
     }
-  })
+  )
+)
 
 response = client.create_order(request)
 print("Order created! ID: %s" % response.order.id)
