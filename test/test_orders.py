@@ -2,7 +2,7 @@ import json
 import os
 
 import pytest
-from tremendous import Configuration, ApiClient, TremendousApi, CreateOrderRequest
+from tremendous import Configuration, ApiClient, TremendousApi, CreateOrderRequest, SingleRewardOrder
 from tremendous.exceptions import BadRequestException
 
 CAMPAIGN_ID = os.environ["TEST_CAMPAIGN_ID"]
@@ -29,23 +29,25 @@ class TestOrders:
 
   def test_submit_order(self):
     request = CreateOrderRequest(
-      payment = {
-        "funding_source_id": "balance"
-      },
-      reward = {
-        "campaign_id": CAMPAIGN_ID,
-        "delivery": {
-            "method": "EMAIL"
+      SingleRewardOrder(
+        payment = {
+          "funding_source_id": "balance"
         },
-        "recipient": {
-            "name": "Recipient Name",
-            "email": RECIPIENT_EMAIL
-        },
-        "value": {
-            "denomination": 5.0,
-            "currency_code": "USD"
-        }
-      })
+        reward = {
+          "campaign_id": CAMPAIGN_ID,
+          "delivery": {
+              "method": "EMAIL"
+          },
+          "recipient": {
+              "name": "Recipient Name",
+              "email": RECIPIENT_EMAIL
+          },
+          "value": {
+              "denomination": 5.0,
+              "currency_code": "USD"
+          }
+        })
+      )
 
     data = self.client.create_order(request)
 
@@ -56,23 +58,25 @@ class TestOrders:
   def test_raise_validation_errors(self):
     with pytest.raises(BadRequestException) as e_info:
       request = CreateOrderRequest(
-      payment = {
-        "funding_source_id": "NOT A VALID FUNDING SOURCE ID"
-      },
-      reward = {
-        "campaign_id": CAMPAIGN_ID,
-        "delivery": {
-            "method": "EMAIL"
-        },
-        "recipient": {
-            "name": "Recipient Name",
-            "email": RECIPIENT_EMAIL
-        },
-        "value": {
-            "denomination": 5.0,
-            "currency_code": "USD"
-        }
-      })
+        SingleRewardOrder(
+          payment = {
+            "funding_source_id": "NOT A VALID FUNDING SOURCE ID"
+          },
+          reward = {
+            "campaign_id": CAMPAIGN_ID,
+            "delivery": {
+                "method": "EMAIL"
+            },
+            "recipient": {
+                "name": "Recipient Name",
+                "email": RECIPIENT_EMAIL
+            },
+            "value": {
+                "denomination": 5.0,
+                "currency_code": "USD"
+            }
+          })
+        )
 
       self.client.create_order(request)
 

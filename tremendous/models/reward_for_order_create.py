@@ -25,7 +25,7 @@ from typing_extensions import Annotated
 from tremendous.models.list_rewards200_response_rewards_inner_recipient import ListRewards200ResponseRewardsInnerRecipient
 from tremendous.models.list_rewards200_response_rewards_inner_value import ListRewards200ResponseRewardsInnerValue
 from tremendous.models.reward_base_custom_fields_inner import RewardBaseCustomFieldsInner
-from tremendous.models.single_reward_order1_reward_delivery import SingleRewardOrder1RewardDelivery
+from tremendous.models.single_reward_order_reward_delivery import SingleRewardOrderRewardDelivery
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -43,7 +43,7 @@ class RewardForOrderCreate(BaseModel):
     deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.")
     custom_fields: Optional[List[RewardBaseCustomFieldsInner]] = None
     language: Optional[StrictStr] = Field(default=None, description="Set this to translate the redemption experience for this reward. Pass a 2-letter [ISO-639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the desired language. Defaults to `en`. ")
-    delivery: Optional[SingleRewardOrder1RewardDelivery] = None
+    delivery: Optional[SingleRewardOrderRewardDelivery] = None
     __properties: ClassVar[List[str]] = ["id", "order_id", "created_at", "campaign_id", "products", "value", "recipient", "deliver_at", "custom_fields", "language", "delivery"]
 
     @field_validator('id')
@@ -164,7 +164,7 @@ class RewardForOrderCreate(BaseModel):
             "deliver_at": obj.get("deliver_at"),
             "custom_fields": [RewardBaseCustomFieldsInner.from_dict(_item) for _item in obj["custom_fields"]] if obj.get("custom_fields") is not None else None,
             "language": obj.get("language"),
-            "delivery": SingleRewardOrder1RewardDelivery.from_dict(obj["delivery"]) if obj.get("delivery") is not None else None
+            "delivery": SingleRewardOrderRewardDelivery.from_dict(obj["delivery"]) if obj.get("delivery") is not None else None
         })
         return _obj
 

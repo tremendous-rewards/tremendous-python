@@ -24,7 +24,7 @@ from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class SingleRewardOrder1RewardCustomFieldsInner(BaseModel):
+class SingleRewardOrderRewardCustomFieldsInner(BaseModel):
     """
     Reward custom data for searching, tracking or copy (see [Adding custom fields to orders](https://developers.tremendous.com/reference/using-custom-fields-to-add-custom-data-to-rewards).)
     """ # noqa: E501
@@ -60,7 +60,7 @@ class SingleRewardOrder1RewardCustomFieldsInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SingleRewardOrder1RewardCustomFieldsInner from a JSON string"""
+        """Create an instance of SingleRewardOrderRewardCustomFieldsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -90,7 +90,7 @@ class SingleRewardOrder1RewardCustomFieldsInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SingleRewardOrder1RewardCustomFieldsInner from a dict"""
+        """Create an instance of SingleRewardOrderRewardCustomFieldsInner from a dict"""
         if obj is None:
             return None
 

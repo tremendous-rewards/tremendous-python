@@ -23,9 +23,9 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class SingleRewardOrder1Payment(BaseModel):
+class SingleRewardOrderPayment(BaseModel):
     """
-    SingleRewardOrder1Payment
+    SingleRewardOrderPayment
     """ # noqa: E501
     funding_source_id: StrictStr = Field(description="Tremendous ID of the funding source that will be used to pay for the order. Use `balance` to use your Tremendous's balance.")
     __properties: ClassVar[List[str]] = ["funding_source_id"]
@@ -48,7 +48,7 @@ class SingleRewardOrder1Payment(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SingleRewardOrder1Payment from a JSON string"""
+        """Create an instance of SingleRewardOrderPayment from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,7 +73,7 @@ class SingleRewardOrder1Payment(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SingleRewardOrder1Payment from a dict"""
+        """Create an instance of SingleRewardOrderPayment from a dict"""
         if obj is None:
             return None
 
