@@ -18,19 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
-from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.list_rewards401_response_errors import ListRewards401ResponseErrors
+from pydantic import BaseModel, ConfigDict
+from typing import Any, ClassVar, Dict, List
+from tremendous.models.single_reward_order_with_link_order import SingleRewardOrderWithLinkOrder
 from typing import Optional, Set
 from typing_extensions import Self
 
-class GenerateRewardLink403Response(BaseModel):
+class SingleRewardOrderWithLink(BaseModel):
     """
-    GenerateRewardLink403Response
+    SingleRewardOrderWithLink
     """ # noqa: E501
-    status: Optional[StrictInt] = Field(default=None, description="HTTP status code of the response")
-    errors: ListRewards401ResponseErrors
-    __properties: ClassVar[List[str]] = ["status", "errors"]
+    order: SingleRewardOrderWithLinkOrder
+    __properties: ClassVar[List[str]] = ["order"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +49,7 @@ class GenerateRewardLink403Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of GenerateRewardLink403Response from a JSON string"""
+        """Create an instance of SingleRewardOrderWithLink from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,14 +70,14 @@ class GenerateRewardLink403Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of errors
-        if self.errors:
-            _dict['errors'] = self.errors.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of order
+        if self.order:
+            _dict['order'] = self.order.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of GenerateRewardLink403Response from a dict"""
+        """Create an instance of SingleRewardOrderWithLink from a dict"""
         if obj is None:
             return None
 
@@ -86,8 +85,7 @@ class GenerateRewardLink403Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "status": obj.get("status"),
-            "errors": ListRewards401ResponseErrors.from_dict(obj["errors"]) if obj.get("errors") is not None else None
+            "order": SingleRewardOrderWithLinkOrder.from_dict(obj["order"]) if obj.get("order") is not None else None
         })
         return _obj
 

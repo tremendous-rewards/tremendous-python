@@ -18,8 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional
 from tremendous.models.list_rewards401_response_errors import ListRewards401ResponseErrors
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,8 +28,9 @@ class FraudRule422Response(BaseModel):
     """
     FraudRule422Response
     """ # noqa: E501
+    status: Optional[StrictInt] = Field(default=None, description="HTTP status code of the response")
     errors: ListRewards401ResponseErrors
-    __properties: ClassVar[List[str]] = ["errors"]
+    __properties: ClassVar[List[str]] = ["status", "errors"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,6 +86,7 @@ class FraudRule422Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "status": obj.get("status"),
             "errors": ListRewards401ResponseErrors.from_dict(obj["errors"]) if obj.get("errors") is not None else None
         })
         return _obj

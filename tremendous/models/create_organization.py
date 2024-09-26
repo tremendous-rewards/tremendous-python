@@ -18,8 +18,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from datetime import date
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from tremendous.models.create_organization_request_copy_settings import CreateOrganizationRequestCopySettings
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,12 +30,24 @@ class CreateOrganization(BaseModel):
     """
     CreateOrganization
     """ # noqa: E501
+    id: Optional[Annotated[str, Field(strict=True)]] = None
     name: StrictStr = Field(description="Name of the organization")
     website: StrictStr = Field(description="URL of the website of that organization")
-    with_api_key: Optional[StrictBool] = Field(default=None, description="Default value is `false`. Set to true to also generate an API key associated to the new organization.")
+    with_api_key: StrictBool = Field(description="Default value is `false`. Set to true to also generate an API key associated to the new organization.")
     copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
     phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).")
-    __properties: ClassVar[List[str]] = ["name", "website", "with_api_key", "copy_settings", "phone"]
+    created_at: Optional[date] = Field(default=None, description="Timestamp of when the organization has been created. ")
+    __properties: ClassVar[List[str]] = ["id", "name", "website", "with_api_key", "copy_settings", "phone", "created_at"]
+
+    @field_validator('id')
+    def id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"[A-Z0-9]{4,20}", value):
+            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -65,8 +79,12 @@ class CreateOrganization(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
+            "created_at",
         ])
 
         _dict = self.model_dump(
@@ -89,11 +107,13 @@ class CreateOrganization(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "id": obj.get("id"),
             "name": obj.get("name"),
             "website": obj.get("website"),
             "with_api_key": obj.get("with_api_key"),
             "copy_settings": CreateOrganizationRequestCopySettings.from_dict(obj["copy_settings"]) if obj.get("copy_settings") is not None else None,
-            "phone": obj.get("phone")
+            "phone": obj.get("phone"),
+            "created_at": obj.get("created_at")
         })
         return _obj
 

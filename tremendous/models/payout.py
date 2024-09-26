@@ -18,29 +18,47 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import date
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from tremendous.models.create_organization_request_copy_settings import CreateOrganizationRequestCopySettings
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateOrganization200ResponseOrganization(BaseModel):
+class Payout(BaseModel):
     """
-    CreateOrganization200ResponseOrganization
+    Payout
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = None
-    name: StrictStr = Field(description="Name of the organization")
-    website: StrictStr = Field(description="URL of the website of that organization")
-    copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
-    phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).")
-    created_at: Optional[date] = Field(default=None, description="Timestamp of when the organization has been created. ")
-    api_key: Optional[StrictStr] = Field(default=None, description="The API key for the created organization. This property is only returned when `api_key` is set to `true`. ")
-    __properties: ClassVar[List[str]] = ["id", "name", "website", "copy_settings", "phone", "created_at", "api_key"]
+    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the payout")
+    status: Optional[StrictStr] = None
+    product_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the paid out product")
+    product_name: Optional[StrictStr] = Field(default=None, description="Name of the paid out Product")
+    created_at: Optional[datetime] = Field(default=None, description="Date the payout was created")
+    executed_at: Optional[datetime] = Field(default=None, description="Date the payout was executed")
+    __properties: ClassVar[List[str]] = ["id", "status", "product_id", "product_name", "created_at", "executed_at"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"[A-Z0-9]{4,20}", value):
+            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
+        return value
+
+    @field_validator('status')
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['UNEXECUTED', 'COMPLETED', 'FAILED', 'CANCELED', 'ORGANIZATION_REVIEW', 'ADMIN_HELD']):
+            raise ValueError("must be one of enum values ('UNEXECUTED', 'COMPLETED', 'FAILED', 'CANCELED', 'ORGANIZATION_REVIEW', 'ADMIN_HELD')")
+        return value
+
+    @field_validator('product_id')
+    def product_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
@@ -67,7 +85,7 @@ class CreateOrganization200ResponseOrganization(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateOrganization200ResponseOrganization from a JSON string"""
+        """Create an instance of Payout from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,8 +97,18 @@ class CreateOrganization200ResponseOrganization(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
+            "product_id",
+            "product_name",
+            "created_at",
+            "executed_at",
         ])
 
         _dict = self.model_dump(
@@ -88,19 +116,11 @@ class CreateOrganization200ResponseOrganization(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of copy_settings
-        if self.copy_settings:
-            _dict['copy_settings'] = self.copy_settings.to_dict()
-        # set to None if phone (nullable) is None
-        # and model_fields_set contains the field
-        if self.phone is None and "phone" in self.model_fields_set:
-            _dict['phone'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateOrganization200ResponseOrganization from a dict"""
+        """Create an instance of Payout from a dict"""
         if obj is None:
             return None
 
@@ -109,12 +129,11 @@ class CreateOrganization200ResponseOrganization(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "name": obj.get("name"),
-            "website": obj.get("website"),
-            "copy_settings": CreateOrganizationRequestCopySettings.from_dict(obj["copy_settings"]) if obj.get("copy_settings") is not None else None,
-            "phone": obj.get("phone"),
+            "status": obj.get("status"),
+            "product_id": obj.get("product_id"),
+            "product_name": obj.get("product_name"),
             "created_at": obj.get("created_at"),
-            "api_key": obj.get("api_key")
+            "executed_at": obj.get("executed_at")
         })
         return _obj
 

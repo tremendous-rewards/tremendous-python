@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_orders200_response_orders_inner import ListOrders200ResponseOrdersInner
+from tremendous.models.create_order200_response_order import CreateOrder200ResponseOrder
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class CreateOrder200Response(BaseModel):
     """
     CreateOrder200Response
     """ # noqa: E501
-    order: ListOrders200ResponseOrdersInner
+    order: CreateOrder200ResponseOrder
     __properties: ClassVar[List[str]] = ["order"]
 
     model_config = ConfigDict(
@@ -85,7 +85,7 @@ class CreateOrder200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "order": ListOrders200ResponseOrdersInner.from_dict(obj["order"]) if obj.get("order") is not None else None
+            "order": CreateOrder200ResponseOrder.from_dict(obj["order"]) if obj.get("order") is not None else None
         })
         return _obj
 
