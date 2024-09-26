@@ -1,6 +1,7 @@
 {
   "packages": {
     ".": {
+      "package-name": "tremendous-python",
       "changelog-path": "CHANGELOG.md",
       "release-type": "python",
       "bump-minor-pre-major": false,
