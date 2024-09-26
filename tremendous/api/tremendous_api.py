@@ -28,6 +28,7 @@ from tremendous.models.create_invoice_request import CreateInvoiceRequest
 from tremendous.models.create_member200_response import CreateMember200Response
 from tremendous.models.create_member_request import CreateMemberRequest
 from tremendous.models.create_order200_response import CreateOrder200Response
+from tremendous.models.create_order201_response import CreateOrder201Response
 from tremendous.models.create_order_request import CreateOrderRequest
 from tremendous.models.create_organization200_response import CreateOrganization200Response
 from tremendous.models.create_organization_request import CreateOrganizationRequest
@@ -99,7 +100,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateOrder200Response:
+    ) -> CreateOrder201Response:
         """Approve order
 
         Approves an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -137,7 +138,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
+            '200': "CreateOrder201Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
@@ -173,7 +174,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateOrder200Response]:
+    ) -> ApiResponse[CreateOrder201Response]:
         """Approve order
 
         Approves an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -211,7 +212,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
+            '200': "CreateOrder201Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
@@ -285,7 +286,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
+            '200': "CreateOrder201Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
@@ -1788,7 +1789,7 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrder200Response",
-            '201': "CreateOrder200Response",
+            '201': "CreateOrder201Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
@@ -1862,7 +1863,7 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrder200Response",
-            '201': "CreateOrder200Response",
+            '201': "CreateOrder201Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
@@ -1936,7 +1937,7 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrder200Response",
-            '201': "CreateOrder200Response",
+            '201': "CreateOrder201Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
@@ -6156,7 +6157,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateOrder200Response:
+    ) -> CreateOrder201Response:
         """Retrieve order
 
         Retrieve the order, identified by the given `id` in the URL 
@@ -6194,7 +6195,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
+            '200': "CreateOrder201Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
@@ -6227,7 +6228,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateOrder200Response]:
+    ) -> ApiResponse[CreateOrder201Response]:
         """Retrieve order
 
         Retrieve the order, identified by the given `id` in the URL 
@@ -6265,7 +6266,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
+            '200': "CreateOrder201Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
@@ -6336,7 +6337,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
+            '200': "CreateOrder201Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
@@ -11947,7 +11948,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateOrder200Response:
+    ) -> CreateOrder201Response:
         """Reject order
 
         Rejects an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -11985,7 +11986,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
+            '200': "CreateOrder201Response",
             '401': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
@@ -12020,7 +12021,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateOrder200Response]:
+    ) -> ApiResponse[CreateOrder201Response]:
         """Reject order
 
         Rejects an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -12058,7 +12059,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
+            '200': "CreateOrder201Response",
             '401': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
@@ -12131,7 +12132,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
+            '200': "CreateOrder201Response",
             '401': "ListRewards401Response",
             '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",

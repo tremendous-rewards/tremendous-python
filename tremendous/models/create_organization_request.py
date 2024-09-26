@@ -30,7 +30,7 @@ class CreateOrganizationRequest(BaseModel):
     """ # noqa: E501
     name: StrictStr = Field(description="Name of the organization")
     website: StrictStr = Field(description="URL of the website of that organization")
-    with_api_key: Optional[StrictBool] = Field(default=None, description="Default value is `false`. Set to true to also generate an API key associated to the new organization.")
+    with_api_key: StrictBool = Field(description="Default value is `false`. Set to true to also generate an API key associated to the new organization.")
     copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
     phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).")
     __properties: ClassVar[List[str]] = ["name", "website", "with_api_key", "copy_settings", "phone"]
