@@ -21,7 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from tremendous.models.list_funding_sources200_response_funding_sources_inner_meta import ListFundingSources200ResponseFundingSourcesInnerMeta
+from tremendous.models.funding_source_meta import FundingSourceMeta
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,7 +32,7 @@ class FundingSource(BaseModel):
     id: Annotated[str, Field(strict=True)]
     method: StrictStr = Field(description="You can pay for rewards using different payment methods on Tremendous:  <table>   <thead>     <tr>       <th>Payment Method</th>       <th>Description</th>       </tr>   </thead>   <tbody>     <tr>       <td><code>balance</code></td>       <td>Pre-funded balance in your Tremendous account to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>bank_account</code></td>       <td>Bank account to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>credit_card</code></td>       <td>Credit card to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>invoice</code></td>       <td>Send rewards to recipients and pay by invoice.</td>     </tr>    </tbody> </table> ")
     type: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.** ")
-    meta: ListFundingSources200ResponseFundingSourcesInnerMeta
+    meta: FundingSourceMeta
     __properties: ClassVar[List[str]] = ["id", "method", "type", "meta"]
 
     @field_validator('id')
@@ -118,7 +118,7 @@ class FundingSource(BaseModel):
             "id": obj.get("id"),
             "method": obj.get("method"),
             "type": obj.get("type"),
-            "meta": ListFundingSources200ResponseFundingSourcesInnerMeta.from_dict(obj["meta"]) if obj.get("meta") is not None else None
+            "meta": FundingSourceMeta.from_dict(obj["meta"]) if obj.get("meta") is not None else None
         })
         return _obj
 

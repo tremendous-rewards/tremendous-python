@@ -18,8 +18,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
+from tremendous.models.fraud_rule_type import FraudRuleType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,19 +28,9 @@ class FraudRulesListItem(BaseModel):
     """
     An active fraud rule
     """ # noqa: E501
-    rule_type: Optional[StrictStr] = Field(default=None, description="* `review_country` - Flags when the recipient's IP country matches the criteria in the rule * `review_ip` - Flags when recipient's IP matches one in the list * `review_email` - Flags when the recipient's email matches one in the list * `review_redeemed_rewards_count` - Flags when the recipient redeemed more than the number of rewards specified in the config * `review_redeemed_rewards_amount` - Flags when the recipient redeemed more than the total amount specified in the config * `review_multiple_emails` - Flags when recipient's device or account has multiple emails associated * `review_vpn` - Flags when VPN is suspected * `review_tremendous_flag_list` - Flags rewards when redemption attributes match at least one criteria defined by the Tremendous flag list * `review_previously_blocked_recipients` - Flags rewards when the recipient has been blocked before * `allow_ip` - Releases a reward when a recipient's IP matches one in the list * `allow_email` - Releases a reward when the recipient's email matches one in the list ")
+    rule_type: Optional[FraudRuleType] = None
     config: Optional[Dict[str, Any]] = Field(default=None, description="The configuration associated with the rule. The properties allowed depend on the type of rule. This property is only present for rules that require configuration. ")
     __properties: ClassVar[List[str]] = ["rule_type", "config"]
-
-    @field_validator('rule_type')
-    def rule_type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['review_country', 'review_ip', 'review_email', 'review_redeemed_rewards_count', 'review_redeemed_rewards_amount', 'review_multiple_emails', 'review_vpn', 'review_tremendous_flag_list', 'review_previously_blocked_recipients', 'allow_ip', 'allow_email']):
-            raise ValueError("must be one of enum values ('review_country', 'review_ip', 'review_email', 'review_redeemed_rewards_count', 'review_redeemed_rewards_amount', 'review_multiple_emails', 'review_vpn', 'review_tremendous_flag_list', 'review_previously_blocked_recipients', 'allow_ip', 'allow_email')")
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

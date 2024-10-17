@@ -27,7 +27,7 @@ from typing_extensions import Self
 
 class OrderBasePayment(BaseModel):
     """
-    Cost breakdown of the order (cost of rewards + fees). Cost and fees are always denominated in USD, independent from the currency of the ordered rewards. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
+    OrderBasePayment
     """ # noqa: E501
     subtotal: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total price of the order before fees (in USD)")
     total: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total price of the order including fees (in USD)")

@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.list_webhooks200_response_webhooks_inner import ListWebhooks200ResponseWebhooksInner
+from tremendous.models.webhook import Webhook
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class ListWebhooks200Response(BaseModel):
     """
     ListWebhooks200Response
     """ # noqa: E501
-    webhooks: Optional[List[ListWebhooks200ResponseWebhooksInner]] = None
+    webhooks: Optional[List[Webhook]] = None
     __properties: ClassVar[List[str]] = ["webhooks"]
 
     model_config = ConfigDict(
@@ -89,7 +89,7 @@ class ListWebhooks200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "webhooks": [ListWebhooks200ResponseWebhooksInner.from_dict(_item) for _item in obj["webhooks"]] if obj.get("webhooks") is not None else None
+            "webhooks": [Webhook.from_dict(_item) for _item in obj["webhooks"]] if obj.get("webhooks") is not None else None
         })
         return _obj
 

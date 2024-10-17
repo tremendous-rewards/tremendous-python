@@ -21,9 +21,10 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from tremendous.models.list_products_response_products_inner_countries_inner import ListProductsResponseProductsInnerCountriesInner
-from tremendous.models.list_products_response_products_inner_images_inner import ListProductsResponseProductsInnerImagesInner
-from tremendous.models.list_products_response_products_inner_skus_inner import ListProductsResponseProductsInnerSkusInner
+from tremendous.models.currency_codes import CurrencyCodes
+from tremendous.models.product_countries_inner import ProductCountriesInner
+from tremendous.models.product_images_inner import ProductImagesInner
+from tremendous.models.product_skus_inner import ProductSkusInner
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -36,10 +37,10 @@ class Product(BaseModel):
     description: StrictStr = Field(description="Detailed description of the product. Mostly used for products with a `category` of `charities`.")
     category: StrictStr = Field(description="The category of this product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>   </tbody> </table> ")
     disclosure: StrictStr = Field(description="Legal disclosures for this product. Can be in HTML format.")
-    skus: Optional[List[ListProductsResponseProductsInnerSkusInner]] = Field(default=None, description="Products may are restricted in their usage based on the amount of the reward. The `skus` array defines bands of denominations in which this product may be used for payouts. ")
-    currency_codes: Annotated[List[StrictStr], Field(min_length=1)] = Field(description="Available currencies for this product")
-    countries: Annotated[List[ListProductsResponseProductsInnerCountriesInner], Field(min_length=1)] = Field(description="List of countries in which this product is available to recipients.")
-    images: Annotated[List[ListProductsResponseProductsInnerImagesInner], Field(min_length=0)] = Field(description="List of product images associated with this product (e.g. logos or images of the gift cards)")
+    skus: Optional[List[ProductSkusInner]] = Field(default=None, description="Products may are restricted in their usage based on the amount of the reward. The `skus` array defines bands of denominations in which this product may be used for payouts. ")
+    currency_codes: Annotated[List[CurrencyCodes], Field(min_length=1)] = Field(description="Available currencies for this product")
+    countries: Annotated[List[ProductCountriesInner], Field(min_length=1)] = Field(description="List of countries in which this product is available to recipients.")
+    images: Annotated[List[ProductImagesInner], Field(min_length=0)] = Field(description="List of product images associated with this product (e.g. logos or images of the gift cards)")
     __properties: ClassVar[List[str]] = ["id", "name", "description", "category", "disclosure", "skus", "currency_codes", "countries", "images"]
 
     @field_validator('id')
@@ -54,14 +55,6 @@ class Product(BaseModel):
         """Validates the enum"""
         if value not in set(['ach', 'charity', 'merchant_card', 'paypal', 'venmo', 'visa_card']):
             raise ValueError("must be one of enum values ('ach', 'charity', 'merchant_card', 'paypal', 'venmo', 'visa_card')")
-        return value
-
-    @field_validator('currency_codes')
-    def currency_codes_validate_enum(cls, value):
-        """Validates the enum"""
-        for i in value:
-            if i not in set(['USD', 'CAD', 'EUR', 'AED', 'AFN', 'ALL', 'AMD', 'ARS', 'AUD', 'AZN', 'BAM', 'BDT', 'BGN', 'BHD', 'BIF', 'BND', 'BOB', 'BRL', 'BWP', 'BYR', 'BZD', 'CDF', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EEK', 'EGP', 'ERN', 'ETB', 'GBP', 'GEL', 'GHS', 'GNF', 'GTQ', 'HKD', 'HNL', 'HRK', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK', 'JMD', 'JOD', 'JPY', 'KES', 'KHR', 'KRW', 'KWD', 'KZT', 'LBP', 'LKR', 'LTL', 'LVL', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MOP', 'MUR', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SDG', 'SEK', 'SGD', 'SOS', 'SYP', 'THB', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'UYU', 'UZS', 'VEF', 'VND', 'XAF', 'XOF', 'YER', 'ZAR', 'ZMK']):
-                raise ValueError("each list item must be one of ('USD', 'CAD', 'EUR', 'AED', 'AFN', 'ALL', 'AMD', 'ARS', 'AUD', 'AZN', 'BAM', 'BDT', 'BGN', 'BHD', 'BIF', 'BND', 'BOB', 'BRL', 'BWP', 'BYR', 'BZD', 'CDF', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EEK', 'EGP', 'ERN', 'ETB', 'GBP', 'GEL', 'GHS', 'GNF', 'GTQ', 'HKD', 'HNL', 'HRK', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK', 'JMD', 'JOD', 'JPY', 'KES', 'KHR', 'KRW', 'KWD', 'KZT', 'LBP', 'LKR', 'LTL', 'LVL', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MOP', 'MUR', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SDG', 'SEK', 'SGD', 'SOS', 'SYP', 'THB', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'UYU', 'UZS', 'VEF', 'VND', 'XAF', 'XOF', 'YER', 'ZAR', 'ZMK')")
         return value
 
     model_config = ConfigDict(
@@ -143,10 +136,10 @@ class Product(BaseModel):
             "description": obj.get("description"),
             "category": obj.get("category"),
             "disclosure": obj.get("disclosure"),
-            "skus": [ListProductsResponseProductsInnerSkusInner.from_dict(_item) for _item in obj["skus"]] if obj.get("skus") is not None else None,
+            "skus": [ProductSkusInner.from_dict(_item) for _item in obj["skus"]] if obj.get("skus") is not None else None,
             "currency_codes": obj.get("currency_codes"),
-            "countries": [ListProductsResponseProductsInnerCountriesInner.from_dict(_item) for _item in obj["countries"]] if obj.get("countries") is not None else None,
-            "images": [ListProductsResponseProductsInnerImagesInner.from_dict(_item) for _item in obj["images"]] if obj.get("images") is not None else None
+            "countries": [ProductCountriesInner.from_dict(_item) for _item in obj["countries"]] if obj.get("countries") is not None else None,
+            "images": [ProductImagesInner.from_dict(_item) for _item in obj["images"]] if obj.get("images") is not None else None
         })
         return _obj
 

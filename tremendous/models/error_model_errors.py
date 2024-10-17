@@ -18,18 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.organization import Organization
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListOrganizations200Response(BaseModel):
+class ErrorModelErrors(BaseModel):
     """
-    ListOrganizations200Response
+    ErrorModelErrors
     """ # noqa: E501
-    organizations: Optional[List[Organization]] = None
-    __properties: ClassVar[List[str]] = ["organizations"]
+    message: Optional[StrictStr] = Field(default=None, description="Error message")
+    payload: Optional[Dict[str, Any]] = Field(default=None, description="Mirrors the request parameters structure, filled only with the (nested) properties that caused an error.")
+    __properties: ClassVar[List[str]] = ["message", "payload"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +49,7 @@ class ListOrganizations200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrganizations200Response from a JSON string"""
+        """Create an instance of ErrorModelErrors from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -70,18 +70,11 @@ class ListOrganizations200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in organizations (list)
-        _items = []
-        if self.organizations:
-            for _item in self.organizations:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['organizations'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrganizations200Response from a dict"""
+        """Create an instance of ErrorModelErrors from a dict"""
         if obj is None:
             return None
 
@@ -89,7 +82,8 @@ class ListOrganizations200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "organizations": [Organization.from_dict(_item) for _item in obj["organizations"]] if obj.get("organizations") is not None else None
+            "message": obj.get("message"),
+            "payload": obj.get("payload")
         })
         return _obj
 

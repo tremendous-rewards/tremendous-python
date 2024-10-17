@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_products_response_products_inner import ListProductsResponseProductsInner
+from tremendous.models.product import Product
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class ListProductsResponse(BaseModel):
     """
     ListProductsResponse
     """ # noqa: E501
-    products: List[ListProductsResponseProductsInner]
+    products: List[Product]
     __properties: ClassVar[List[str]] = ["products"]
 
     model_config = ConfigDict(
@@ -89,7 +89,7 @@ class ListProductsResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "products": [ListProductsResponseProductsInner.from_dict(_item) for _item in obj["products"]] if obj.get("products") is not None else None
+            "products": [Product.from_dict(_item) for _item in obj["products"]] if obj.get("products") is not None else None
         })
         return _obj
 

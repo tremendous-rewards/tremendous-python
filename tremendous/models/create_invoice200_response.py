@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_invoices200_response_invoices_inner import ListInvoices200ResponseInvoicesInner
+from tremendous.models.invoice import Invoice
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class CreateInvoice200Response(BaseModel):
     """
     CreateInvoice200Response
     """ # noqa: E501
-    invoice: ListInvoices200ResponseInvoicesInner
+    invoice: Invoice
     __properties: ClassVar[List[str]] = ["invoice"]
 
     model_config = ConfigDict(
@@ -85,7 +85,7 @@ class CreateInvoice200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "invoice": ListInvoices200ResponseInvoicesInner.from_dict(obj["invoice"]) if obj.get("invoice") is not None else None
+            "invoice": Invoice.from_dict(obj["invoice"]) if obj.get("invoice") is not None else None
         })
         return _obj
 

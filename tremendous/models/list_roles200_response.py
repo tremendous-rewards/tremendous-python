@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_roles200_response_roles_inner import ListRoles200ResponseRolesInner
+from tremendous.models.role import Role
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class ListRoles200Response(BaseModel):
     """
     ListRoles200Response
     """ # noqa: E501
-    roles: List[ListRoles200ResponseRolesInner]
+    roles: List[Role]
     __properties: ClassVar[List[str]] = ["roles"]
 
     model_config = ConfigDict(
@@ -89,7 +89,7 @@ class ListRoles200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "roles": [ListRoles200ResponseRolesInner.from_dict(_item) for _item in obj["roles"]] if obj.get("roles") is not None else None
+            "roles": [Role.from_dict(_item) for _item in obj["roles"]] if obj.get("roles") is not None else None
         })
         return _obj
 

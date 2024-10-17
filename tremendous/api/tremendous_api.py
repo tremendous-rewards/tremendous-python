@@ -20,23 +20,20 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBytes, StrictInt, StrictStr, field_validator
 from typing import Any, Dict, Optional, Union
 from typing_extensions import Annotated
+from tremendous.models.campaign import Campaign
 from tremendous.models.create_api_key200_response import CreateApiKey200Response
 from tremendous.models.create_campaign201_response import CreateCampaign201Response
-from tremendous.models.create_campaign_request import CreateCampaignRequest
 from tremendous.models.create_invoice200_response import CreateInvoice200Response
 from tremendous.models.create_invoice_request import CreateInvoiceRequest
+from tremendous.models.create_member import CreateMember
 from tremendous.models.create_member200_response import CreateMember200Response
-from tremendous.models.create_member_request import CreateMemberRequest
-from tremendous.models.create_order200_response import CreateOrder200Response
-from tremendous.models.create_order201_response import CreateOrder201Response
 from tremendous.models.create_order_request import CreateOrderRequest
+from tremendous.models.create_organization import CreateOrganization
 from tremendous.models.create_organization200_response import CreateOrganization200Response
-from tremendous.models.create_organization_request import CreateOrganizationRequest
 from tremendous.models.create_webhook200_response import CreateWebhook200Response
-from tremendous.models.create_webhook_request import CreateWebhookRequest
-from tremendous.models.delete_fraud_rule200_response import DeleteFraudRule200Response
-from tremendous.models.fraud_rule200_response import FraudRule200Response
+from tremendous.models.fraud_generic_response import FraudGenericResponse
 from tremendous.models.fraud_rule_request import FraudRuleRequest
+from tremendous.models.fraud_rule_type import FraudRuleType
 from tremendous.models.generate_reward_link200_response import GenerateRewardLink200Response
 from tremendous.models.generate_reward_token200_response import GenerateRewardToken200Response
 from tremendous.models.get_fraud_review200_response import GetFraudReview200Response
@@ -61,10 +58,13 @@ from tremendous.models.list_rewards200_response import ListRewards200Response
 from tremendous.models.list_roles200_response import ListRoles200Response
 from tremendous.models.list_webhook_events200_response import ListWebhookEvents200Response
 from tremendous.models.list_webhooks200_response import ListWebhooks200Response
+from tremendous.models.resend_reward_request import ResendRewardRequest
 from tremendous.models.simulate_webhook_request import SimulateWebhookRequest
-from tremendous.models.update_campaign_request import UpdateCampaignRequest
-from tremendous.models.update_fraud_rule_list200_response import UpdateFraudRuleList200Response
+from tremendous.models.single_reward_order_with_link import SingleRewardOrderWithLink
+from tremendous.models.single_reward_order_without_link import SingleRewardOrderWithoutLink
+from tremendous.models.update_campaign import UpdateCampaign
 from tremendous.models.update_fraud_rule_list_request import UpdateFraudRuleListRequest
+from tremendous.models.webhook_post import WebhookPost
 
 from tremendous.api_client import ApiClient, RequestSerialized
 from tremendous.api_response import ApiResponse
@@ -100,7 +100,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateOrder201Response:
+    ) -> SingleRewardOrderWithoutLink:
         """Approve order
 
         Approves an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -138,14 +138,14 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
-            '401': "ListRewards401Response",
-            '402': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithoutLink",
+            '401': "ErrorModel",
+            '402': "ErrorModel",
+            '403': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -174,7 +174,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateOrder201Response]:
+    ) -> ApiResponse[SingleRewardOrderWithoutLink]:
         """Approve order
 
         Approves an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -212,14 +212,14 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
-            '401': "ListRewards401Response",
-            '402': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithoutLink",
+            '401': "ErrorModel",
+            '402': "ErrorModel",
+            '403': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -286,14 +286,14 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
-            '401': "ListRewards401Response",
-            '402': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithoutLink",
+            '401': "ErrorModel",
+            '402': "ErrorModel",
+            '403': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -418,10 +418,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFraudReview200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -489,10 +489,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFraudReview200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -560,10 +560,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFraudReview200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -684,10 +684,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateApiKey200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -751,10 +751,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateApiKey200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -818,10 +818,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateApiKey200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -891,7 +891,7 @@ class TremendousApi:
     @validate_call
     def create_campaign(
         self,
-        create_campaign_request: Annotated[CreateCampaignRequest, Field(description="Campaign details")],
+        campaign: Annotated[Campaign, Field(description="Campaign details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -908,8 +908,8 @@ class TremendousApi:
         """Create campaign
 
 
-        :param create_campaign_request: Campaign details (required)
-        :type create_campaign_request: CreateCampaignRequest
+        :param campaign: Campaign details (required)
+        :type campaign: Campaign
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -933,7 +933,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_campaign_serialize(
-            create_campaign_request=create_campaign_request,
+            campaign=campaign,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -942,10 +942,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "CreateCampaign201Response",
-            '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -961,7 +961,7 @@ class TremendousApi:
     @validate_call
     def create_campaign_with_http_info(
         self,
-        create_campaign_request: Annotated[CreateCampaignRequest, Field(description="Campaign details")],
+        campaign: Annotated[Campaign, Field(description="Campaign details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -978,8 +978,8 @@ class TremendousApi:
         """Create campaign
 
 
-        :param create_campaign_request: Campaign details (required)
-        :type create_campaign_request: CreateCampaignRequest
+        :param campaign: Campaign details (required)
+        :type campaign: Campaign
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1003,7 +1003,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_campaign_serialize(
-            create_campaign_request=create_campaign_request,
+            campaign=campaign,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1012,10 +1012,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "CreateCampaign201Response",
-            '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1031,7 +1031,7 @@ class TremendousApi:
     @validate_call
     def create_campaign_without_preload_content(
         self,
-        create_campaign_request: Annotated[CreateCampaignRequest, Field(description="Campaign details")],
+        campaign: Annotated[Campaign, Field(description="Campaign details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1048,8 +1048,8 @@ class TremendousApi:
         """Create campaign
 
 
-        :param create_campaign_request: Campaign details (required)
-        :type create_campaign_request: CreateCampaignRequest
+        :param campaign: Campaign details (required)
+        :type campaign: Campaign
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1073,7 +1073,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_campaign_serialize(
-            create_campaign_request=create_campaign_request,
+            campaign=campaign,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1082,10 +1082,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "CreateCampaign201Response",
-            '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1096,7 +1096,7 @@ class TremendousApi:
 
     def _create_campaign_serialize(
         self,
-        create_campaign_request,
+        campaign,
         _request_auth,
         _content_type,
         _headers,
@@ -1120,8 +1120,8 @@ class TremendousApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if create_campaign_request is not None:
-            _body_params = create_campaign_request
+        if campaign is not None:
+            _body_params = campaign
 
 
         # set the HTTP header `Accept`
@@ -1187,7 +1187,7 @@ class TremendousApi:
     ) -> CreateInvoice200Response:
         """Create invoice
 
-        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice in USD</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
+        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance 
 
         :param create_invoice_request: Invoice details (required)
         :type create_invoice_request: CreateInvoiceRequest
@@ -1223,10 +1223,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateInvoice200Response",
-            '400': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1258,7 +1258,7 @@ class TremendousApi:
     ) -> ApiResponse[CreateInvoice200Response]:
         """Create invoice
 
-        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice in USD</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
+        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance 
 
         :param create_invoice_request: Invoice details (required)
         :type create_invoice_request: CreateInvoiceRequest
@@ -1294,10 +1294,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateInvoice200Response",
-            '400': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1329,7 +1329,7 @@ class TremendousApi:
     ) -> RESTResponseType:
         """Create invoice
 
-        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice in USD</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
+        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance 
 
         :param create_invoice_request: Invoice details (required)
         :type create_invoice_request: CreateInvoiceRequest
@@ -1365,10 +1365,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateInvoice200Response",
-            '400': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1454,7 +1454,7 @@ class TremendousApi:
     @validate_call
     def create_member(
         self,
-        create_member_request: Annotated[CreateMemberRequest, Field(description="Member details")],
+        create_member: Annotated[CreateMember, Field(description="Member details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1472,8 +1472,8 @@ class TremendousApi:
 
         Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  > ❗️ Automatic invitations are not available in the sandbox > > You must manually use the returned `invite_url` field in the payload instead. 
 
-        :param create_member_request: Member details (required)
-        :type create_member_request: CreateMemberRequest
+        :param create_member: Member details (required)
+        :type create_member: CreateMember
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1497,7 +1497,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_member_serialize(
-            create_member_request=create_member_request,
+            create_member=create_member,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1506,10 +1506,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateMember200Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1525,7 +1525,7 @@ class TremendousApi:
     @validate_call
     def create_member_with_http_info(
         self,
-        create_member_request: Annotated[CreateMemberRequest, Field(description="Member details")],
+        create_member: Annotated[CreateMember, Field(description="Member details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1543,8 +1543,8 @@ class TremendousApi:
 
         Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  > ❗️ Automatic invitations are not available in the sandbox > > You must manually use the returned `invite_url` field in the payload instead. 
 
-        :param create_member_request: Member details (required)
-        :type create_member_request: CreateMemberRequest
+        :param create_member: Member details (required)
+        :type create_member: CreateMember
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1568,7 +1568,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_member_serialize(
-            create_member_request=create_member_request,
+            create_member=create_member,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1577,10 +1577,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateMember200Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1596,7 +1596,7 @@ class TremendousApi:
     @validate_call
     def create_member_without_preload_content(
         self,
-        create_member_request: Annotated[CreateMemberRequest, Field(description="Member details")],
+        create_member: Annotated[CreateMember, Field(description="Member details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1614,8 +1614,8 @@ class TremendousApi:
 
         Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  > ❗️ Automatic invitations are not available in the sandbox > > You must manually use the returned `invite_url` field in the payload instead. 
 
-        :param create_member_request: Member details (required)
-        :type create_member_request: CreateMemberRequest
+        :param create_member: Member details (required)
+        :type create_member: CreateMember
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1639,7 +1639,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_member_serialize(
-            create_member_request=create_member_request,
+            create_member=create_member,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1648,10 +1648,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateMember200Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1662,7 +1662,7 @@ class TremendousApi:
 
     def _create_member_serialize(
         self,
-        create_member_request,
+        create_member,
         _request_auth,
         _content_type,
         _headers,
@@ -1686,8 +1686,8 @@ class TremendousApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if create_member_request is not None:
-            _body_params = create_member_request
+        if create_member is not None:
+            _body_params = create_member
 
 
         # set the HTTP header `Accept`
@@ -1750,10 +1750,10 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateOrder200Response:
+    ) -> SingleRewardOrderWithLink:
         """Create order
 
-        Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">external_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference for this order, supplied by the customer.</p>  <p>When set, <code>external_id</code> makes order idempotent. All requests that use the same <code>external_id</code> after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a <code>201</code> response code. These responses <strong>fail</strong> to create any further orders.</p>  <p>It also allows for retrieving by <code>external_id</code> instead of <code>id</code> only.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">payment</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">funding_source_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the funding source that will be used to pay for the order. Use <code>balance</code> to use your Tremendous&#39;s balance.</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">reward</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>A single reward, sent to a recipient. A reward is always part of an order.</p>  <p>Either <code>products</code> or <code>campaign_id</code> must be specified.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the reward</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the order this reward is part of.</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date-time</span></td><td><p>Date the reward was created</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">products</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.</p>  <p>Providing a <code>products</code> array will override the products made available by the campaign specified using the <code>campaign_id</code> property unless the <code>products</code> array is empty. It will <em>not</em> override other campaign attributes, like the message and customization of the look and feel.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">denomination</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the reward</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency_code</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the reward</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">recipient</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details of the recipient of the reward</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Name of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">email</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Email address of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">phone</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">deliver_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">custom_fields</code> </div> </td><td><span class=\"property-type\">array</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show array item type</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the custom field</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Value of the custom field</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">label</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Label of the custom field</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">language</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Set this to translate the redemption experience for this reward. Pass a 2-letter <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1 code</a> for the desired language. Defaults to <code>en</code>.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details on how the reward is delivered to the recipient.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>How to deliver the reward to the recipient.</p>  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing `external_id`, will result in a `201` response code. In this case the response will return a representation of the already existing order in the response body. 
+        Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing `external_id`, will result in a `201` response code. In this case the response will return a representation of the already existing order in the response body. 
 
         :param create_order_request: Order to create (required)
         :type create_order_request: CreateOrderRequest
@@ -1788,14 +1788,14 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
-            '201': "CreateOrder201Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '402': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithLink",
+            '201': "SingleRewardOrderWithoutLink",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '402': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1824,10 +1824,10 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateOrder200Response]:
+    ) -> ApiResponse[SingleRewardOrderWithLink]:
         """Create order
 
-        Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">external_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference for this order, supplied by the customer.</p>  <p>When set, <code>external_id</code> makes order idempotent. All requests that use the same <code>external_id</code> after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a <code>201</code> response code. These responses <strong>fail</strong> to create any further orders.</p>  <p>It also allows for retrieving by <code>external_id</code> instead of <code>id</code> only.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">payment</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">funding_source_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the funding source that will be used to pay for the order. Use <code>balance</code> to use your Tremendous&#39;s balance.</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">reward</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>A single reward, sent to a recipient. A reward is always part of an order.</p>  <p>Either <code>products</code> or <code>campaign_id</code> must be specified.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the reward</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the order this reward is part of.</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date-time</span></td><td><p>Date the reward was created</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">products</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.</p>  <p>Providing a <code>products</code> array will override the products made available by the campaign specified using the <code>campaign_id</code> property unless the <code>products</code> array is empty. It will <em>not</em> override other campaign attributes, like the message and customization of the look and feel.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">denomination</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the reward</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency_code</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the reward</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">recipient</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details of the recipient of the reward</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Name of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">email</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Email address of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">phone</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">deliver_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">custom_fields</code> </div> </td><td><span class=\"property-type\">array</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show array item type</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the custom field</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Value of the custom field</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">label</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Label of the custom field</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">language</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Set this to translate the redemption experience for this reward. Pass a 2-letter <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1 code</a> for the desired language. Defaults to <code>en</code>.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details on how the reward is delivered to the recipient.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>How to deliver the reward to the recipient.</p>  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing `external_id`, will result in a `201` response code. In this case the response will return a representation of the already existing order in the response body. 
+        Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing `external_id`, will result in a `201` response code. In this case the response will return a representation of the already existing order in the response body. 
 
         :param create_order_request: Order to create (required)
         :type create_order_request: CreateOrderRequest
@@ -1862,14 +1862,14 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
-            '201': "CreateOrder201Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '402': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithLink",
+            '201': "SingleRewardOrderWithoutLink",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '402': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1901,7 +1901,7 @@ class TremendousApi:
     ) -> RESTResponseType:
         """Create order
 
-        Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">external_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference for this order, supplied by the customer.</p>  <p>When set, <code>external_id</code> makes order idempotent. All requests that use the same <code>external_id</code> after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a <code>201</code> response code. These responses <strong>fail</strong> to create any further orders.</p>  <p>It also allows for retrieving by <code>external_id</code> instead of <code>id</code> only.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">payment</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">funding_source_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the funding source that will be used to pay for the order. Use <code>balance</code> to use your Tremendous&#39;s balance.</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">reward</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>A single reward, sent to a recipient. A reward is always part of an order.</p>  <p>Either <code>products</code> or <code>campaign_id</code> must be specified.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the reward</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the order this reward is part of.</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date-time</span></td><td><p>Date the reward was created</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">products</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.</p>  <p>Providing a <code>products</code> array will override the products made available by the campaign specified using the <code>campaign_id</code> property unless the <code>products</code> array is empty. It will <em>not</em> override other campaign attributes, like the message and customization of the look and feel.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">denomination</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the reward</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency_code</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the reward</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">recipient</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details of the recipient of the reward</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Name of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">email</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Email address of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">phone</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">deliver_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">custom_fields</code> </div> </td><td><span class=\"property-type\">array</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show array item type</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the custom field</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Value of the custom field</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">label</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Label of the custom field</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">language</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Set this to translate the redemption experience for this reward. Pass a 2-letter <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1 code</a> for the desired language. Defaults to <code>en</code>.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details on how the reward is delivered to the recipient.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>How to deliver the reward to the recipient.</p>  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing `external_id`, will result in a `201` response code. In this case the response will return a representation of the already existing order in the response body. 
+        Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing `external_id`, will result in a `201` response code. In this case the response will return a representation of the already existing order in the response body. 
 
         :param create_order_request: Order to create (required)
         :type create_order_request: CreateOrderRequest
@@ -1936,14 +1936,14 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder200Response",
-            '201': "CreateOrder201Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '402': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithLink",
+            '201': "SingleRewardOrderWithoutLink",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '402': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2029,7 +2029,7 @@ class TremendousApi:
     @validate_call
     def create_organization(
         self,
-        create_organization_request: Annotated[CreateOrganizationRequest, Field(description="Organization details")],
+        create_organization: Annotated[CreateOrganization, Field(description="Organization details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2047,8 +2047,8 @@ class TremendousApi:
 
         Organizations are a way to separate different parts of your business within the same Tremendous account.  You can assign users in your Tremendous team as members to any organization. Users can be members of multiple organizations at once.  API keys belong to a single organization. The API key used in a request determines on behalf of which organization the request is carried out.  **Important note:** When creating an organization, you are required to either pass `with_api_key` or `copy_settings[user]` in the request body as `true`. This ensures that your new Organization can either be accessed via the API or the Dashboard. 
 
-        :param create_organization_request: Organization details (required)
-        :type create_organization_request: CreateOrganizationRequest
+        :param create_organization: Organization details (required)
+        :type create_organization: CreateOrganization
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2072,7 +2072,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_organization_serialize(
-            create_organization_request=create_organization_request,
+            create_organization=create_organization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2081,10 +2081,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrganization200Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2100,7 +2100,7 @@ class TremendousApi:
     @validate_call
     def create_organization_with_http_info(
         self,
-        create_organization_request: Annotated[CreateOrganizationRequest, Field(description="Organization details")],
+        create_organization: Annotated[CreateOrganization, Field(description="Organization details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2118,8 +2118,8 @@ class TremendousApi:
 
         Organizations are a way to separate different parts of your business within the same Tremendous account.  You can assign users in your Tremendous team as members to any organization. Users can be members of multiple organizations at once.  API keys belong to a single organization. The API key used in a request determines on behalf of which organization the request is carried out.  **Important note:** When creating an organization, you are required to either pass `with_api_key` or `copy_settings[user]` in the request body as `true`. This ensures that your new Organization can either be accessed via the API or the Dashboard. 
 
-        :param create_organization_request: Organization details (required)
-        :type create_organization_request: CreateOrganizationRequest
+        :param create_organization: Organization details (required)
+        :type create_organization: CreateOrganization
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2143,7 +2143,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_organization_serialize(
-            create_organization_request=create_organization_request,
+            create_organization=create_organization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2152,10 +2152,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrganization200Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2171,7 +2171,7 @@ class TremendousApi:
     @validate_call
     def create_organization_without_preload_content(
         self,
-        create_organization_request: Annotated[CreateOrganizationRequest, Field(description="Organization details")],
+        create_organization: Annotated[CreateOrganization, Field(description="Organization details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2189,8 +2189,8 @@ class TremendousApi:
 
         Organizations are a way to separate different parts of your business within the same Tremendous account.  You can assign users in your Tremendous team as members to any organization. Users can be members of multiple organizations at once.  API keys belong to a single organization. The API key used in a request determines on behalf of which organization the request is carried out.  **Important note:** When creating an organization, you are required to either pass `with_api_key` or `copy_settings[user]` in the request body as `true`. This ensures that your new Organization can either be accessed via the API or the Dashboard. 
 
-        :param create_organization_request: Organization details (required)
-        :type create_organization_request: CreateOrganizationRequest
+        :param create_organization: Organization details (required)
+        :type create_organization: CreateOrganization
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2214,7 +2214,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_organization_serialize(
-            create_organization_request=create_organization_request,
+            create_organization=create_organization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2223,10 +2223,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrganization200Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2237,7 +2237,7 @@ class TremendousApi:
 
     def _create_organization_serialize(
         self,
-        create_organization_request,
+        create_organization,
         _request_auth,
         _content_type,
         _headers,
@@ -2261,8 +2261,8 @@ class TremendousApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if create_organization_request is not None:
-            _body_params = create_organization_request
+        if create_organization is not None:
+            _body_params = create_organization
 
 
         # set the HTTP header `Accept`
@@ -2312,7 +2312,7 @@ class TremendousApi:
     @validate_call
     def create_webhook(
         self,
-        create_webhook_request: Annotated[CreateWebhookRequest, Field(description="Webhook details")],
+        webhook_post: Annotated[WebhookPost, Field(description="Webhook details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2328,10 +2328,10 @@ class TremendousApi:
     ) -> CreateWebhook200Response:
         """Create webhook
 
-        Tremendous uses webhooks as a notification system for various events that happen in your account.  > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">url</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">uri</span></td><td><p>URL the webhook will make requests to</p> </td></tr>   </tbody> </table>  </div>  
+        Tremendous uses webhooks as a notification system for various events that happen in your account.  > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL. 
 
-        :param create_webhook_request: Webhook details (required)
-        :type create_webhook_request: CreateWebhookRequest
+        :param webhook_post: Webhook details (required)
+        :type webhook_post: WebhookPost
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2355,7 +2355,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_webhook_serialize(
-            create_webhook_request=create_webhook_request,
+            webhook_post=webhook_post,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2364,10 +2364,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateWebhook200Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2383,7 +2383,7 @@ class TremendousApi:
     @validate_call
     def create_webhook_with_http_info(
         self,
-        create_webhook_request: Annotated[CreateWebhookRequest, Field(description="Webhook details")],
+        webhook_post: Annotated[WebhookPost, Field(description="Webhook details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2399,10 +2399,10 @@ class TremendousApi:
     ) -> ApiResponse[CreateWebhook200Response]:
         """Create webhook
 
-        Tremendous uses webhooks as a notification system for various events that happen in your account.  > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">url</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">uri</span></td><td><p>URL the webhook will make requests to</p> </td></tr>   </tbody> </table>  </div>  
+        Tremendous uses webhooks as a notification system for various events that happen in your account.  > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL. 
 
-        :param create_webhook_request: Webhook details (required)
-        :type create_webhook_request: CreateWebhookRequest
+        :param webhook_post: Webhook details (required)
+        :type webhook_post: WebhookPost
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2426,7 +2426,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_webhook_serialize(
-            create_webhook_request=create_webhook_request,
+            webhook_post=webhook_post,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2435,10 +2435,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateWebhook200Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2454,7 +2454,7 @@ class TremendousApi:
     @validate_call
     def create_webhook_without_preload_content(
         self,
-        create_webhook_request: Annotated[CreateWebhookRequest, Field(description="Webhook details")],
+        webhook_post: Annotated[WebhookPost, Field(description="Webhook details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2470,10 +2470,10 @@ class TremendousApi:
     ) -> RESTResponseType:
         """Create webhook
 
-        Tremendous uses webhooks as a notification system for various events that happen in your account.  > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">url</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">uri</span></td><td><p>URL the webhook will make requests to</p> </td></tr>   </tbody> </table>  </div>  
+        Tremendous uses webhooks as a notification system for various events that happen in your account.  > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL. 
 
-        :param create_webhook_request: Webhook details (required)
-        :type create_webhook_request: CreateWebhookRequest
+        :param webhook_post: Webhook details (required)
+        :type webhook_post: WebhookPost
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2497,7 +2497,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_webhook_serialize(
-            create_webhook_request=create_webhook_request,
+            webhook_post=webhook_post,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2506,10 +2506,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateWebhook200Response",
-            '400': "ResendReward422Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2520,7 +2520,7 @@ class TremendousApi:
 
     def _create_webhook_serialize(
         self,
-        create_webhook_request,
+        webhook_post,
         _request_auth,
         _content_type,
         _headers,
@@ -2544,8 +2544,8 @@ class TremendousApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if create_webhook_request is not None:
-            _body_params = create_webhook_request
+        if webhook_post is not None:
+            _body_params = webhook_post
 
 
         # set the HTTP header `Accept`
@@ -2595,7 +2595,7 @@ class TremendousApi:
     @validate_call
     def delete_fraud_rule(
         self,
-        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        rule_type: Annotated[FraudRuleType, Field(description="The rule type to create or update.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2608,13 +2608,13 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> DeleteFraudRule200Response:
+    ) -> FraudGenericResponse:
         """Delete fraud rule
 
         Deletes the rule of the type passed in the URL. 
 
         :param rule_type: The rule type to create or update. (required)
-        :type rule_type: str
+        :type rule_type: FraudRuleType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2646,11 +2646,11 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DeleteFraudRule200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "FraudGenericResponse",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2666,7 +2666,7 @@ class TremendousApi:
     @validate_call
     def delete_fraud_rule_with_http_info(
         self,
-        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        rule_type: Annotated[FraudRuleType, Field(description="The rule type to create or update.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2679,13 +2679,13 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[DeleteFraudRule200Response]:
+    ) -> ApiResponse[FraudGenericResponse]:
         """Delete fraud rule
 
         Deletes the rule of the type passed in the URL. 
 
         :param rule_type: The rule type to create or update. (required)
-        :type rule_type: str
+        :type rule_type: FraudRuleType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2717,11 +2717,11 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DeleteFraudRule200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "FraudGenericResponse",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2737,7 +2737,7 @@ class TremendousApi:
     @validate_call
     def delete_fraud_rule_without_preload_content(
         self,
-        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        rule_type: Annotated[FraudRuleType, Field(description="The rule type to create or update.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2756,7 +2756,7 @@ class TremendousApi:
         Deletes the rule of the type passed in the URL. 
 
         :param rule_type: The rule type to create or update. (required)
-        :type rule_type: str
+        :type rule_type: FraudRuleType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2788,11 +2788,11 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DeleteFraudRule200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "FraudGenericResponse",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2824,7 +2824,7 @@ class TremendousApi:
 
         # process the path parameters
         if rule_type is not None:
-            _path_params['rule_type'] = rule_type
+            _path_params['rule_type'] = rule_type.value
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -2917,10 +2917,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateInvoice200Response",
-            '404': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '404': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2988,10 +2988,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateInvoice200Response",
-            '404': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '404': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3059,10 +3059,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateInvoice200Response",
-            '404': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '404': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3187,10 +3187,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3258,10 +3258,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3329,10 +3329,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3457,11 +3457,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-            '400': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3529,11 +3529,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-            '400': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3601,11 +3601,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-            '400': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3731,10 +3731,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bytearray",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3802,10 +3802,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bytearray",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3873,10 +3873,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bytearray",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3950,7 +3950,7 @@ class TremendousApi:
     @validate_call
     def fraud_rule(
         self,
-        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        rule_type: Annotated[FraudRuleType, Field(description="The rule type to create or update.")],
         fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.")] = None,
         _request_timeout: Union[
             None,
@@ -3964,13 +3964,13 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> FraudRule200Response:
+    ) -> FraudGenericResponse:
         """Configure fraud rule
 
         Configure a fraud rule of the type passed in the URL. If a rule of the same type already exists, it will be overwritten. 
 
         :param rule_type: The rule type to create or update. (required)
-        :type rule_type: str
+        :type rule_type: FraudRuleType
         :param fraud_rule_request: Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.
         :type fraud_rule_request: FraudRuleRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -4005,13 +4005,13 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "FraudRule200Response",
-            '400': "FraudRule400Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '422': "FraudRule422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "FraudGenericResponse",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4027,7 +4027,7 @@ class TremendousApi:
     @validate_call
     def fraud_rule_with_http_info(
         self,
-        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        rule_type: Annotated[FraudRuleType, Field(description="The rule type to create or update.")],
         fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.")] = None,
         _request_timeout: Union[
             None,
@@ -4041,13 +4041,13 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[FraudRule200Response]:
+    ) -> ApiResponse[FraudGenericResponse]:
         """Configure fraud rule
 
         Configure a fraud rule of the type passed in the URL. If a rule of the same type already exists, it will be overwritten. 
 
         :param rule_type: The rule type to create or update. (required)
-        :type rule_type: str
+        :type rule_type: FraudRuleType
         :param fraud_rule_request: Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.
         :type fraud_rule_request: FraudRuleRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -4082,13 +4082,13 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "FraudRule200Response",
-            '400': "FraudRule400Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '422': "FraudRule422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "FraudGenericResponse",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4104,7 +4104,7 @@ class TremendousApi:
     @validate_call
     def fraud_rule_without_preload_content(
         self,
-        rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
+        rule_type: Annotated[FraudRuleType, Field(description="The rule type to create or update.")],
         fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.")] = None,
         _request_timeout: Union[
             None,
@@ -4124,7 +4124,7 @@ class TremendousApi:
         Configure a fraud rule of the type passed in the URL. If a rule of the same type already exists, it will be overwritten. 
 
         :param rule_type: The rule type to create or update. (required)
-        :type rule_type: str
+        :type rule_type: FraudRuleType
         :param fraud_rule_request: Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.
         :type fraud_rule_request: FraudRuleRequest
         :param _request_timeout: timeout setting for this request. If one
@@ -4159,13 +4159,13 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "FraudRule200Response",
-            '400': "FraudRule400Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '422': "FraudRule422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "FraudGenericResponse",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4198,7 +4198,7 @@ class TremendousApi:
 
         # process the path parameters
         if rule_type is not None:
-            _path_params['rule_type'] = rule_type
+            _path_params['rule_type'] = rule_type.value
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -4306,11 +4306,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GenerateRewardLink200Response",
-            '403': "GenerateRewardLink403Response",
-            '404': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '403': "ErrorModel",
+            '404': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4378,11 +4378,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GenerateRewardLink200Response",
-            '403': "GenerateRewardLink403Response",
-            '404': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '403': "ErrorModel",
+            '404': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4450,11 +4450,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GenerateRewardLink200Response",
-            '403': "GenerateRewardLink403Response",
-            '404': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '403': "ErrorModel",
+            '404': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4579,10 +4579,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GenerateRewardToken200Response",
-            '404': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '404': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4650,10 +4650,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GenerateRewardToken200Response",
-            '404': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '404': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4721,10 +4721,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GenerateRewardToken200Response",
-            '404': "ListRewards401Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '404': "ErrorModel",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4849,10 +4849,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign201Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4920,10 +4920,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign201Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4991,10 +4991,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign201Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5119,10 +5119,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFraudReview200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5190,10 +5190,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFraudReview200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5261,10 +5261,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFraudReview200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5389,10 +5389,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFundingSource200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5460,10 +5460,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFundingSource200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5531,10 +5531,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFundingSource200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5659,10 +5659,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateInvoice200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5730,10 +5730,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateInvoice200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5801,10 +5801,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateInvoice200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5928,10 +5928,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetMember200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5998,10 +5998,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetMember200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6068,10 +6068,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetMember200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6157,7 +6157,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateOrder201Response:
+    ) -> SingleRewardOrderWithoutLink:
         """Retrieve order
 
         Retrieve the order, identified by the given `id` in the URL 
@@ -6195,11 +6195,11 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithoutLink",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6228,7 +6228,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateOrder201Response]:
+    ) -> ApiResponse[SingleRewardOrderWithoutLink]:
         """Retrieve order
 
         Retrieve the order, identified by the given `id` in the URL 
@@ -6266,11 +6266,11 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithoutLink",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6337,11 +6337,11 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithoutLink",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6465,10 +6465,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetOrganization200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6535,10 +6535,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetOrganization200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6605,10 +6605,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetOrganization200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6733,10 +6733,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetProductResponse",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6804,10 +6804,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetProductResponse",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6875,10 +6875,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetProductResponse",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7003,10 +7003,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetReward200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7074,10 +7074,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetReward200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7145,10 +7145,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetReward200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7273,10 +7273,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateWebhook200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7344,10 +7344,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateWebhook200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7415,10 +7415,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateWebhook200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7555,10 +7555,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListBalanceTransactions200Response",
-            '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7638,10 +7638,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListBalanceTransactions200Response",
-            '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7721,10 +7721,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListBalanceTransactions200Response",
-            '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7862,9 +7862,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListCampaigns200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7928,9 +7928,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListCampaigns200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7994,9 +7994,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListCampaigns200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8114,9 +8114,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFields200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8180,9 +8180,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFields200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8246,9 +8246,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFields200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8370,9 +8370,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListForexResponse",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8440,9 +8440,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListForexResponse",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8510,9 +8510,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListForexResponse",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8663,9 +8663,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudReviews200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8757,9 +8757,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudReviews200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8851,9 +8851,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudReviews200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9006,9 +9006,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudRules200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9072,9 +9072,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudRules200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9138,9 +9138,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudRules200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9258,9 +9258,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFundingSources200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9324,9 +9324,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFundingSources200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9390,9 +9390,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFundingSources200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9518,9 +9518,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListInvoices200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9592,9 +9592,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListInvoices200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9666,9 +9666,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListInvoices200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9796,9 +9796,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListMembers200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9862,9 +9862,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListMembers200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9928,9 +9928,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListMembers200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10072,9 +10072,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrders200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10162,9 +10162,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrders200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10252,9 +10252,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrders200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10402,9 +10402,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrganizations200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10468,9 +10468,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrganizations200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10534,9 +10534,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrganizations200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10662,9 +10662,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListProductsResponse",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10736,9 +10736,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListProductsResponse",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10810,9 +10810,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListProductsResponse",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -10944,9 +10944,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRewards200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11014,9 +11014,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRewards200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11084,9 +11084,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRewards200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11209,9 +11209,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRoles200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11275,9 +11275,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRoles200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11341,9 +11341,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRoles200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11465,10 +11465,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListWebhookEvents200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11536,10 +11536,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListWebhookEvents200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11607,10 +11607,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListWebhookEvents200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11731,9 +11731,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListWebhooks200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11797,9 +11797,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListWebhooks200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11863,9 +11863,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListWebhooks200Response",
-            '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -11948,7 +11948,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateOrder201Response:
+    ) -> SingleRewardOrderWithoutLink:
         """Reject order
 
         Rejects an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -11986,13 +11986,13 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
-            '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithoutLink",
+            '401': "ErrorModel",
+            '403': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12021,7 +12021,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateOrder201Response]:
+    ) -> ApiResponse[SingleRewardOrderWithoutLink]:
         """Reject order
 
         Rejects an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
@@ -12059,13 +12059,13 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
-            '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithoutLink",
+            '401': "ErrorModel",
+            '403': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12132,13 +12132,13 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateOrder201Response",
-            '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "SingleRewardOrderWithoutLink",
+            '401': "ErrorModel",
+            '403': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12263,10 +12263,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFraudReview200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12334,10 +12334,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFraudReview200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12405,10 +12405,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetFraudReview200Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12482,6 +12482,7 @@ class TremendousApi:
     def resend_reward(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the reward that should be resent")],
+        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="_Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12501,6 +12502,8 @@ class TremendousApi:
 
         :param id: ID of the reward that should be resent (required)
         :type id: str
+        :param resend_reward_request: _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
+        :type resend_reward_request: ResendRewardRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -12525,6 +12528,7 @@ class TremendousApi:
 
         _param = self._resend_reward_serialize(
             id=id,
+            resend_reward_request=resend_reward_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -12533,11 +12537,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12554,6 +12558,7 @@ class TremendousApi:
     def resend_reward_with_http_info(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the reward that should be resent")],
+        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="_Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12573,6 +12578,8 @@ class TremendousApi:
 
         :param id: ID of the reward that should be resent (required)
         :type id: str
+        :param resend_reward_request: _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
+        :type resend_reward_request: ResendRewardRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -12597,6 +12604,7 @@ class TremendousApi:
 
         _param = self._resend_reward_serialize(
             id=id,
+            resend_reward_request=resend_reward_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -12605,11 +12613,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12626,6 +12634,7 @@ class TremendousApi:
     def resend_reward_without_preload_content(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the reward that should be resent")],
+        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="_Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12645,6 +12654,8 @@ class TremendousApi:
 
         :param id: ID of the reward that should be resent (required)
         :type id: str
+        :param resend_reward_request: _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
+        :type resend_reward_request: ResendRewardRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -12669,6 +12680,7 @@ class TremendousApi:
 
         _param = self._resend_reward_serialize(
             id=id,
+            resend_reward_request=resend_reward_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -12677,11 +12689,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12693,6 +12705,7 @@ class TremendousApi:
     def _resend_reward_serialize(
         self,
         id,
+        resend_reward_request,
         _request_auth,
         _content_type,
         _headers,
@@ -12718,6 +12731,8 @@ class TremendousApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if resend_reward_request is not None:
+            _body_params = resend_reward_request
 
 
         # set the HTTP header `Accept`
@@ -12727,6 +12742,19 @@ class TremendousApi:
             ]
         )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -12810,11 +12838,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12886,11 +12914,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -12962,11 +12990,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13057,7 +13085,7 @@ class TremendousApi:
     def update_campaign(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the campaign that should be updated")],
-        update_campaign_request: Annotated[UpdateCampaignRequest, Field(description="Campaign details")],
+        update_campaign: Annotated[UpdateCampaign, Field(description="Campaign details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -13076,8 +13104,8 @@ class TremendousApi:
 
         :param id: ID of the campaign that should be updated (required)
         :type id: str
-        :param update_campaign_request: Campaign details (required)
-        :type update_campaign_request: UpdateCampaignRequest
+        :param update_campaign: Campaign details (required)
+        :type update_campaign: UpdateCampaign
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13102,7 +13130,7 @@ class TremendousApi:
 
         _param = self._update_campaign_serialize(
             id=id,
-            update_campaign_request=update_campaign_request,
+            update_campaign=update_campaign,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13111,10 +13139,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign201Response",
-            '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13131,7 +13159,7 @@ class TremendousApi:
     def update_campaign_with_http_info(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the campaign that should be updated")],
-        update_campaign_request: Annotated[UpdateCampaignRequest, Field(description="Campaign details")],
+        update_campaign: Annotated[UpdateCampaign, Field(description="Campaign details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -13150,8 +13178,8 @@ class TremendousApi:
 
         :param id: ID of the campaign that should be updated (required)
         :type id: str
-        :param update_campaign_request: Campaign details (required)
-        :type update_campaign_request: UpdateCampaignRequest
+        :param update_campaign: Campaign details (required)
+        :type update_campaign: UpdateCampaign
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13176,7 +13204,7 @@ class TremendousApi:
 
         _param = self._update_campaign_serialize(
             id=id,
-            update_campaign_request=update_campaign_request,
+            update_campaign=update_campaign,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13185,10 +13213,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign201Response",
-            '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13205,7 +13233,7 @@ class TremendousApi:
     def update_campaign_without_preload_content(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the campaign that should be updated")],
-        update_campaign_request: Annotated[UpdateCampaignRequest, Field(description="Campaign details")],
+        update_campaign: Annotated[UpdateCampaign, Field(description="Campaign details")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -13224,8 +13252,8 @@ class TremendousApi:
 
         :param id: ID of the campaign that should be updated (required)
         :type id: str
-        :param update_campaign_request: Campaign details (required)
-        :type update_campaign_request: UpdateCampaignRequest
+        :param update_campaign: Campaign details (required)
+        :type update_campaign: UpdateCampaign
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13250,7 +13278,7 @@ class TremendousApi:
 
         _param = self._update_campaign_serialize(
             id=id,
-            update_campaign_request=update_campaign_request,
+            update_campaign=update_campaign,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13259,10 +13287,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign201Response",
-            '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '401': "ErrorModel",
+            '422': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13274,7 +13302,7 @@ class TremendousApi:
     def _update_campaign_serialize(
         self,
         id,
-        update_campaign_request,
+        update_campaign,
         _request_auth,
         _content_type,
         _headers,
@@ -13300,8 +13328,8 @@ class TremendousApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if update_campaign_request is not None:
-            _body_params = update_campaign_request
+        if update_campaign is not None:
+            _body_params = update_campaign
 
 
         # set the HTTP header `Accept`
@@ -13365,7 +13393,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UpdateFraudRuleList200Response:
+    ) -> FraudGenericResponse:
         """Update fraud rule list
 
         Use this endpoint to modify a list associated with an already-configured rule. Add and remove operations supported.  For example, to append new IPs to the `review_ip` rule, a valid JSON body would be: ```json   {     \"operation\": \"add\",     \"config\": {       \"ips\": [\"123.123.123.123\"]     }   } ``` 
@@ -13406,12 +13434,12 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateFraudRuleList200Response",
-            '400': "FraudRule400Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "FraudGenericResponse",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13441,7 +13469,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UpdateFraudRuleList200Response]:
+    ) -> ApiResponse[FraudGenericResponse]:
         """Update fraud rule list
 
         Use this endpoint to modify a list associated with an already-configured rule. Add and remove operations supported.  For example, to append new IPs to the `review_ip` rule, a valid JSON body would be: ```json   {     \"operation\": \"add\",     \"config\": {       \"ips\": [\"123.123.123.123\"]     }   } ``` 
@@ -13482,12 +13510,12 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateFraudRuleList200Response",
-            '400': "FraudRule400Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "FraudGenericResponse",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -13558,12 +13586,12 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateFraudRuleList200Response",
-            '400': "FraudRule400Response",
-            '401': "ListRewards401Response",
-            '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
-            '500': "ListRewards401Response",
+            '200': "FraudGenericResponse",
+            '400': "ErrorModel",
+            '401': "ErrorModel",
+            '404': "ErrorModel",
+            '429': "ErrorModel",
+            '500': "ErrorModel",
         }
         response_data = self.api_client.call_api(
             *_param,

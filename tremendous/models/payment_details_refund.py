@@ -26,7 +26,7 @@ from typing_extensions import Self
 
 class PaymentDetailsRefund(BaseModel):
     """
-    Breakdown of the order refunds (total amount in USD, independent from the currency of the ordered rewards). Note that this property will only appear for canceled orders or orders with canceled rewards. 
+    PaymentDetailsRefund
     """ # noqa: E501
     total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total amount of the order refunds (in USD)")
     __properties: ClassVar[List[str]] = ["total"]

@@ -18,18 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.organization import Organization
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, ClassVar, Dict, List, Union
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListOrganizations200Response(BaseModel):
+class ProductSkusInner(BaseModel):
     """
-    ListOrganizations200Response
+    ProductSkusInner
     """ # noqa: E501
-    organizations: Optional[List[Organization]] = None
-    __properties: ClassVar[List[str]] = ["organizations"]
+    min: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Minimal denomination that this product supports (in the product's currency)")
+    max: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Maximum denomination that this product supports (in the product's currency)")
+    __properties: ClassVar[List[str]] = ["min", "max"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +50,7 @@ class ListOrganizations200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrganizations200Response from a JSON string"""
+        """Create an instance of ProductSkusInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -70,18 +71,11 @@ class ListOrganizations200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in organizations (list)
-        _items = []
-        if self.organizations:
-            for _item in self.organizations:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['organizations'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrganizations200Response from a dict"""
+        """Create an instance of ProductSkusInner from a dict"""
         if obj is None:
             return None
 
@@ -89,7 +83,8 @@ class ListOrganizations200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "organizations": [Organization.from_dict(_item) for _item in obj["organizations"]] if obj.get("organizations") is not None else None
+            "min": obj.get("min"),
+            "max": obj.get("max")
         })
         return _obj
 

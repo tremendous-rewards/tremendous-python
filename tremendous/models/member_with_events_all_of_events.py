@@ -18,18 +18,29 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.organization import Organization
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListOrganizations200Response(BaseModel):
+class MemberWithEventsAllOfEvents(BaseModel):
     """
-    ListOrganizations200Response
+    MemberWithEventsAllOfEvents
     """ # noqa: E501
-    organizations: Optional[List[Organization]] = None
-    __properties: ClassVar[List[str]] = ["organizations"]
+    type: Optional[StrictStr] = Field(default=None, description="Event type")
+    date_utc: Optional[datetime] = Field(default=None, description="Timestamp when the event happened")
+    __properties: ClassVar[List[str]] = ["type", "date_utc"]
+
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['created', 'last_login']):
+            raise ValueError("must be one of enum values ('created', 'last_login')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +60,7 @@ class ListOrganizations200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrganizations200Response from a JSON string"""
+        """Create an instance of MemberWithEventsAllOfEvents from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -70,18 +81,16 @@ class ListOrganizations200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in organizations (list)
-        _items = []
-        if self.organizations:
-            for _item in self.organizations:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['organizations'] = _items
+        # set to None if date_utc (nullable) is None
+        # and model_fields_set contains the field
+        if self.date_utc is None and "date_utc" in self.model_fields_set:
+            _dict['date_utc'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrganizations200Response from a dict"""
+        """Create an instance of MemberWithEventsAllOfEvents from a dict"""
         if obj is None:
             return None
 
@@ -89,7 +98,8 @@ class ListOrganizations200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "organizations": [Organization.from_dict(_item) for _item in obj["organizations"]] if obj.get("organizations") is not None else None
+            "type": obj.get("type"),
+            "date_utc": obj.get("date_utc")
         })
         return _obj
 

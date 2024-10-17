@@ -19,10 +19,10 @@ import re  # noqa: F401
 import json
 
 from datetime import date
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from tremendous.models.create_organization_request_copy_settings import CreateOrganizationRequestCopySettings
+from tremendous.models.create_organization_copy_settings import CreateOrganizationCopySettings
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,11 +33,12 @@ class CreateOrganization200ResponseOrganization(BaseModel):
     id: Optional[Annotated[str, Field(strict=True)]] = None
     name: StrictStr = Field(description="Name of the organization")
     website: StrictStr = Field(description="URL of the website of that organization")
-    copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
+    with_api_key: Optional[StrictBool] = Field(default=None, description="Default value is `false`. Set to true to also generate an API key associated to the new organization.")
+    copy_settings: Optional[CreateOrganizationCopySettings] = None
     phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).")
     created_at: Optional[date] = Field(default=None, description="Timestamp of when the organization has been created. ")
     api_key: Optional[StrictStr] = Field(default=None, description="The API key for the created organization. This property is only returned when `api_key` is set to `true`. ")
-    __properties: ClassVar[List[str]] = ["id", "name", "website", "copy_settings", "phone", "created_at", "api_key"]
+    __properties: ClassVar[List[str]] = ["id", "name", "website", "with_api_key", "copy_settings", "phone", "created_at", "api_key"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -79,8 +80,12 @@ class CreateOrganization200ResponseOrganization(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
+            "created_at",
         ])
 
         _dict = self.model_dump(
@@ -111,7 +116,8 @@ class CreateOrganization200ResponseOrganization(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "website": obj.get("website"),
-            "copy_settings": CreateOrganizationRequestCopySettings.from_dict(obj["copy_settings"]) if obj.get("copy_settings") is not None else None,
+            "with_api_key": obj.get("with_api_key"),
+            "copy_settings": CreateOrganizationCopySettings.from_dict(obj["copy_settings"]) if obj.get("copy_settings") is not None else None,
             "phone": obj.get("phone"),
             "created_at": obj.get("created_at"),
             "api_key": obj.get("api_key")

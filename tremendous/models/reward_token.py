@@ -19,9 +19,8 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,20 +28,10 @@ class RewardToken(BaseModel):
     """
     The redemption token for a reward.
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward")
+    id: Optional[Any] = None
     token: Optional[StrictStr] = Field(default=None, description="The token to redeem the reward. ")
     expires_at: Optional[datetime] = Field(default=None, description="Date the token expires")
     __properties: ClassVar[List[str]] = ["id", "token", "expires_at"]
-
-    @field_validator('id')
-    def id_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"[A-Z0-9]{4,20}", value):
-            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -76,10 +65,8 @@ class RewardToken(BaseModel):
           are ignored.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "id",
             "token",
             "expires_at",
         ])

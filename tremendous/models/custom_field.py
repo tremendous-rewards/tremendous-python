@@ -28,7 +28,7 @@ class CustomField(BaseModel):
     """
     Reward custom data for searching, tracking or copy (see [Adding custom fields to orders](https://developers.tremendous.com/reference/using-custom-fields-to-add-custom-data-to-rewards).)
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the custom field")
+    id: Optional[Annotated[str, Field(strict=True)]] = None
     value: Optional[StrictStr] = Field(default=None, description="Value of the custom field")
     label: Optional[StrictStr] = Field(default=None, description="Label of the custom field")
     __properties: ClassVar[List[str]] = ["id", "value", "label"]
@@ -74,8 +74,10 @@ class CustomField(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
             "label",
         ])
 

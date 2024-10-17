@@ -27,7 +27,7 @@ from typing_extensions import Self
 
 class MemberWithoutEvents(BaseModel):
     """
-    Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly.  These actions include adding funding sources to the organization, creating Campaigns, and more. 
+    MemberWithoutEvents
     """ # noqa: E501
     id: Annotated[str, Field(strict=True)]
     email: StrictStr = Field(description="Email address of the member")

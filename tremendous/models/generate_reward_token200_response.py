@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.generate_reward_token200_response_reward import GenerateRewardToken200ResponseReward
+from tremendous.models.reward_token import RewardToken
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class GenerateRewardToken200Response(BaseModel):
     """
     GenerateRewardToken200Response
     """ # noqa: E501
-    reward: GenerateRewardToken200ResponseReward
+    reward: RewardToken
     __properties: ClassVar[List[str]] = ["reward"]
 
     model_config = ConfigDict(
@@ -85,7 +85,7 @@ class GenerateRewardToken200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "reward": GenerateRewardToken200ResponseReward.from_dict(obj["reward"]) if obj.get("reward") is not None else None
+            "reward": RewardToken.from_dict(obj["reward"]) if obj.get("reward") is not None else None
         })
         return _obj
 

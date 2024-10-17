@@ -22,7 +22,7 @@ from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from tremendous.models.create_organization_request_copy_settings import CreateOrganizationRequestCopySettings
+from tremendous.models.create_organization_copy_settings import CreateOrganizationCopySettings
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -34,7 +34,7 @@ class CreateOrganizationProperties(BaseModel):
     name: Optional[StrictStr] = Field(default=None, description="Name of the organization")
     website: Optional[StrictStr] = Field(default=None, description="URL of the website of that organization")
     with_api_key: Optional[StrictBool] = Field(default=None, description="Default value is `false`. Set to true to also generate an API key associated to the new organization.")
-    copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
+    copy_settings: Optional[CreateOrganizationCopySettings] = None
     phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).")
     created_at: Optional[date] = Field(default=None, description="Timestamp of when the organization has been created. ")
     __properties: ClassVar[List[str]] = ["id", "name", "website", "with_api_key", "copy_settings", "phone", "created_at"]
@@ -111,7 +111,7 @@ class CreateOrganizationProperties(BaseModel):
             "name": obj.get("name"),
             "website": obj.get("website"),
             "with_api_key": obj.get("with_api_key"),
-            "copy_settings": CreateOrganizationRequestCopySettings.from_dict(obj["copy_settings"]) if obj.get("copy_settings") is not None else None,
+            "copy_settings": CreateOrganizationCopySettings.from_dict(obj["copy_settings"]) if obj.get("copy_settings") is not None else None,
             "phone": obj.get("phone"),
             "created_at": obj.get("created_at")
         })

@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.list_organizations200_response_organizations_inner import ListOrganizations200ResponseOrganizationsInner
+from tremendous.models.organization import Organization
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class GetOrganization200Response(BaseModel):
     """
     GetOrganization200Response
     """ # noqa: E501
-    organization: Optional[ListOrganizations200ResponseOrganizationsInner] = None
+    organization: Optional[Organization] = None
     __properties: ClassVar[List[str]] = ["organization"]
 
     model_config = ConfigDict(
@@ -85,7 +85,7 @@ class GetOrganization200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "organization": ListOrganizations200ResponseOrganizationsInner.from_dict(obj["organization"]) if obj.get("organization") is not None else None
+            "organization": Organization.from_dict(obj["organization"]) if obj.get("organization") is not None else None
         })
         return _obj
 

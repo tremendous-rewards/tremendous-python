@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_members200_response_members_inner import ListMembers200ResponseMembersInner
+from tremendous.models.member_without_events import MemberWithoutEvents
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class CreateMember200Response(BaseModel):
     """
     CreateMember200Response
     """ # noqa: E501
-    member: ListMembers200ResponseMembersInner
+    member: MemberWithoutEvents
     __properties: ClassVar[List[str]] = ["member"]
 
     model_config = ConfigDict(
@@ -85,7 +85,7 @@ class CreateMember200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "member": ListMembers200ResponseMembersInner.from_dict(obj["member"]) if obj.get("member") is not None else None
+            "member": MemberWithoutEvents.from_dict(obj["member"]) if obj.get("member") is not None else None
         })
         return _obj
 

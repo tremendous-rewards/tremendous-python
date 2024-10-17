@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_campaigns200_response_campaigns_inner import ListCampaigns200ResponseCampaignsInner
+from tremendous.models.campaign import Campaign
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class CreateCampaign201Response(BaseModel):
     """
     CreateCampaign201Response
     """ # noqa: E501
-    campaign: ListCampaigns200ResponseCampaignsInner
+    campaign: Campaign
     __properties: ClassVar[List[str]] = ["campaign"]
 
     model_config = ConfigDict(
@@ -85,7 +85,7 @@ class CreateCampaign201Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "campaign": ListCampaigns200ResponseCampaignsInner.from_dict(obj["campaign"]) if obj.get("campaign") is not None else None
+            "campaign": Campaign.from_dict(obj["campaign"]) if obj.get("campaign") is not None else None
         })
         return _obj
 

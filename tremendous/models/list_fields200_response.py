@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.list_fields200_response_fields_inner import ListFields200ResponseFieldsInner
+from tremendous.models.model_field import ModelField
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class ListFields200Response(BaseModel):
     """
     ListFields200Response
     """ # noqa: E501
-    fields: Optional[List[ListFields200ResponseFieldsInner]] = None
+    fields: Optional[List[ModelField]] = None
     __properties: ClassVar[List[str]] = ["fields"]
 
     model_config = ConfigDict(
@@ -89,7 +89,7 @@ class ListFields200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "fields": [ListFields200ResponseFieldsInner.from_dict(_item) for _item in obj["fields"]] if obj.get("fields") is not None else None
+            "fields": [ModelField.from_dict(_item) for _item in obj["fields"]] if obj.get("fields") is not None else None
         })
         return _obj
 

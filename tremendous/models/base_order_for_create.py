@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.single_reward_order_payment import SingleRewardOrderPayment
+from tremendous.models.base_order_for_create_payment import BaseOrderForCreatePayment
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +29,7 @@ class BaseOrderForCreate(BaseModel):
     BaseOrderForCreate
     """ # noqa: E501
     external_id: Optional[StrictStr] = Field(default=None, description="Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. ")
-    payment: SingleRewardOrderPayment
+    payment: BaseOrderForCreatePayment
     __properties: ClassVar[List[str]] = ["external_id", "payment"]
 
     model_config = ConfigDict(
@@ -92,7 +92,7 @@ class BaseOrderForCreate(BaseModel):
 
         _obj = cls.model_validate({
             "external_id": obj.get("external_id"),
-            "payment": SingleRewardOrderPayment.from_dict(obj["payment"]) if obj.get("payment") is not None else None
+            "payment": BaseOrderForCreatePayment.from_dict(obj["payment"]) if obj.get("payment") is not None else None
         })
         return _obj
 

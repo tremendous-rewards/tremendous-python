@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.single_reward_order_without_link_order import SingleRewardOrderWithoutLinkOrder
+from tremendous.models.order_without_link import OrderWithoutLink
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class SingleRewardOrderWithoutLink(BaseModel):
     """
     SingleRewardOrderWithoutLink
     """ # noqa: E501
-    order: SingleRewardOrderWithoutLinkOrder
+    order: OrderWithoutLink
     __properties: ClassVar[List[str]] = ["order"]
 
     model_config = ConfigDict(
@@ -85,7 +85,7 @@ class SingleRewardOrderWithoutLink(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "order": SingleRewardOrderWithoutLinkOrder.from_dict(obj["order"]) if obj.get("order") is not None else None
+            "order": OrderWithoutLink.from_dict(obj["order"]) if obj.get("order") is not None else None
         })
         return _obj
 

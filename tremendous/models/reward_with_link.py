@@ -22,27 +22,27 @@ from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from tremendous.models.list_rewards200_response_rewards_inner_recipient import ListRewards200ResponseRewardsInnerRecipient
-from tremendous.models.list_rewards200_response_rewards_inner_value import ListRewards200ResponseRewardsInnerValue
-from tremendous.models.reward_base_custom_fields_inner import RewardBaseCustomFieldsInner
-from tremendous.models.reward_with_link_delivery import RewardWithLinkDelivery
+from tremendous.models.custom_field import CustomField
+from tremendous.models.delivery_details_with_link import DeliveryDetailsWithLink
+from tremendous.models.recipient import Recipient
+from tremendous.models.reward_value import RewardValue
 from typing import Optional, Set
 from typing_extensions import Self
 
 class RewardWithLink(BaseModel):
     """
-    A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
+    RewardWithLink
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward")
-    order_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the order this reward is part of.")
+    id: Optional[Annotated[str, Field(strict=True)]] = None
+    order_id: Optional[Annotated[str, Field(strict=True)]] = None
     created_at: Optional[datetime] = Field(default=None, description="Date the reward was created")
-    campaign_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. ")
+    campaign_id: Optional[Annotated[str, Field(strict=True)]] = None
     products: Optional[Annotated[List[Annotated[str, Field(strict=True)]], Field(min_length=1)]] = Field(default=None, description="List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.  Providing a `products` array will override the products made available by the campaign specified using the `campaign_id` property unless the `products` array is empty. It will _not_ override other campaign attributes, like the message and customization of the look and feel. ")
-    value: Optional[ListRewards200ResponseRewardsInnerValue] = None
-    recipient: Optional[ListRewards200ResponseRewardsInnerRecipient] = None
+    value: Optional[RewardValue] = None
+    recipient: Optional[Recipient] = None
     deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.")
-    custom_fields: Optional[List[RewardBaseCustomFieldsInner]] = None
-    delivery: Optional[RewardWithLinkDelivery] = None
+    custom_fields: Optional[List[CustomField]] = None
+    delivery: Optional[DeliveryDetailsWithLink] = None
     __properties: ClassVar[List[str]] = ["id", "order_id", "created_at", "campaign_id", "products", "value", "recipient", "deliver_at", "custom_fields", "delivery"]
 
     @field_validator('id')
@@ -108,11 +108,13 @@ class RewardWithLink(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
             "order_id",
             "created_at",
+            "campaign_id",
         ])
 
         _dict = self.model_dump(
@@ -158,11 +160,11 @@ class RewardWithLink(BaseModel):
             "created_at": obj.get("created_at"),
             "campaign_id": obj.get("campaign_id"),
             "products": obj.get("products"),
-            "value": ListRewards200ResponseRewardsInnerValue.from_dict(obj["value"]) if obj.get("value") is not None else None,
-            "recipient": ListRewards200ResponseRewardsInnerRecipient.from_dict(obj["recipient"]) if obj.get("recipient") is not None else None,
+            "value": RewardValue.from_dict(obj["value"]) if obj.get("value") is not None else None,
+            "recipient": Recipient.from_dict(obj["recipient"]) if obj.get("recipient") is not None else None,
             "deliver_at": obj.get("deliver_at"),
-            "custom_fields": [RewardBaseCustomFieldsInner.from_dict(_item) for _item in obj["custom_fields"]] if obj.get("custom_fields") is not None else None,
-            "delivery": RewardWithLinkDelivery.from_dict(obj["delivery"]) if obj.get("delivery") is not None else None
+            "custom_fields": [CustomField.from_dict(_item) for _item in obj["custom_fields"]] if obj.get("custom_fields") is not None else None,
+            "delivery": DeliveryDetailsWithLink.from_dict(obj["delivery"]) if obj.get("delivery") is not None else None
         })
         return _obj
 

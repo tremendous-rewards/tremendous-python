@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.list_rewards200_response_rewards_inner import ListRewards200ResponseRewardsInner
+from tremendous.models.reward_without_link import RewardWithoutLink
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class ListRewards200Response(BaseModel):
     """
     ListRewards200Response
     """ # noqa: E501
-    rewards: Optional[List[ListRewards200ResponseRewardsInner]] = None
+    rewards: Optional[List[RewardWithoutLink]] = None
     total_count: Optional[StrictInt] = Field(default=None, description="The total number of rewards across all pages")
     __properties: ClassVar[List[str]] = ["rewards", "total_count"]
 
@@ -90,7 +90,7 @@ class ListRewards200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "rewards": [ListRewards200ResponseRewardsInner.from_dict(_item) for _item in obj["rewards"]] if obj.get("rewards") is not None else None,
+            "rewards": [RewardWithoutLink.from_dict(_item) for _item in obj["rewards"]] if obj.get("rewards") is not None else None,
             "total_count": obj.get("total_count")
         })
         return _obj

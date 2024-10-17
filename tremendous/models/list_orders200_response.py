@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_orders200_response_orders_inner import ListOrders200ResponseOrdersInner
+from tremendous.models.order_without_link import OrderWithoutLink
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class ListOrders200Response(BaseModel):
     """
     ListOrders200Response
     """ # noqa: E501
-    orders: List[ListOrders200ResponseOrdersInner]
+    orders: List[OrderWithoutLink]
     total_count: StrictInt = Field(description="The total number of orders across all pages")
     __properties: ClassVar[List[str]] = ["orders", "total_count"]
 
@@ -90,7 +90,7 @@ class ListOrders200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "orders": [ListOrders200ResponseOrdersInner.from_dict(_item) for _item in obj["orders"]] if obj.get("orders") is not None else None,
+            "orders": [OrderWithoutLink.from_dict(_item) for _item in obj["orders"]] if obj.get("orders") is not None else None,
             "total_count": obj.get("total_count")
         })
         return _obj

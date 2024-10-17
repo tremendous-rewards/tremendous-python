@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_balance_transactions200_response_transactions_inner import ListBalanceTransactions200ResponseTransactionsInner
+from tremendous.models.balance_transaction import BalanceTransaction
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class ListBalanceTransactions200Response(BaseModel):
     """
     ListBalanceTransactions200Response
     """ # noqa: E501
-    transactions: List[ListBalanceTransactions200ResponseTransactionsInner]
+    transactions: List[BalanceTransaction]
     __properties: ClassVar[List[str]] = ["transactions"]
 
     model_config = ConfigDict(
@@ -89,7 +89,7 @@ class ListBalanceTransactions200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "transactions": [ListBalanceTransactions200ResponseTransactionsInner.from_dict(_item) for _item in obj["transactions"]] if obj.get("transactions") is not None else None
+            "transactions": [BalanceTransaction.from_dict(_item) for _item in obj["transactions"]] if obj.get("transactions") is not None else None
         })
         return _obj
 

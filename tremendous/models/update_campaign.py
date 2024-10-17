@@ -21,21 +21,21 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from tremendous.models.list_campaigns200_response_campaigns_inner_email_style import ListCampaigns200ResponseCampaignsInnerEmailStyle
-from tremendous.models.list_campaigns200_response_campaigns_inner_webpage_style import ListCampaigns200ResponseCampaignsInnerWebpageStyle
+from tremendous.models.campaign_base_email_style import CampaignBaseEmailStyle
+from tremendous.models.campaign_base_webpage_style import CampaignBaseWebpageStyle
 from typing import Optional, Set
 from typing_extensions import Self
 
 class UpdateCampaign(BaseModel):
     """
-    With a campaign you can define the look & feel of how rewards are sent out. It also lets you set the available products (different gift cards, charity, etc.) recipients can choose from. 
+    UpdateCampaign
     """ # noqa: E501
     id: Optional[Annotated[str, Field(strict=True)]] = None
     name: Optional[StrictStr] = Field(default=None, description="Name of the campaign")
     description: Optional[StrictStr] = Field(default=None, description="Description of the campaign")
     products: Optional[List[Annotated[str, Field(strict=True)]]] = Field(default=None, description="List of IDs of products (different gift cards, charity, etc.) that are available in this campaign. ")
-    webpage_style: Optional[ListCampaigns200ResponseCampaignsInnerWebpageStyle] = None
-    email_style: Optional[ListCampaigns200ResponseCampaignsInnerEmailStyle] = None
+    webpage_style: Optional[CampaignBaseWebpageStyle] = None
+    email_style: Optional[CampaignBaseEmailStyle] = None
     __properties: ClassVar[List[str]] = ["id", "name", "description", "products", "webpage_style", "email_style"]
 
     @field_validator('id')
@@ -116,8 +116,8 @@ class UpdateCampaign(BaseModel):
             "name": obj.get("name"),
             "description": obj.get("description"),
             "products": obj.get("products"),
-            "webpage_style": ListCampaigns200ResponseCampaignsInnerWebpageStyle.from_dict(obj["webpage_style"]) if obj.get("webpage_style") is not None else None,
-            "email_style": ListCampaigns200ResponseCampaignsInnerEmailStyle.from_dict(obj["email_style"]) if obj.get("email_style") is not None else None
+            "webpage_style": CampaignBaseWebpageStyle.from_dict(obj["webpage_style"]) if obj.get("webpage_style") is not None else None,
+            "email_style": CampaignBaseEmailStyle.from_dict(obj["email_style"]) if obj.get("email_style") is not None else None
         })
         return _obj
 

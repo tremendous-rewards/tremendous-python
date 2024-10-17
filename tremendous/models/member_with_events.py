@@ -21,13 +21,13 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from tremendous.models.get_member200_response_member_events_inner import GetMember200ResponseMemberEventsInner
+from tremendous.models.member_with_events_all_of_events import MemberWithEventsAllOfEvents
 from typing import Optional, Set
 from typing_extensions import Self
 
 class MemberWithEvents(BaseModel):
     """
-    Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly.  These actions include adding funding sources to the organization, creating Campaigns, and more. 
+    MemberWithEvents
     """ # noqa: E501
     id: Annotated[str, Field(strict=True)]
     email: StrictStr = Field(description="Email address of the member")
@@ -35,7 +35,7 @@ class MemberWithEvents(BaseModel):
     active: Optional[StrictBool] = Field(default=None, description="Is this member currently active in the organization. If `false`, the member will not be able to access the organization. ")
     role: Optional[StrictStr] = Field(default=None, description="The role ID associated with the member within the organization. ")
     status: StrictStr = Field(description="Current status of the member's account.  When creating a member it starts out in the status `INVITED`. As soon as that member open the invitation link and registers an account, the status switches to `REGISTERED`. ")
-    events: Optional[List[GetMember200ResponseMemberEventsInner]] = Field(default=None, description="List of events related to the member.")
+    events: Optional[List[MemberWithEventsAllOfEvents]] = Field(default=None, description="List of events related to the member.")
     __properties: ClassVar[List[str]] = ["id", "email", "name", "active", "role", "status", "events"]
 
     @field_validator('id')
@@ -132,7 +132,7 @@ class MemberWithEvents(BaseModel):
             "active": obj.get("active"),
             "role": obj.get("role"),
             "status": obj.get("status"),
-            "events": [GetMember200ResponseMemberEventsInner.from_dict(_item) for _item in obj["events"]] if obj.get("events") is not None else None
+            "events": [MemberWithEventsAllOfEvents.from_dict(_item) for _item in obj["events"]] if obj.get("events") is not None else None
         })
         return _obj
 

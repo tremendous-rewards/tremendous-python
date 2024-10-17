@@ -18,9 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.order_without_link_rewards_inner import OrderWithoutLinkRewardsInner
+from tremendous.models.fraud_review_reason import FraudReviewReason
+from tremendous.models.fraud_review_status import FraudReviewStatus
+from tremendous.models.reward_without_link import RewardWithoutLink
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,31 +30,10 @@ class FraudReviewListItem(BaseModel):
     """
     The fraud review associated with a reward.
     """ # noqa: E501
-    status: Optional[StrictStr] = Field(default=None, description="The current status of the fraud review:  * `flagged` - The reward has been flagged for and waiting manual review. * `blocked` - The reward was reviewed and blocked. * `released` - The reward was reviewed and released. ")
-    reasons: Optional[List[StrictStr]] = Field(default=None, description="The array may contain multiple reasons, depending on which rule(s) flagged the reward for review. Reasons can be any of the following:  * `Disallowed IP` * `Disallowed email` * `Disallowed country` * `Over reward dollar limit` * `Over reward count limit` * `VPN detected` * `Device related to multiple emails` * `Device or account related to multiple emails` * `IP on a Tremendous fraud list` * `Bank account on a Tremendous fraud list` * `Fingerprint on a Tremendous fraud list` * `Email on a Tremendous fraud list` * `Phone on a Tremendous fraud list` * `IP related to a blocked reward` * `Bank account related to a blocked reward` * `Fingerprint related to a blocked reward` * `Email related to a blocked reward` * `Phone related to a blocked reward` * `Allowed IP` * `Allowed email` ")
-    reward: Optional[OrderWithoutLinkRewardsInner] = None
+    status: Optional[FraudReviewStatus] = None
+    reasons: Optional[List[FraudReviewReason]] = Field(default=None, description="The array may contain multiple reasons, depending on which rule(s) flagged the reward for review. Reasons can be any of the following:  * `Disallowed IP` * `Disallowed email` * `Disallowed country` * `Over reward dollar limit` * `Over reward count limit` * `VPN detected` * `Device related to multiple emails` * `Device or account related to multiple emails` * `IP on a Tremendous fraud list` * `Bank account on a Tremendous fraud list` * `Fingerprint on a Tremendous fraud list` * `Email on a Tremendous fraud list` * `Phone on a Tremendous fraud list` * `IP related to a blocked reward` * `Bank account related to a blocked reward` * `Fingerprint related to a blocked reward` * `Email related to a blocked reward` * `Phone related to a blocked reward` * `Allowed IP` * `Allowed email` ")
+    reward: Optional[RewardWithoutLink] = None
     __properties: ClassVar[List[str]] = ["status", "reasons", "reward"]
-
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['flagged', 'blocked', 'released']):
-            raise ValueError("must be one of enum values ('flagged', 'blocked', 'released')")
-        return value
-
-    @field_validator('reasons')
-    def reasons_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        for i in value:
-            if i not in set(['Disallowed IP', 'Disallowed email', 'Disallowed country', 'Over reward dollar limit', 'Over reward count limit', 'VPN detected', 'Device related to multiple emails', 'Device or account related to multiple emails', 'IP on a Tremendous fraud list', 'Bank account on a Tremendous fraud list', 'Fingerprint on a Tremendous fraud list', 'Email on a Tremendous fraud list', 'Phone on a Tremendous fraud list', 'IP related to a blocked reward', 'Bank account related to a blocked reward', 'Fingerprint related to a blocked reward', 'Email related to a blocked reward', 'Phone related to a blocked reward', 'Allowed IP', 'Allowed email']):
-                raise ValueError("each list item must be one of ('Disallowed IP', 'Disallowed email', 'Disallowed country', 'Over reward dollar limit', 'Over reward count limit', 'VPN detected', 'Device related to multiple emails', 'Device or account related to multiple emails', 'IP on a Tremendous fraud list', 'Bank account on a Tremendous fraud list', 'Fingerprint on a Tremendous fraud list', 'Email on a Tremendous fraud list', 'Phone on a Tremendous fraud list', 'IP related to a blocked reward', 'Bank account related to a blocked reward', 'Fingerprint related to a blocked reward', 'Email related to a blocked reward', 'Phone related to a blocked reward', 'Allowed IP', 'Allowed email')")
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,10 +66,8 @@ class FraudReviewListItem(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "status",
             "reasons",
         ])
 
@@ -114,7 +93,7 @@ class FraudReviewListItem(BaseModel):
         _obj = cls.model_validate({
             "status": obj.get("status"),
             "reasons": obj.get("reasons"),
-            "reward": OrderWithoutLinkRewardsInner.from_dict(obj["reward"]) if obj.get("reward") is not None else None
+            "reward": RewardWithoutLink.from_dict(obj["reward"]) if obj.get("reward") is not None else None
         })
         return _obj
 

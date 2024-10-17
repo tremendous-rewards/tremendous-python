@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_invoices200_response_invoices_inner import ListInvoices200ResponseInvoicesInner
+from tremendous.models.invoice import Invoice
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class ListInvoices200Response(BaseModel):
     """
     ListInvoices200Response
     """ # noqa: E501
-    invoices: List[ListInvoices200ResponseInvoicesInner]
+    invoices: List[Invoice]
     total_count: StrictInt = Field(description="The total number of invoices across all pages")
     __properties: ClassVar[List[str]] = ["invoices", "total_count"]
 
@@ -90,7 +90,7 @@ class ListInvoices200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "invoices": [ListInvoices200ResponseInvoicesInner.from_dict(_item) for _item in obj["invoices"]] if obj.get("invoices") is not None else None,
+            "invoices": [Invoice.from_dict(_item) for _item in obj["invoices"]] if obj.get("invoices") is not None else None,
             "total_count": obj.get("total_count")
         })
         return _obj

@@ -18,8 +18,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
+from tremendous.models.delivery_method import DeliveryMethod
+from tremendous.models.delivery_status import DeliveryStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,29 +29,9 @@ class DeliveryDetails(BaseModel):
     """
     Details on how the reward is delivered to the recipient. 
     """ # noqa: E501
-    method: Optional[StrictStr] = Field(default=None, description="How to deliver the reward to the recipient.  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> ")
-    status: Optional[StrictStr] = Field(default=None, description="Current status of the delivery of the reward:  * `SCHEDULED` - Reward is scheduled for delivery and will be delivered soon. * `FAILED` - Delivery of reward failed (e.g. email bounced). * `SUCCEEDED` - Reward was successfully delivered (email or text message delivered or reward link opened). * `PENDING` - Delivery is pending but not yet scheduled. ")
+    method: Optional[DeliveryMethod] = None
+    status: Optional[DeliveryStatus] = None
     __properties: ClassVar[List[str]] = ["method", "status"]
-
-    @field_validator('method')
-    def method_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['EMAIL', 'LINK', 'PHONE']):
-            raise ValueError("must be one of enum values ('EMAIL', 'LINK', 'PHONE')")
-        return value
-
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['SCHEDULED', 'FAILED', 'SUCCEEDED', 'PENDING']):
-            raise ValueError("must be one of enum values ('SCHEDULED', 'FAILED', 'SUCCEEDED', 'PENDING')")
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -81,10 +63,8 @@ class DeliveryDetails(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
-            "status",
         ])
 
         _dict = self.model_dump(

@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_fraud_rules200_response_fraud_rules_inner import ListFraudRules200ResponseFraudRulesInner
+from tremendous.models.fraud_rules_list_item import FraudRulesListItem
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class ListFraudRules200Response(BaseModel):
     """
     ListFraudRules200Response
     """ # noqa: E501
-    fraud_rules: List[ListFraudRules200ResponseFraudRulesInner]
+    fraud_rules: List[FraudRulesListItem]
     __properties: ClassVar[List[str]] = ["fraud_rules"]
 
     model_config = ConfigDict(
@@ -89,7 +89,7 @@ class ListFraudRules200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "fraud_rules": [ListFraudRules200ResponseFraudRulesInner.from_dict(_item) for _item in obj["fraud_rules"]] if obj.get("fraud_rules") is not None else None
+            "fraud_rules": [FraudRulesListItem.from_dict(_item) for _item in obj["fraud_rules"]] if obj.get("fraud_rules") is not None else None
         })
         return _obj
 

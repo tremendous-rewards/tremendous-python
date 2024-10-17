@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_funding_sources200_response_funding_sources_inner import ListFundingSources200ResponseFundingSourcesInner
+from tremendous.models.funding_source import FundingSource
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class ListFundingSources200Response(BaseModel):
     """
     ListFundingSources200Response
     """ # noqa: E501
-    funding_sources: List[ListFundingSources200ResponseFundingSourcesInner]
+    funding_sources: List[FundingSource]
     __properties: ClassVar[List[str]] = ["funding_sources"]
 
     model_config = ConfigDict(
@@ -89,7 +89,7 @@ class ListFundingSources200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "funding_sources": [ListFundingSources200ResponseFundingSourcesInner.from_dict(_item) for _item in obj["funding_sources"]] if obj.get("funding_sources") is not None else None
+            "funding_sources": [FundingSource.from_dict(_item) for _item in obj["funding_sources"]] if obj.get("funding_sources") is not None else None
         })
         return _obj
 

@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.list_rewards401_response_errors import ListRewards401ResponseErrors
+from tremendous.models.error_model_errors import ErrorModelErrors
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +29,7 @@ class ErrorModel(BaseModel):
     ErrorModel
     """ # noqa: E501
     status: Optional[StrictInt] = Field(default=None, description="HTTP status code of the response")
-    errors: ListRewards401ResponseErrors
+    errors: ErrorModelErrors
     __properties: ClassVar[List[str]] = ["status", "errors"]
 
     model_config = ConfigDict(
@@ -87,7 +87,7 @@ class ErrorModel(BaseModel):
 
         _obj = cls.model_validate({
             "status": obj.get("status"),
-            "errors": ListRewards401ResponseErrors.from_dict(obj["errors"]) if obj.get("errors") is not None else None
+            "errors": ErrorModelErrors.from_dict(obj["errors"]) if obj.get("errors") is not None else None
         })
         return _obj
 

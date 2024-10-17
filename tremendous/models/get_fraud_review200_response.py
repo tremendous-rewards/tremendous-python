@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from tremendous.models.get_fraud_review200_response_fraud_review import GetFraudReview200ResponseFraudReview
+from tremendous.models.fraud_review import FraudReview
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class GetFraudReview200Response(BaseModel):
     """
     GetFraudReview200Response
     """ # noqa: E501
-    fraud_review: GetFraudReview200ResponseFraudReview
+    fraud_review: FraudReview
     __properties: ClassVar[List[str]] = ["fraud_review"]
 
     model_config = ConfigDict(
@@ -85,7 +85,7 @@ class GetFraudReview200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "fraud_review": GetFraudReview200ResponseFraudReview.from_dict(obj["fraud_review"]) if obj.get("fraud_review") is not None else None
+            "fraud_review": FraudReview.from_dict(obj["fraud_review"]) if obj.get("fraud_review") is not None else None
         })
         return _obj
 

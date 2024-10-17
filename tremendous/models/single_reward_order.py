@@ -20,8 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.single_reward_order_payment import SingleRewardOrderPayment
-from tremendous.models.single_reward_order_reward import SingleRewardOrderReward
+from tremendous.models.base_order_for_create_payment import BaseOrderForCreatePayment
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,8 +29,8 @@ class SingleRewardOrder(BaseModel):
     An order that contains a single reward. The reward is sent to a single recipient. 
     """ # noqa: E501
     external_id: Optional[StrictStr] = Field(default=None, description="Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. ")
-    payment: Optional[SingleRewardOrderPayment] = None
-    reward: SingleRewardOrderReward
+    payment: BaseOrderForCreatePayment
+    reward: Dict[str, Any]
     __properties: ClassVar[List[str]] = ["external_id", "payment", "reward"]
 
     model_config = ConfigDict(
@@ -76,9 +75,6 @@ class SingleRewardOrder(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of payment
         if self.payment:
             _dict['payment'] = self.payment.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of reward
-        if self.reward:
-            _dict['reward'] = self.reward.to_dict()
         # set to None if external_id (nullable) is None
         # and model_fields_set contains the field
         if self.external_id is None and "external_id" in self.model_fields_set:
@@ -97,8 +93,8 @@ class SingleRewardOrder(BaseModel):
 
         _obj = cls.model_validate({
             "external_id": obj.get("external_id"),
-            "payment": SingleRewardOrderPayment.from_dict(obj["payment"]) if obj.get("payment") is not None else None,
-            "reward": SingleRewardOrderReward.from_dict(obj["reward"]) if obj.get("reward") is not None else None
+            "payment": BaseOrderForCreatePayment.from_dict(obj["payment"]) if obj.get("payment") is not None else None,
+            "reward": obj.get("reward")
         })
         return _obj
 
