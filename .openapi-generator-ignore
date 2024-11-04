@@ -38,3 +38,4 @@ setup.cfg
 requirements.txt
 text-requirements.txt
 pyproject.toml
+.gitignore
