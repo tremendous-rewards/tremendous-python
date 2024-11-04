@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.0.1...tremendous-python-v4.1.0) (2024-11-04)
+
+
+### Features
+
+* add /reports endpoints ([0cfe6f6](https://github.com/tremendous-rewards/tremendous-python/commit/0cfe6f6e170f3987aa7fdd0e1bea5f18eb69dadc))
+
 ## [4.0.1](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.0.0...tremendous-python-v4.0.1) (2024-09-26)
 
 
