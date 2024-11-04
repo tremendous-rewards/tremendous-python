@@ -5,7 +5,8 @@
 
 ### Features
 
-* add /reports endpoints ([0cfe6f6](https://github.com/tremendous-rewards/tremendous-python/commit/0cfe6f6e170f3987aa7fdd0e1bea5f18eb69dadc))
+* add /reports endpoints ([#32](https://github.com/tremendous-rewards/tremendous-python/commit/a8419dddbbaa872fab7a556a47aec0672b4fdb3b))
+* add support for updated_phone and updated_email on POST /api/v2/reward/:id/resend ([#32](https://github.com/tremendous-rewards/tremendous-python/commit/a8419dddbbaa872fab7a556a47aec0672b4fdb3b))
 
 ## [4.0.1](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.0.0...tremendous-python-v4.0.1) (2024-09-26)
 
