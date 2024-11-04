@@ -1,4 +1,3 @@
-.gitignore
 test-requirements.txt
 tremendous/__init__.py
 tremendous/api/__init__.py
@@ -38,6 +37,13 @@ tremendous/models/create_organization_for_response.py
 tremendous/models/create_organization_properties.py
 tremendous/models/create_organization_request.py
 tremendous/models/create_organization_request_copy_settings.py
+tremendous/models/create_report201_response.py
+tremendous/models/create_report201_response_report.py
+tremendous/models/create_report_request.py
+tremendous/models/create_report_request_filters.py
+tremendous/models/create_report_request_filters_digital_rewards.py
+tremendous/models/create_report_request_filters_digital_rewards_amount.py
+tremendous/models/create_report_request_filters_digital_rewards_created_at.py
 tremendous/models/create_webhook200_response.py
 tremendous/models/create_webhook_request.py
 tremendous/models/currency_codes.py
@@ -104,6 +110,7 @@ tremendous/models/list_fraud_rules200_response_fraud_rules_inner.py
 tremendous/models/list_funding_sources200_response.py
 tremendous/models/list_funding_sources200_response_funding_sources_inner.py
 tremendous/models/list_funding_sources200_response_funding_sources_inner_meta.py
+tremendous/models/list_funding_sources200_response_funding_sources_inner_meta_failure_details.py
 tremendous/models/list_invoices200_response.py
 tremendous/models/list_invoices200_response_invoices_inner.py
 tremendous/models/list_members200_response.py
@@ -153,7 +160,9 @@ tremendous/models/payout.py
 tremendous/models/product.py
 tremendous/models/recipient.py
 tremendous/models/refund_details.py
+tremendous/models/report.py
 tremendous/models/resend_reward422_response.py
+tremendous/models/resend_reward_request.py
 tremendous/models/review_country.py
 tremendous/models/review_country1.py
 tremendous/models/review_email.py

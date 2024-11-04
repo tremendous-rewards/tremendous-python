@@ -22,6 +22,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
+from tremendous.models.list_funding_sources200_response_funding_sources_inner_meta_failure_details import ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -40,8 +41,11 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
     network: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Network of the credit card ")
     last4: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Last 4 digits of the credit card number ")
     expired: Optional[StrictBool] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Is this credit card expired ")
+    year: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Year part of card's expiration date ")
+    month: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Month part of card's expiration date ")
     last_payment_failed_at: Optional[datetime] = Field(default=None, description="**Only available when `method` is set to `bank_account` or `credit_card`.**  Point in time when the last order failed using this bank account or credit card as a funding source. ")
-    __properties: ClassVar[List[str]] = ["available_cents", "pending_cents", "accountholder_name", "account_type", "bank_name", "account_number_mask", "account_routing_mask", "refundable", "network", "last4", "expired", "last_payment_failed_at"]
+    failure_details: Optional[ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails] = None
+    __properties: ClassVar[List[str]] = ["available_cents", "pending_cents", "accountholder_name", "account_type", "bank_name", "account_number_mask", "account_routing_mask", "refundable", "network", "last4", "expired", "year", "month", "last_payment_failed_at", "failure_details"]
 
     @field_validator('account_type')
     def account_type_validate_enum(cls, value):
@@ -79,8 +83,8 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['MasterCard', 'Amex', 'JCB', 'Diner\'s Club', 'visa', 'discover', 'laser', 'elo', 'maestro', 'solo']):
-            raise ValueError("must be one of enum values ('MasterCard', 'Amex', 'JCB', 'Diner\'s Club', 'visa', 'discover', 'laser', 'elo', 'maestro', 'solo')")
+        if value not in set(['MasterCard', 'Amex', 'JCB', 'Diner\'s Club', 'Visa', 'Discover', 'Laser', 'Elo', 'Maestro', 'Solo']):
+            raise ValueError("must be one of enum values ('MasterCard', 'Amex', 'JCB', 'Diner\'s Club', 'Visa', 'Discover', 'Laser', 'Elo', 'Maestro', 'Solo')")
         return value
 
     @field_validator('last4')
@@ -132,6 +136,9 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of failure_details
+        if self.failure_details:
+            _dict['failure_details'] = self.failure_details.to_dict()
         # set to None if bank_name (nullable) is None
         # and model_fields_set contains the field
         if self.bank_name is None and "bank_name" in self.model_fields_set:
@@ -141,6 +148,11 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
         # and model_fields_set contains the field
         if self.last_payment_failed_at is None and "last_payment_failed_at" in self.model_fields_set:
             _dict['last_payment_failed_at'] = None
+
+        # set to None if failure_details (nullable) is None
+        # and model_fields_set contains the field
+        if self.failure_details is None and "failure_details" in self.model_fields_set:
+            _dict['failure_details'] = None
 
         return _dict
 
@@ -165,7 +177,10 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
             "network": obj.get("network"),
             "last4": obj.get("last4"),
             "expired": obj.get("expired"),
-            "last_payment_failed_at": obj.get("last_payment_failed_at")
+            "year": obj.get("year"),
+            "month": obj.get("month"),
+            "last_payment_failed_at": obj.get("last_payment_failed_at"),
+            "failure_details": ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails.from_dict(obj["failure_details"]) if obj.get("failure_details") is not None else None
         })
         return _obj
 

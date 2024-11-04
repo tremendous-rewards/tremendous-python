@@ -35,7 +35,8 @@ class Payout(BaseModel):
     product_name: Optional[StrictStr] = Field(default=None, description="Name of the paid out Product")
     created_at: Optional[datetime] = Field(default=None, description="Date the payout was created")
     executed_at: Optional[datetime] = Field(default=None, description="Date the payout was executed")
-    __properties: ClassVar[List[str]] = ["id", "status", "product_id", "product_name", "created_at", "executed_at"]
+    defer_execution_until: Optional[datetime] = Field(default=None, description="Date when a delayed payout will be executed in the future")
+    __properties: ClassVar[List[str]] = ["id", "status", "product_id", "product_name", "created_at", "executed_at", "defer_execution_until"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -102,6 +103,7 @@ class Payout(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
@@ -109,6 +111,7 @@ class Payout(BaseModel):
             "product_name",
             "created_at",
             "executed_at",
+            "defer_execution_until",
         ])
 
         _dict = self.model_dump(
@@ -116,6 +119,16 @@ class Payout(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if executed_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.executed_at is None and "executed_at" in self.model_fields_set:
+            _dict['executed_at'] = None
+
+        # set to None if defer_execution_until (nullable) is None
+        # and model_fields_set contains the field
+        if self.defer_execution_until is None and "defer_execution_until" in self.model_fields_set:
+            _dict['defer_execution_until'] = None
+
         return _dict
 
     @classmethod
@@ -133,7 +146,8 @@ class Payout(BaseModel):
             "product_id": obj.get("product_id"),
             "product_name": obj.get("product_name"),
             "created_at": obj.get("created_at"),
-            "executed_at": obj.get("executed_at")
+            "executed_at": obj.get("executed_at"),
+            "defer_execution_until": obj.get("defer_execution_until")
         })
         return _obj
 
