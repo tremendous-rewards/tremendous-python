@@ -32,6 +32,8 @@ from tremendous.models.create_order201_response import CreateOrder201Response
 from tremendous.models.create_order_request import CreateOrderRequest
 from tremendous.models.create_organization200_response import CreateOrganization200Response
 from tremendous.models.create_organization_request import CreateOrganizationRequest
+from tremendous.models.create_report201_response import CreateReport201Response
+from tremendous.models.create_report_request import CreateReportRequest
 from tremendous.models.create_webhook200_response import CreateWebhook200Response
 from tremendous.models.create_webhook_request import CreateWebhookRequest
 from tremendous.models.delete_fraud_rule200_response import DeleteFraudRule200Response
@@ -61,6 +63,7 @@ from tremendous.models.list_rewards200_response import ListRewards200Response
 from tremendous.models.list_roles200_response import ListRoles200Response
 from tremendous.models.list_webhook_events200_response import ListWebhookEvents200Response
 from tremendous.models.list_webhooks200_response import ListWebhooks200Response
+from tremendous.models.resend_reward_request import ResendRewardRequest
 from tremendous.models.simulate_webhook_request import SimulateWebhookRequest
 from tremendous.models.update_campaign_request import UpdateCampaignRequest
 from tremendous.models.update_fraud_rule_list200_response import UpdateFraudRuleList200Response
@@ -2294,6 +2297,292 @@ class TremendousApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/organizations',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def create_report(
+        self,
+        create_report_request: Annotated[CreateReportRequest, Field(description="Report to create")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CreateReport201Response:
+        """Create report
+
+        Creating a report allows your organization to programmatically retrieve information that's available in our dashboard UI.  This request creates a new report object with a unique ID, and kicks off an async report generation.  To retrieve a completed report, either poll `/api/v2/reports/{id}` or listen for REPORTS webhook event.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">report_type</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Type of report for retrieval. <table> <thead> <tr> <th>Report type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>digital_rewards</code></td> <td>Report for Tremendous digital reward history</td> </tr> </tbody> </table></p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">format</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Format the report will be generated in. <table> <thead> <tr> <th>Format</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>csv</code></td> <td>CSV format for report</td> </tr> </tbody> </table></p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">filters</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Filters to apply to the report. Corresponds to the filters provided in the dashboard</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">digital_rewards</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Filters object for a <code>report_type: digital_rewards</code> report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Amount of the rewards returned in the report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">gte</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Minimum amount of the rewards that should be returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">lte</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Maximum amount of the rewards that should be returned in the report</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the Tremendous campaign that this report should be limited to</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Creation dates of rewards returned in the report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">gte</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Minimum date the reward was created</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">lte</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Maximum date the reward was created</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivered_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Delivery date for gifts that should be returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery_method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Delivery method for rewards returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the Tremendous order that this report should be limited to</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">order_status</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Order status for rewards returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">status</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>Status for rewards returned in the report</p> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ## Rate limits  Some reports may take a long time to generate and we limit the number of reports that can be simulataneously generated by an organization at a given time. If you exceed the rate limit, you'll receive a `429` response. 
+
+        :param create_report_request: Report to create (required)
+        :type create_report_request: CreateReportRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_report_serialize(
+            create_report_request=create_report_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "CreateReport201Response",
+            '400': "ResendReward422Response",
+            '401': "ListRewards401Response",
+            '422': "ResendReward422Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def create_report_with_http_info(
+        self,
+        create_report_request: Annotated[CreateReportRequest, Field(description="Report to create")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CreateReport201Response]:
+        """Create report
+
+        Creating a report allows your organization to programmatically retrieve information that's available in our dashboard UI.  This request creates a new report object with a unique ID, and kicks off an async report generation.  To retrieve a completed report, either poll `/api/v2/reports/{id}` or listen for REPORTS webhook event.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">report_type</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Type of report for retrieval. <table> <thead> <tr> <th>Report type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>digital_rewards</code></td> <td>Report for Tremendous digital reward history</td> </tr> </tbody> </table></p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">format</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Format the report will be generated in. <table> <thead> <tr> <th>Format</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>csv</code></td> <td>CSV format for report</td> </tr> </tbody> </table></p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">filters</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Filters to apply to the report. Corresponds to the filters provided in the dashboard</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">digital_rewards</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Filters object for a <code>report_type: digital_rewards</code> report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Amount of the rewards returned in the report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">gte</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Minimum amount of the rewards that should be returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">lte</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Maximum amount of the rewards that should be returned in the report</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the Tremendous campaign that this report should be limited to</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Creation dates of rewards returned in the report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">gte</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Minimum date the reward was created</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">lte</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Maximum date the reward was created</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivered_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Delivery date for gifts that should be returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery_method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Delivery method for rewards returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the Tremendous order that this report should be limited to</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">order_status</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Order status for rewards returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">status</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>Status for rewards returned in the report</p> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ## Rate limits  Some reports may take a long time to generate and we limit the number of reports that can be simulataneously generated by an organization at a given time. If you exceed the rate limit, you'll receive a `429` response. 
+
+        :param create_report_request: Report to create (required)
+        :type create_report_request: CreateReportRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_report_serialize(
+            create_report_request=create_report_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "CreateReport201Response",
+            '400': "ResendReward422Response",
+            '401': "ListRewards401Response",
+            '422': "ResendReward422Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def create_report_without_preload_content(
+        self,
+        create_report_request: Annotated[CreateReportRequest, Field(description="Report to create")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create report
+
+        Creating a report allows your organization to programmatically retrieve information that's available in our dashboard UI.  This request creates a new report object with a unique ID, and kicks off an async report generation.  To retrieve a completed report, either poll `/api/v2/reports/{id}` or listen for REPORTS webhook event.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">report_type</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Type of report for retrieval. <table> <thead> <tr> <th>Report type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>digital_rewards</code></td> <td>Report for Tremendous digital reward history</td> </tr> </tbody> </table></p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">format</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Format the report will be generated in. <table> <thead> <tr> <th>Format</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>csv</code></td> <td>CSV format for report</td> </tr> </tbody> </table></p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">filters</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Filters to apply to the report. Corresponds to the filters provided in the dashboard</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">digital_rewards</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Filters object for a <code>report_type: digital_rewards</code> report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Amount of the rewards returned in the report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">gte</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Minimum amount of the rewards that should be returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">lte</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Maximum amount of the rewards that should be returned in the report</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the Tremendous campaign that this report should be limited to</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Creation dates of rewards returned in the report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">gte</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Minimum date the reward was created</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">lte</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Maximum date the reward was created</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivered_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Delivery date for gifts that should be returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery_method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Delivery method for rewards returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the Tremendous order that this report should be limited to</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">order_status</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Order status for rewards returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">status</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>Status for rewards returned in the report</p> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ## Rate limits  Some reports may take a long time to generate and we limit the number of reports that can be simulataneously generated by an organization at a given time. If you exceed the rate limit, you'll receive a `429` response. 
+
+        :param create_report_request: Report to create (required)
+        :type create_report_request: CreateReportRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_report_serialize(
+            create_report_request=create_report_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "CreateReport201Response",
+            '400': "ResendReward422Response",
+            '401': "ListRewards401Response",
+            '422': "ResendReward422Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _create_report_serialize(
+        self,
+        create_report_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if create_report_request is not None:
+            _body_params = create_report_request
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/reports',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -6933,6 +7222,279 @@ class TremendousApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/products/{id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_report(
+        self,
+        id: Annotated[StrictStr, Field(description="ID of the report that should be retrieved. ID is returned from `POST` to /api/v2/reports ")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CreateReport201Response:
+        """Retrieve report
+
+        Retrieve the report, identified by the given `id` in the URL  Using the ID that was returned by `POST /api/v2/reports`, retrieves a download link for the report, identified by the given ID in the URL. Returns the report’s current status and, if available, the URL for download. The URL is valid for 7 days. 
+
+        :param id: ID of the report that should be retrieved. ID is returned from `POST` to /api/v2/reports  (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_report_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CreateReport201Response",
+            '202': "CreateReport201Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_report_with_http_info(
+        self,
+        id: Annotated[StrictStr, Field(description="ID of the report that should be retrieved. ID is returned from `POST` to /api/v2/reports ")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CreateReport201Response]:
+        """Retrieve report
+
+        Retrieve the report, identified by the given `id` in the URL  Using the ID that was returned by `POST /api/v2/reports`, retrieves a download link for the report, identified by the given ID in the URL. Returns the report’s current status and, if available, the URL for download. The URL is valid for 7 days. 
+
+        :param id: ID of the report that should be retrieved. ID is returned from `POST` to /api/v2/reports  (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_report_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CreateReport201Response",
+            '202': "CreateReport201Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_report_without_preload_content(
+        self,
+        id: Annotated[StrictStr, Field(description="ID of the report that should be retrieved. ID is returned from `POST` to /api/v2/reports ")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Retrieve report
+
+        Retrieve the report, identified by the given `id` in the URL  Using the ID that was returned by `POST /api/v2/reports`, retrieves a download link for the report, identified by the given ID in the URL. Returns the report’s current status and, if available, the URL for download. The URL is valid for 7 days. 
+
+        :param id: ID of the report that should be retrieved. ID is returned from `POST` to /api/v2/reports  (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_report_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CreateReport201Response",
+            '202': "CreateReport201Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_report_serialize(
+        self,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/reports/{id}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -12482,6 +13044,7 @@ class TremendousApi:
     def resend_reward(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the reward that should be resent")],
+        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="_Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12501,6 +13064,8 @@ class TremendousApi:
 
         :param id: ID of the reward that should be resent (required)
         :type id: str
+        :param resend_reward_request: _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
+        :type resend_reward_request: ResendRewardRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -12525,6 +13090,7 @@ class TremendousApi:
 
         _param = self._resend_reward_serialize(
             id=id,
+            resend_reward_request=resend_reward_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -12554,6 +13120,7 @@ class TremendousApi:
     def resend_reward_with_http_info(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the reward that should be resent")],
+        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="_Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12573,6 +13140,8 @@ class TremendousApi:
 
         :param id: ID of the reward that should be resent (required)
         :type id: str
+        :param resend_reward_request: _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
+        :type resend_reward_request: ResendRewardRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -12597,6 +13166,7 @@ class TremendousApi:
 
         _param = self._resend_reward_serialize(
             id=id,
+            resend_reward_request=resend_reward_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -12626,6 +13196,7 @@ class TremendousApi:
     def resend_reward_without_preload_content(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the reward that should be resent")],
+        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="_Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12645,6 +13216,8 @@ class TremendousApi:
 
         :param id: ID of the reward that should be resent (required)
         :type id: str
+        :param resend_reward_request: _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
+        :type resend_reward_request: ResendRewardRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -12669,6 +13242,7 @@ class TremendousApi:
 
         _param = self._resend_reward_serialize(
             id=id,
+            resend_reward_request=resend_reward_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -12693,6 +13267,7 @@ class TremendousApi:
     def _resend_reward_serialize(
         self,
         id,
+        resend_reward_request,
         _request_auth,
         _content_type,
         _headers,
@@ -12718,6 +13293,8 @@ class TremendousApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if resend_reward_request is not None:
+            _body_params = resend_reward_request
 
 
         # set the HTTP header `Accept`
@@ -12727,6 +13304,19 @@ class TremendousApi:
             ]
         )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
