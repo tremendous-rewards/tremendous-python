@@ -25,9 +25,9 @@ from tremendous.models.list_orders200_response_orders_inner_payment_refund impor
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListOrders200ResponseOrdersInnerPayment(BaseModel):
+class ListBalanceTransactions200ResponseTransactionsInnerOrderPayment(BaseModel):
     """
-    Cost breakdown of the order (cost of rewards + fees). Cost and fees are always denominated in USD, independent from the currency of the ordered rewards. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
+    ListBalanceTransactions200ResponseTransactionsInnerOrderPayment
     """ # noqa: E501
     subtotal: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order before fees (in USD)")
     total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order including fees (in USD)")
@@ -54,7 +54,7 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseOrdersInnerPayment from a JSON string"""
+        """Create an instance of ListBalanceTransactions200ResponseTransactionsInnerOrderPayment from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -82,7 +82,7 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseOrdersInnerPayment from a dict"""
+        """Create an instance of ListBalanceTransactions200ResponseTransactionsInnerOrderPayment from a dict"""
         if obj is None:
             return None
 

@@ -18,23 +18,31 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from tremendous.models.list_orders200_response_orders_inner_payment_refund import ListOrders200ResponseOrdersInnerPaymentRefund
+from tremendous.models.balance_transaction_order_payment import BalanceTransactionOrderPayment
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListOrders200ResponseOrdersInnerPayment(BaseModel):
+class BalanceTransactionOrder(BaseModel):
     """
-    Cost breakdown of the order (cost of rewards + fees). Cost and fees are always denominated in USD, independent from the currency of the ordered rewards. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
+    Order details
     """ # noqa: E501
-    subtotal: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order before fees (in USD)")
-    total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order including fees (in USD)")
-    fees: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Fees for the order (in USD)")
-    discount: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Discount for the order (in USD)")
-    refund: Optional[ListOrders200ResponseOrdersInnerPaymentRefund] = None
-    __properties: ClassVar[List[str]] = ["subtotal", "total", "fees", "discount", "refund"]
+    id: Optional[Annotated[str, Field(strict=True)]] = None
+    external_id: Optional[StrictStr] = Field(default=None, description="Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. ")
+    payment: Optional[BalanceTransactionOrderPayment] = None
+    __properties: ClassVar[List[str]] = ["id", "external_id", "payment"]
+
+    @field_validator('id')
+    def id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"[A-Z0-9]{4,20}", value):
+            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +62,7 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseOrdersInnerPayment from a JSON string"""
+        """Create an instance of BalanceTransactionOrder from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -66,8 +74,10 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
         ])
 
         _dict = self.model_dump(
@@ -75,14 +85,19 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of refund
-        if self.refund:
-            _dict['refund'] = self.refund.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of payment
+        if self.payment:
+            _dict['payment'] = self.payment.to_dict()
+        # set to None if external_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.external_id is None and "external_id" in self.model_fields_set:
+            _dict['external_id'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseOrdersInnerPayment from a dict"""
+        """Create an instance of BalanceTransactionOrder from a dict"""
         if obj is None:
             return None
 
@@ -90,11 +105,9 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "subtotal": obj.get("subtotal"),
-            "total": obj.get("total"),
-            "fees": obj.get("fees"),
-            "discount": obj.get("discount"),
-            "refund": ListOrders200ResponseOrdersInnerPaymentRefund.from_dict(obj["refund"]) if obj.get("refund") is not None else None
+            "id": obj.get("id"),
+            "external_id": obj.get("external_id"),
+            "payment": BalanceTransactionOrderPayment.from_dict(obj["payment"]) if obj.get("payment") is not None else None
         })
         return _obj
 

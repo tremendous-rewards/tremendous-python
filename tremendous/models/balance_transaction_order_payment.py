@@ -21,19 +21,19 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
-from tremendous.models.list_orders200_response_orders_inner_payment_refund import ListOrders200ResponseOrdersInnerPaymentRefund
+from tremendous.models.payment_details_refund import PaymentDetailsRefund
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListOrders200ResponseOrdersInnerPayment(BaseModel):
+class BalanceTransactionOrderPayment(BaseModel):
     """
-    Cost breakdown of the order (cost of rewards + fees). Cost and fees are always denominated in USD, independent from the currency of the ordered rewards. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
+    BalanceTransactionOrderPayment
     """ # noqa: E501
     subtotal: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order before fees (in USD)")
     total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order including fees (in USD)")
     fees: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Fees for the order (in USD)")
     discount: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Discount for the order (in USD)")
-    refund: Optional[ListOrders200ResponseOrdersInnerPaymentRefund] = None
+    refund: Optional[PaymentDetailsRefund] = None
     __properties: ClassVar[List[str]] = ["subtotal", "total", "fees", "discount", "refund"]
 
     model_config = ConfigDict(
@@ -54,7 +54,7 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseOrdersInnerPayment from a JSON string"""
+        """Create an instance of BalanceTransactionOrderPayment from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -66,8 +66,16 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "subtotal",
+            "total",
+            "fees",
+            "discount",
         ])
 
         _dict = self.model_dump(
@@ -82,7 +90,7 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListOrders200ResponseOrdersInnerPayment from a dict"""
+        """Create an instance of BalanceTransactionOrderPayment from a dict"""
         if obj is None:
             return None
 
@@ -94,7 +102,7 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
             "total": obj.get("total"),
             "fees": obj.get("fees"),
             "discount": obj.get("discount"),
-            "refund": ListOrders200ResponseOrdersInnerPaymentRefund.from_dict(obj["refund"]) if obj.get("refund") is not None else None
+            "refund": PaymentDetailsRefund.from_dict(obj["refund"]) if obj.get("refund") is not None else None
         })
         return _obj
 

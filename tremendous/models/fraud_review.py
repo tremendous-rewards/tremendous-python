@@ -32,6 +32,7 @@ class FraudReview(BaseModel):
     The fraud review associated with a reward.
     """ # noqa: E501
     status: Optional[StrictStr] = Field(default=None, description="The current status of the fraud review:  * `flagged` - The reward has been flagged for and waiting manual review. * `blocked` - The reward was reviewed and blocked. * `released` - The reward was reviewed and released. ")
+    risk: Optional[StrictStr] = Field(default=None, description="The fraud risk associated with the reward.")
     reasons: Optional[List[StrictStr]] = Field(default=None, description="The array may contain multiple reasons, depending on which rule(s) flagged the reward for review. Reasons can be any of the following:  * `Disallowed IP` * `Disallowed email` * `Disallowed country` * `Over reward dollar limit` * `Over reward count limit` * `VPN detected` * `Device related to multiple emails` * `Device or account related to multiple emails` * `IP on a Tremendous fraud list` * `Bank account on a Tremendous fraud list` * `Fingerprint on a Tremendous fraud list` * `Email on a Tremendous fraud list` * `Phone on a Tremendous fraud list` * `IP related to a blocked reward` * `Bank account related to a blocked reward` * `Fingerprint related to a blocked reward` * `Email related to a blocked reward` * `Phone related to a blocked reward` * `Allowed IP` * `Allowed email` ")
     reviewed_by: Optional[StrictStr] = Field(default=None, description="The name of the person who reviewed the reward, or `Automatic Review` if the reward was blocked automatically. Rewards can be automatically blocked if they remain in the flagged fraud queue for more than 30 days.  This field is only present if the status is not `flagged`. ")
     reviewed_at: Optional[datetime] = Field(default=None, description="When the reward was blocked or released following fraud review.  This field is only present if the status is not `flagged`. ")
@@ -41,7 +42,7 @@ class FraudReview(BaseModel):
     redeemed_at: Optional[datetime] = Field(default=None, description="Date the reward was redeemed")
     geo: Optional[GetFraudReview200ResponseFraudReviewGeo] = None
     reward: Optional[OrderWithoutLinkRewardsInner] = None
-    __properties: ClassVar[List[str]] = ["status", "reasons", "reviewed_by", "reviewed_at", "related_rewards", "device_id", "redemption_method", "redeemed_at", "geo", "reward"]
+    __properties: ClassVar[List[str]] = ["status", "risk", "reasons", "reviewed_by", "reviewed_at", "related_rewards", "device_id", "redemption_method", "redeemed_at", "geo", "reward"]
 
     @field_validator('status')
     def status_validate_enum(cls, value):
@@ -51,6 +52,16 @@ class FraudReview(BaseModel):
 
         if value not in set(['flagged', 'blocked', 'released']):
             raise ValueError("must be one of enum values ('flagged', 'blocked', 'released')")
+        return value
+
+    @field_validator('risk')
+    def risk_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['high', 'medium', 'low']):
+            raise ValueError("must be one of enum values ('high', 'medium', 'low')")
         return value
 
     @field_validator('reasons')
@@ -107,9 +118,11 @@ class FraudReview(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "status",
+            "risk",
             "reasons",
             "redemption_method",
         ])
@@ -141,6 +154,7 @@ class FraudReview(BaseModel):
 
         _obj = cls.model_validate({
             "status": obj.get("status"),
+            "risk": obj.get("risk"),
             "reasons": obj.get("reasons"),
             "reviewed_by": obj.get("reviewed_by"),
             "reviewed_at": obj.get("reviewed_at"),

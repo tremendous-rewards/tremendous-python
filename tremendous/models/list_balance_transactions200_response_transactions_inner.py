@@ -20,7 +20,8 @@ import json
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from tremendous.models.list_balance_transactions200_response_transactions_inner_order import ListBalanceTransactions200ResponseTransactionsInnerOrder
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,7 +34,8 @@ class ListBalanceTransactions200ResponseTransactionsInner(BaseModel):
     balance: Union[StrictFloat, StrictInt] = Field(description="The updated total after the transaction. Note that this running balance may be delayed and contain `null`.")
     action: StrictStr = Field(description="The action that was performed")
     description: StrictStr = Field(description="A brief description of the transaction")
-    __properties: ClassVar[List[str]] = ["created_at", "amount", "balance", "action", "description"]
+    order: Optional[ListBalanceTransactions200ResponseTransactionsInnerOrder] = None
+    __properties: ClassVar[List[str]] = ["created_at", "amount", "balance", "action", "description", "order"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -74,6 +76,9 @@ class ListBalanceTransactions200ResponseTransactionsInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of order
+        if self.order:
+            _dict['order'] = self.order.to_dict()
         return _dict
 
     @classmethod
@@ -90,7 +95,8 @@ class ListBalanceTransactions200ResponseTransactionsInner(BaseModel):
             "amount": obj.get("amount"),
             "balance": obj.get("balance"),
             "action": obj.get("action"),
-            "description": obj.get("description")
+            "description": obj.get("description"),
+            "order": ListBalanceTransactions200ResponseTransactionsInnerOrder.from_dict(obj["order"]) if obj.get("order") is not None else None
         })
         return _obj
 

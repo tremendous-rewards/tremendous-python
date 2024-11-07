@@ -12,6 +12,8 @@ tremendous/models/allow_email1.py
 tremendous/models/allow_ip.py
 tremendous/models/allow_ip1.py
 tremendous/models/balance_transaction.py
+tremendous/models/balance_transaction_order.py
+tremendous/models/balance_transaction_order_payment.py
 tremendous/models/base_order_for_create.py
 tremendous/models/campaign.py
 tremendous/models/campaign_base.py
@@ -68,6 +70,7 @@ tremendous/models/fraud_review_list_item.py
 tremendous/models/fraud_review_reason.py
 tremendous/models/fraud_review_redemption_method.py
 tremendous/models/fraud_review_related_rewards.py
+tremendous/models/fraud_review_risk.py
 tremendous/models/fraud_review_status.py
 tremendous/models/fraud_rule200_response.py
 tremendous/models/fraud_rule400_response.py
@@ -96,6 +99,8 @@ tremendous/models/get_reward200_response.py
 tremendous/models/invoice.py
 tremendous/models/list_balance_transactions200_response.py
 tremendous/models/list_balance_transactions200_response_transactions_inner.py
+tremendous/models/list_balance_transactions200_response_transactions_inner_order.py
+tremendous/models/list_balance_transactions200_response_transactions_inner_order_payment.py
 tremendous/models/list_campaigns200_response.py
 tremendous/models/list_campaigns200_response_campaigns_inner.py
 tremendous/models/list_campaigns200_response_campaigns_inner_email_style.py
