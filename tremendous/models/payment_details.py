@@ -29,11 +29,12 @@ class PaymentDetails(BaseModel):
     """
     PaymentDetails
     """ # noqa: E501
-    subtotal: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total price of the order before fees (in USD)")
-    total: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total price of the order including fees (in USD)")
-    fees: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Fees for the order (in USD)")
+    subtotal: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order before fees (in USD)")
+    total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order including fees (in USD)")
+    fees: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Fees for the order (in USD)")
+    discount: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Discount for the order (in USD)")
     refund: Optional[PaymentDetailsRefund] = None
-    __properties: ClassVar[List[str]] = ["subtotal", "total", "fees", "refund"]
+    __properties: ClassVar[List[str]] = ["subtotal", "total", "fees", "discount", "refund"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -68,11 +69,13 @@ class PaymentDetails(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "subtotal",
             "total",
             "fees",
+            "discount",
         ])
 
         _dict = self.model_dump(
@@ -98,6 +101,7 @@ class PaymentDetails(BaseModel):
             "subtotal": obj.get("subtotal"),
             "total": obj.get("total"),
             "fees": obj.get("fees"),
+            "discount": obj.get("discount"),
             "refund": PaymentDetailsRefund.from_dict(obj["refund"]) if obj.get("refund") is not None else None
         })
         return _obj
