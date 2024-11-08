@@ -1,5 +1,19 @@
 # Changelog
 
+## [4.2.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.1.0...tremendous-python-v4.2.0) (2024-11-08)
+
+
+### Features
+
+* add `discount` to `Order` payment details ([4158c9e](https://github.com/tremendous-rewards/tremendous-python/commit/4158c9e5bbf86e0443bd02ca6f3971af76cedde9))
+* add `risk` property to fraud reviews ([4158c9e](https://github.com/tremendous-rewards/tremendous-python/commit/4158c9e5bbf86e0443bd02ca6f3971af76cedde9))
+* include order property when possible on balance transactions endpoint ([#35](https://github.com/tremendous-rewards/tremendous-python/issues/35)) ([4158c9e](https://github.com/tremendous-rewards/tremendous-python/commit/4158c9e5bbf86e0443bd02ca6f3971af76cedde9))
+
+
+### Bug Fixes
+
+* fix `POST /orders` "created" response schema ([#38](https://github.com/tremendous-rewards/tremendous-python/issues/38)) ([df2f204](https://github.com/tremendous-rewards/tremendous-python/commit/df2f204330a47d9968cd8a731eadf99e8c263130))
+
 ## [4.1.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.0.1...tremendous-python-v4.1.0) (2024-11-04)
 
 
