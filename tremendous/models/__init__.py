@@ -4,7 +4,7 @@
 """
     API Endpoints
 
-    Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+    Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
     The version of the OpenAPI document: 2
     Contact: developers@tremendous.com
@@ -60,6 +60,7 @@ from tremendous.models.custom_field import CustomField
 from tremendous.models.delete_fraud_rule200_response import DeleteFraudRule200Response
 from tremendous.models.delivery_details import DeliveryDetails
 from tremendous.models.delivery_details_with_link import DeliveryDetailsWithLink
+from tremendous.models.delivery_metadata import DeliveryMetadata
 from tremendous.models.delivery_method import DeliveryMethod
 from tremendous.models.delivery_status import DeliveryStatus
 from tremendous.models.error_model import ErrorModel
@@ -202,6 +203,7 @@ from tremendous.models.single_reward_order_payment import SingleRewardOrderPayme
 from tremendous.models.single_reward_order_reward import SingleRewardOrderReward
 from tremendous.models.single_reward_order_reward_custom_fields_inner import SingleRewardOrderRewardCustomFieldsInner
 from tremendous.models.single_reward_order_reward_delivery import SingleRewardOrderRewardDelivery
+from tremendous.models.single_reward_order_reward_delivery_meta import SingleRewardOrderRewardDeliveryMeta
 from tremendous.models.single_reward_order_with_link import SingleRewardOrderWithLink
 from tremendous.models.single_reward_order_with_link_order import SingleRewardOrderWithLinkOrder
 from tremendous.models.single_reward_order_without_link import SingleRewardOrderWithoutLink

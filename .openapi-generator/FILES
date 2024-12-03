@@ -52,6 +52,7 @@ tremendous/models/custom_field.py
 tremendous/models/delete_fraud_rule200_response.py
 tremendous/models/delivery_details.py
 tremendous/models/delivery_details_with_link.py
+tremendous/models/delivery_metadata.py
 tremendous/models/delivery_method.py
 tremendous/models/delivery_status.py
 tremendous/models/error_model.py
@@ -194,6 +195,7 @@ tremendous/models/single_reward_order_payment.py
 tremendous/models/single_reward_order_reward.py
 tremendous/models/single_reward_order_reward_custom_fields_inner.py
 tremendous/models/single_reward_order_reward_delivery.py
+tremendous/models/single_reward_order_reward_delivery_meta.py
 tremendous/models/single_reward_order_with_link.py
 tremendous/models/single_reward_order_with_link_order.py
 tremendous/models/single_reward_order_without_link.py

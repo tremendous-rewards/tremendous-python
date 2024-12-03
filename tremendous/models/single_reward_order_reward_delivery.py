@@ -3,7 +3,7 @@
 """
     API Endpoints
 
-    Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+    Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
     The version of the OpenAPI document: 2
     Contact: developers@tremendous.com
@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from tremendous.models.single_reward_order_reward_delivery_meta import SingleRewardOrderRewardDeliveryMeta
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +29,8 @@ class SingleRewardOrderRewardDelivery(BaseModel):
     Details on how the reward is delivered to the recipient. 
     """ # noqa: E501
     method: Optional[StrictStr] = Field(default=None, description="How to deliver the reward to the recipient.  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> ")
-    __properties: ClassVar[List[str]] = ["method"]
+    meta: Optional[SingleRewardOrderRewardDeliveryMeta] = None
+    __properties: ClassVar[List[str]] = ["method", "meta"]
 
     @field_validator('method')
     def method_validate_enum(cls, value):
@@ -79,6 +81,9 @@ class SingleRewardOrderRewardDelivery(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of meta
+        if self.meta:
+            _dict['meta'] = self.meta.to_dict()
         return _dict
 
     @classmethod
@@ -91,7 +96,8 @@ class SingleRewardOrderRewardDelivery(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "method": obj.get("method")
+            "method": obj.get("method"),
+            "meta": SingleRewardOrderRewardDeliveryMeta.from_dict(obj["meta"]) if obj.get("meta") is not None else None
         })
         return _obj
 

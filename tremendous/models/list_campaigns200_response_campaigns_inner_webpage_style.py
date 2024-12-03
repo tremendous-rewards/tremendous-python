@@ -3,7 +3,7 @@
 """
     API Endpoints
 
-    Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+    Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
     The version of the OpenAPI document: 2
     Contact: developers@tremendous.com
@@ -31,8 +31,8 @@ class ListCampaigns200ResponseCampaignsInnerWebpageStyle(BaseModel):
     message: Optional[StrictStr] = Field(default=None, description="Message for the reward page")
     logo_image_url: Optional[StrictStr] = Field(default=None, description="URL of a publicly-accessible image (png, jpeg, jpg, gif, or svg). This image will be copied to our storage location.")
     logo_image_height_px: Optional[StrictInt] = Field(default=None, description="Image height in pixels")
-    logo_background_color: Optional[StrictStr] = Field(default=None, description="Logo backgrond color code (hex, rgb, or rgba)")
-    background_color: Optional[StrictStr] = Field(default=None, description="Backgrond color code (hex, rgb, or rgba)")
+    logo_background_color: Optional[StrictStr] = Field(default=None, description="Logo background color code (hex, rgb, or rgba)")
+    background_color: Optional[StrictStr] = Field(default=None, description="Background color code (hex, rgb, or rgba)")
     __properties: ClassVar[List[str]] = ["headline", "message", "logo_image_url", "logo_image_height_px", "logo_background_color", "background_color"]
 
     model_config = ConfigDict(
