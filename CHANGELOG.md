@@ -1,5 +1,18 @@
 # Changelog
 
+## [4.3.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.2.0...tremendous-python-v4.3.0) (2024-12-03)
+
+
+### Features
+
+* add `DeliveryMetadata` to `POST /orders` ([#42](https://github.com/tremendous-rewards/tremendous-python/issues/42)) ([d625a11](https://github.com/tremendous-rewards/tremendous-python/commit/d625a113e08d600e4d1c3d6d1a6af67f68708dbc))
+
+
+### Bug Fixes
+
+* add missing `FraudReviewReason` value ([d625a11](https://github.com/tremendous-rewards/tremendous-python/commit/d625a113e08d600e4d1c3d6d1a6af67f68708dbc))
+* fix typos ([d625a11](https://github.com/tremendous-rewards/tremendous-python/commit/d625a113e08d600e4d1c3d6d1a6af67f68708dbc))
+
 ## [4.2.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.1.0...tremendous-python-v4.2.0) (2024-11-08)
 
 
