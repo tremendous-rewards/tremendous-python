@@ -3,7 +3,7 @@
 """
     API Endpoints
 
-    Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+    Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
     The version of the OpenAPI document: 2
     Contact: developers@tremendous.com
@@ -31,7 +31,7 @@ class CreateReport201ResponseReport(BaseModel):
     id: Optional[StrictStr] = Field(default=None, description="Tremendous ID of the report, used to retrieve your report")
     status: Optional[StrictStr] = Field(default=None, description="Status of this report  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>CREATED</code></td>       <td>Report has been created</td>     </tr>     <tr>       <td><code>PROCESSING</code></td>       <td>Report is currently being generated</td>     </tr>     <tr>       <td><code>READY_FOR_DOWNLOAD</code></td>       <td>Report generation is complete and ready for download</td>     </tr>     <tr>       <td><code>FAILED</code></td>       <td>Report failed to generate</td>     </tr>   </tbody> </table> ")
     created_at: Optional[datetime] = Field(default=None, description="Timestamp of when the report was created ")
-    expected_completion_at: Optional[datetime] = Field(default=None, description="Timestamp of when the report is expected to finish generating. If the report if complete, this will return the time the report completed generating at. ")
+    expected_completion_at: Optional[datetime] = Field(default=None, description="Timestamp of when the report is expected to finish generating. If the report is complete, this will return the time the report completed generating at. ")
     url: Optional[StrictStr] = Field(default=None, description="URL to download the report. Only returned when the report generation is complete and report is ready for download. URL is valid for 7 days from generation completion ")
     __properties: ClassVar[List[str]] = ["id", "status", "created_at", "expected_completion_at", "url"]
 

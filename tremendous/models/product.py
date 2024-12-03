@@ -3,7 +3,7 @@
 """
     API Endpoints
 
-    Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+    Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
     The version of the OpenAPI document: 2
     Contact: developers@tremendous.com
@@ -29,14 +29,14 @@ from typing_extensions import Self
 
 class Product(BaseModel):
     """
-    A product represents one way to payout a reward to it's recipient. Think:  * Amazon.com gift card (ID: `OKMHM2X2OHYV`) * Donations to Save the Children (ID: `ESRNAD533W5A`) * Virtual Visa debit card (ID: `Q24BD9EZ332JT`)  each of which is one specific product on Tremendous.  > 📘 All available products > > See this [list](https://www.tremendous.com/catalog)  Products can be limited in their availability to recipients by  * geography (field `countries`) * currency (field `currencies`) * amount of the reward (field `skus`)   * e.g. adidas gift cards accept any amount between 5 and 200 USD.  See the description of each respective parameter for further details. 
+    A product represents one way to payout a reward to its recipient. Think:  * Amazon.com gift card (ID: `OKMHM2X2OHYV`) * Donations to Save the Children (ID: `ESRNAD533W5A`) * Virtual Visa debit card (ID: `Q24BD9EZ332JT`)  each of which is one specific product on Tremendous.  > 📘 All available products > > See this [list](https://www.tremendous.com/catalog)  Products can be limited in their availability to recipients by  * geography (field `countries`) * currency (field `currencies`) * amount of the reward (field `skus`)   * e.g. adidas gift cards accept any amount between 5 and 200 USD.  See the description of each respective parameter for further details. 
     """ # noqa: E501
     id: Annotated[str, Field(strict=True)]
     name: StrictStr = Field(description="Name of the product")
     description: StrictStr = Field(description="Detailed description of the product. Mostly used for products with a `category` of `charities`.")
     category: StrictStr = Field(description="The category of this product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>   </tbody> </table> ")
     disclosure: StrictStr = Field(description="Legal disclosures for this product. Can be in HTML format.")
-    skus: Optional[List[ListProductsResponseProductsInnerSkusInner]] = Field(default=None, description="Products may are restricted in their usage based on the amount of the reward. The `skus` array defines bands of denominations in which this product may be used for payouts. ")
+    skus: Optional[List[ListProductsResponseProductsInnerSkusInner]] = Field(default=None, description="Products are restricted in their usage based on the amount of the reward. The `skus` array defines bands of denominations in which this product may be used for payouts. ")
     currency_codes: Annotated[List[StrictStr], Field(min_length=1)] = Field(description="Available currencies for this product")
     countries: Annotated[List[ListProductsResponseProductsInnerCountriesInner], Field(min_length=1)] = Field(description="List of countries in which this product is available to recipients.")
     images: Annotated[List[ListProductsResponseProductsInnerImagesInner], Field(min_length=0)] = Field(description="List of product images associated with this product (e.g. logos or images of the gift cards)")

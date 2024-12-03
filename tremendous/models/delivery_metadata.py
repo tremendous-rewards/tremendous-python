@@ -18,18 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_roles200_response_roles_inner import ListRoles200ResponseRolesInner
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListRoles200Response(BaseModel):
+class DeliveryMetadata(BaseModel):
     """
-    ListRoles200Response
+    Customizable reward delivery metadata, taking precedence over the related campaign settings. 
     """ # noqa: E501
-    roles: List[ListRoles200ResponseRolesInner]
-    __properties: ClassVar[List[str]] = ["roles"]
+    sender_name: Optional[StrictStr] = Field(default=None, description="The \"sender name\" used in the delivery. If it's an email reward, \"via Tremendous\" will be appended to the value. Please note that you cannot customize the sender email.")
+    subject_line: Optional[StrictStr] = Field(default=None, description="The subject line used in the delivery.")
+    message: Optional[StrictStr] = Field(default=None, description="The content of the message of the reward, shown in the email / SMS and on the landing page.")
+    __properties: ClassVar[List[str]] = ["sender_name", "subject_line", "message"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +50,7 @@ class ListRoles200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListRoles200Response from a JSON string"""
+        """Create an instance of DeliveryMetadata from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -70,18 +71,11 @@ class ListRoles200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in roles (list)
-        _items = []
-        if self.roles:
-            for _item in self.roles:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['roles'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListRoles200Response from a dict"""
+        """Create an instance of DeliveryMetadata from a dict"""
         if obj is None:
             return None
 
@@ -89,7 +83,9 @@ class ListRoles200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "roles": [ListRoles200ResponseRolesInner.from_dict(_item) for _item in obj["roles"]] if obj.get("roles") is not None else None
+            "sender_name": obj.get("sender_name"),
+            "subject_line": obj.get("subject_line"),
+            "message": obj.get("message")
         })
         return _obj
 
