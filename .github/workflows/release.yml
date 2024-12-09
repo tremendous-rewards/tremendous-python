@@ -40,5 +40,5 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Publish package
-        uses: pypa/gh-action-pypi-publish@15c56dba361d8335944d31a2ecd17d700fc7bcbc
+        uses: pypa/gh-action-pypi-publish@67339c736fd9354cd4f8cb0b744f2b82a74b5c70
         if: ${{ steps.release.outputs.release_created }}
