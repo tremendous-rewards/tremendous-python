@@ -3,7 +3,7 @@ import os
 
 from setuptools import setup, find_packages
 
-PYTHON_REQUIRES = ">=3.7"
+PYTHON_REQUIRES = ">=3.8"
 
 data = {}
 root = os.path.abspath(os.path.dirname(__file__))
