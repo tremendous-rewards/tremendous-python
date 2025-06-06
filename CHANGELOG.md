@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.0.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.3.0...tremendous-python-v5.0.0) (2025-06-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove Python 3.7 support ([#50](https://github.com/tremendous-rewards/tremendous-python/issues/50))
+
+### Bug Fixes
+
+* Remove Python 3.7 support ([#50](https://github.com/tremendous-rewards/tremendous-python/issues/50)) ([17d8d5c](https://github.com/tremendous-rewards/tremendous-python/commit/17d8d5ca06983edab63c5736814ff1c46dc15be0))
+
 ## [4.3.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.2.0...tremendous-python-v4.3.0) (2024-12-03)
 
 
