@@ -18,26 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListProductsResponseProductsInnerImagesInner(BaseModel):
+class ProductDocuments(BaseModel):
     """
-    ListProductsResponseProductsInnerImagesInner
+    URLs and files related to product documentation. 
     """ # noqa: E501
-    src: StrictStr = Field(description="URL to this image")
-    type: StrictStr = Field(description="Type of image")
-    content_type: Optional[StrictStr] = Field(default=None, description="The MIME content type of this image")
-    __properties: ClassVar[List[str]] = ["src", "type", "content_type"]
-
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['card', 'logo']):
-            raise ValueError("must be one of enum values ('card', 'logo')")
-        return value
+    cardholder_agreement_pdf: Optional[StrictStr] = Field(default=None, description="URL to the cardholder agreement PDF file.")
+    cardholder_agreement_url: Optional[StrictStr] = Field(default=None, description="URL to the cardholder agreement web page.")
+    privacy_policy_url: Optional[StrictStr] = Field(default=None, description="URL to the privacy policy web page.")
+    __properties: ClassVar[List[str]] = ["cardholder_agreement_pdf", "cardholder_agreement_url", "privacy_policy_url"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -57,7 +50,7 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListProductsResponseProductsInnerImagesInner from a JSON string"""
+        """Create an instance of ProductDocuments from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,16 +71,11 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if content_type (nullable) is None
-        # and model_fields_set contains the field
-        if self.content_type is None and "content_type" in self.model_fields_set:
-            _dict['content_type'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListProductsResponseProductsInnerImagesInner from a dict"""
+        """Create an instance of ProductDocuments from a dict"""
         if obj is None:
             return None
 
@@ -95,9 +83,9 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "src": obj.get("src"),
-            "type": obj.get("type"),
-            "content_type": obj.get("content_type")
+            "cardholder_agreement_pdf": obj.get("cardholder_agreement_pdf"),
+            "cardholder_agreement_url": obj.get("cardholder_agreement_url"),
+            "privacy_policy_url": obj.get("privacy_policy_url")
         })
         return _obj
 

@@ -22,6 +22,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from tremendous.models.list_products_response_products_inner_countries_inner import ListProductsResponseProductsInnerCountriesInner
+from tremendous.models.list_products_response_products_inner_documents import ListProductsResponseProductsInnerDocuments
 from tremendous.models.list_products_response_products_inner_images_inner import ListProductsResponseProductsInnerImagesInner
 from tremendous.models.list_products_response_products_inner_skus_inner import ListProductsResponseProductsInnerSkusInner
 from typing import Optional, Set
@@ -34,13 +35,15 @@ class ListProductsResponseProductsInner(BaseModel):
     id: Annotated[str, Field(strict=True)]
     name: StrictStr = Field(description="Name of the product")
     description: StrictStr = Field(description="Detailed description of the product. Mostly used for products with a `category` of `charities`.")
-    category: StrictStr = Field(description="The category of this product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>   </tbody> </table> ")
+    category: StrictStr = Field(description="The category of this product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>   </tbody> </table> ")
     disclosure: StrictStr = Field(description="Legal disclosures for this product. Can be in HTML format.")
     skus: Optional[List[ListProductsResponseProductsInnerSkusInner]] = Field(default=None, description="Products are restricted in their usage based on the amount of the reward. The `skus` array defines bands of denominations in which this product may be used for payouts. ")
     currency_codes: Annotated[List[StrictStr], Field(min_length=1)] = Field(description="Available currencies for this product")
     countries: Annotated[List[ListProductsResponseProductsInnerCountriesInner], Field(min_length=1)] = Field(description="List of countries in which this product is available to recipients.")
     images: Annotated[List[ListProductsResponseProductsInnerImagesInner], Field(min_length=0)] = Field(description="List of product images associated with this product (e.g. logos or images of the gift cards)")
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "category", "disclosure", "skus", "currency_codes", "countries", "images"]
+    usage_instructions: Optional[StrictStr] = Field(default=None, description="Instructions for how to use the product, if applicable. Mostly used for products with a `category` of `merchant_card`.")
+    documents: Optional[ListProductsResponseProductsInnerDocuments] = None
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "category", "disclosure", "skus", "currency_codes", "countries", "images", "usage_instructions", "documents"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -52,8 +55,8 @@ class ListProductsResponseProductsInner(BaseModel):
     @field_validator('category')
     def category_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['ach', 'charity', 'merchant_card', 'paypal', 'venmo', 'visa_card']):
-            raise ValueError("must be one of enum values ('ach', 'charity', 'merchant_card', 'paypal', 'venmo', 'visa_card')")
+        if value not in set(['ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card']):
+            raise ValueError("must be one of enum values ('ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card')")
         return value
 
     @field_validator('currency_codes')
@@ -124,6 +127,14 @@ class ListProductsResponseProductsInner(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['images'] = _items
+        # override the default output from pydantic by calling `to_dict()` of documents
+        if self.documents:
+            _dict['documents'] = self.documents.to_dict()
+        # set to None if documents (nullable) is None
+        # and model_fields_set contains the field
+        if self.documents is None and "documents" in self.model_fields_set:
+            _dict['documents'] = None
+
         return _dict
 
     @classmethod
@@ -144,7 +155,9 @@ class ListProductsResponseProductsInner(BaseModel):
             "skus": [ListProductsResponseProductsInnerSkusInner.from_dict(_item) for _item in obj["skus"]] if obj.get("skus") is not None else None,
             "currency_codes": obj.get("currency_codes"),
             "countries": [ListProductsResponseProductsInnerCountriesInner.from_dict(_item) for _item in obj["countries"]] if obj.get("countries") is not None else None,
-            "images": [ListProductsResponseProductsInnerImagesInner.from_dict(_item) for _item in obj["images"]] if obj.get("images") is not None else None
+            "images": [ListProductsResponseProductsInnerImagesInner.from_dict(_item) for _item in obj["images"]] if obj.get("images") is not None else None,
+            "usage_instructions": obj.get("usage_instructions"),
+            "documents": ListProductsResponseProductsInnerDocuments.from_dict(obj["documents"]) if obj.get("documents") is not None else None
         })
         return _obj
 

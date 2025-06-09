@@ -18,25 +18,29 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
+from tremendous.models.connected_organization_organization import ConnectedOrganizationOrganization
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListProductsResponseProductsInnerImagesInner(BaseModel):
+class ConnectedOrganization(BaseModel):
     """
-    ListProductsResponseProductsInnerImagesInner
+    ConnectedOrganization
     """ # noqa: E501
-    src: StrictStr = Field(description="URL to this image")
-    type: StrictStr = Field(description="Type of image")
-    content_type: Optional[StrictStr] = Field(default=None, description="The MIME content type of this image")
-    __properties: ClassVar[List[str]] = ["src", "type", "content_type"]
+    id: Annotated[str, Field(strict=True)] = Field(description="Tremendous' identifier for the connected organization.")
+    client_id: StrictStr = Field(description="Client ID of the OAuth app that is to be used by the platform once the integration is complete.")
+    created_at: datetime = Field(description="Timestamp of when the connected organization was created.")
+    organization: Optional[ConnectedOrganizationOrganization] = None
+    __properties: ClassVar[List[str]] = ["id", "client_id", "created_at", "organization"]
 
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['card', 'logo']):
-            raise ValueError("must be one of enum values ('card', 'logo')")
+    @field_validator('id')
+    def id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if not re.match(r"[A-Z0-9]{4,20}", value):
+            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
@@ -57,7 +61,7 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListProductsResponseProductsInnerImagesInner from a JSON string"""
+        """Create an instance of ConnectedOrganization from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -69,8 +73,10 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
         ])
 
         _dict = self.model_dump(
@@ -78,16 +84,19 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if content_type (nullable) is None
+        # override the default output from pydantic by calling `to_dict()` of organization
+        if self.organization:
+            _dict['organization'] = self.organization.to_dict()
+        # set to None if organization (nullable) is None
         # and model_fields_set contains the field
-        if self.content_type is None and "content_type" in self.model_fields_set:
-            _dict['content_type'] = None
+        if self.organization is None and "organization" in self.model_fields_set:
+            _dict['organization'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListProductsResponseProductsInnerImagesInner from a dict"""
+        """Create an instance of ConnectedOrganization from a dict"""
         if obj is None:
             return None
 
@@ -95,9 +104,10 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "src": obj.get("src"),
-            "type": obj.get("type"),
-            "content_type": obj.get("content_type")
+            "id": obj.get("id"),
+            "client_id": obj.get("client_id"),
+            "created_at": obj.get("created_at"),
+            "organization": ConnectedOrganizationOrganization.from_dict(obj["organization"]) if obj.get("organization") is not None else None
         })
         return _obj
 

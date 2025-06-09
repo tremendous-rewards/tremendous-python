@@ -31,9 +31,11 @@ class ListFundingSources200ResponseFundingSourcesInner(BaseModel):
     """ # noqa: E501
     id: Annotated[str, Field(strict=True)]
     method: StrictStr = Field(description="You can pay for rewards using different payment methods on Tremendous:  <table>   <thead>     <tr>       <th>Payment Method</th>       <th>Description</th>       </tr>   </thead>   <tbody>     <tr>       <td><code>balance</code></td>       <td>Pre-funded balance in your Tremendous account to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>bank_account</code></td>       <td>Bank account to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>credit_card</code></td>       <td>Credit card to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>invoice</code></td>       <td>Send rewards to recipients and pay by invoice.</td>     </tr>    </tbody> </table> ")
+    usage_permissions: Optional[List[StrictStr]] = Field(default=None, description="Indicates the level of access granted for using this funding source.  Permissions is an array containing the following:   * `api_orders`   * `dashboard_orders`   * `balance_funding` ")
+    status: Optional[StrictStr] = Field(default=None, description="Status of the funding_source ")
     type: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.** ")
     meta: ListFundingSources200ResponseFundingSourcesInnerMeta
-    __properties: ClassVar[List[str]] = ["id", "method", "type", "meta"]
+    __properties: ClassVar[List[str]] = ["id", "method", "usage_permissions", "status", "type", "meta"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -47,6 +49,27 @@ class ListFundingSources200ResponseFundingSourcesInner(BaseModel):
         """Validates the enum"""
         if value not in set(['balance', 'bank_account', 'credit_card', 'invoice']):
             raise ValueError("must be one of enum values ('balance', 'bank_account', 'credit_card', 'invoice')")
+        return value
+
+    @field_validator('usage_permissions')
+    def usage_permissions_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        for i in value:
+            if i not in set(['api_orders', 'dashboard_orders', 'balance_funding']):
+                raise ValueError("each list item must be one of ('api_orders', 'dashboard_orders', 'balance_funding')")
+        return value
+
+    @field_validator('status')
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['active', 'deleted', 'pending_confirmation', 'failed']):
+            raise ValueError("must be one of enum values ('active', 'deleted', 'pending_confirmation', 'failed')")
         return value
 
     @field_validator('type')
@@ -115,6 +138,8 @@ class ListFundingSources200ResponseFundingSourcesInner(BaseModel):
         _obj = cls.model_validate({
             "id": obj.get("id"),
             "method": obj.get("method"),
+            "usage_permissions": obj.get("usage_permissions"),
+            "status": obj.get("status"),
             "type": obj.get("type"),
             "meta": ListFundingSources200ResponseFundingSourcesInnerMeta.from_dict(obj["meta"]) if obj.get("meta") is not None else None
         })

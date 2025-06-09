@@ -35,7 +35,8 @@ class CreateOrganizationRequestCopySettings(BaseModel):
     users: Optional[StrictBool] = Field(default=False, description="Copy over the users and custom roles from the current organization to the new organization. Defaults to `false`.")
     custom_roles: Optional[StrictBool] = Field(default=False, description="Copy over the custom roles from the current organization to the new organization. Custom roles are always copied if `users` is `true`. Defaults to `false`.")
     fraud_prevention: Optional[StrictBool] = Field(default=False, description="Copy over the fraud prevention settings and rules from the current organization to the new organization. Defaults to `false`.")
-    __properties: ClassVar[List[str]] = ["campaigns", "custom_fields", "order_approvals", "payment_methods", "security_settings", "users", "custom_roles", "fraud_prevention"]
+    tax_management: Optional[StrictBool] = Field(default=False, description="Copy over the tax management settings, including the association with the parent tax entity, from the current organization to the new organization. Defaults to `false`.")
+    __properties: ClassVar[List[str]] = ["campaigns", "custom_fields", "order_approvals", "payment_methods", "security_settings", "users", "custom_roles", "fraud_prevention", "tax_management"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,7 +96,8 @@ class CreateOrganizationRequestCopySettings(BaseModel):
             "security_settings": obj.get("security_settings") if obj.get("security_settings") is not None else True,
             "users": obj.get("users") if obj.get("users") is not None else False,
             "custom_roles": obj.get("custom_roles") if obj.get("custom_roles") is not None else False,
-            "fraud_prevention": obj.get("fraud_prevention") if obj.get("fraud_prevention") is not None else False
+            "fraud_prevention": obj.get("fraud_prevention") if obj.get("fraud_prevention") is not None else False,
+            "tax_management": obj.get("tax_management") if obj.get("tax_management") is not None else False
         })
         return _obj
 
