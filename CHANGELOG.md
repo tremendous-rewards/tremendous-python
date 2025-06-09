@@ -1,5 +1,26 @@
 # Changelog
 
+## [5.0.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.3.0...tremendous-python-v5.0.0) (2025-06-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove Python 3.7 support ([#50](https://github.com/tremendous-rewards/tremendous-python/issues/50))
+
+### Features
+
+* add more fields to the Funding Source resource ([d6b5213](https://github.com/tremendous-rewards/tremendous-python/commit/d6b5213fe089214deb7d75c570392ae68c34278e))
+* add support for the Cancel Reward endpoint ([d6b5213](https://github.com/tremendous-rewards/tremendous-python/commit/d6b5213fe089214deb7d75c570392ae68c34278e))
+* add support for the Connected Organization and Connected ([d6b5213](https://github.com/tremendous-rewards/tremendous-python/commit/d6b5213fe089214deb7d75c570392ae68c34278e))
+* regen SDK code ([#52](https://github.com/tremendous-rewards/tremendous-python/issues/52)) ([d6b5213](https://github.com/tremendous-rewards/tremendous-python/commit/d6b5213fe089214deb7d75c570392ae68c34278e))
+* update fields regarding disclosures on the Products resource ([d6b5213](https://github.com/tremendous-rewards/tremendous-python/commit/d6b5213fe089214deb7d75c570392ae68c34278e))
+
+
+### Bug Fixes
+
+* expect `200` instead of `201` when creating a Report or a Campaign ([d6b5213](https://github.com/tremendous-rewards/tremendous-python/commit/d6b5213fe089214deb7d75c570392ae68c34278e))
+* Remove Python 3.7 support ([#50](https://github.com/tremendous-rewards/tremendous-python/issues/50)) ([17d8d5c](https://github.com/tremendous-rewards/tremendous-python/commit/17d8d5ca06983edab63c5736814ff1c46dc15be0))
+
 ## [4.3.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.2.0...tremendous-python-v4.3.0) (2024-12-03)
 
 
