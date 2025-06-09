@@ -18,26 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from tremendous.models.create_report200_response_report import CreateReport200ResponseReport
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListProductsResponseProductsInnerImagesInner(BaseModel):
+class CreateReport200Response(BaseModel):
     """
-    ListProductsResponseProductsInnerImagesInner
+    CreateReport200Response
     """ # noqa: E501
-    src: StrictStr = Field(description="URL to this image")
-    type: StrictStr = Field(description="Type of image")
-    content_type: Optional[StrictStr] = Field(default=None, description="The MIME content type of this image")
-    __properties: ClassVar[List[str]] = ["src", "type", "content_type"]
-
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['card', 'logo']):
-            raise ValueError("must be one of enum values ('card', 'logo')")
-        return value
+    report: CreateReport200ResponseReport
+    message: Optional[StrictStr] = Field(default=None, description="Report status message")
+    __properties: ClassVar[List[str]] = ["report", "message"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -57,7 +50,7 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListProductsResponseProductsInnerImagesInner from a JSON string"""
+        """Create an instance of CreateReport200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,16 +71,14 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if content_type (nullable) is None
-        # and model_fields_set contains the field
-        if self.content_type is None and "content_type" in self.model_fields_set:
-            _dict['content_type'] = None
-
+        # override the default output from pydantic by calling `to_dict()` of report
+        if self.report:
+            _dict['report'] = self.report.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListProductsResponseProductsInnerImagesInner from a dict"""
+        """Create an instance of CreateReport200Response from a dict"""
         if obj is None:
             return None
 
@@ -95,9 +86,8 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "src": obj.get("src"),
-            "type": obj.get("type"),
-            "content_type": obj.get("content_type")
+            "report": CreateReport200ResponseReport.from_dict(obj["report"]) if obj.get("report") is not None else None,
+            "message": obj.get("message")
         })
         return _obj
 
