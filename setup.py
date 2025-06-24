@@ -21,7 +21,7 @@ setup(
     url="https://github.com/tremendous-rewards/tremendous-python",
     keywords=["Api", "Gift cards", "Rewards", "Incentives", "Tremendous"],
     install_requires=[
-        "urllib3 >= 1.25.3, < 2.1.0",
+        "urllib3 >= 2.1.0, < 3.0.0",
         "python-dateutil",
         "pydantic >= 2",
         "typing-extensions >= 4.7.1",
