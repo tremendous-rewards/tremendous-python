@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.1.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.0.0...tremendous-python-v5.1.0) (2025-06-24)
+
+
+### Bug Fixes
+
+* unlock `urllib3` dependency to support recent releases ([#53](https://github.com/tremendous-rewards/tremendous-python/issues/53)) ([35c2826](https://github.com/tremendous-rewards/tremendous-python/commit/35c2826006d948cc8105527002ae945bd2ea054d))
+
+
+### Miscellaneous Chores
+
+* release 5.1.0 ([65f0167](https://github.com/tremendous-rewards/tremendous-python/commit/65f0167caf14bcb8e1e7b1fd65b0c5b95263b170))
+
 ## [5.0.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v4.3.0...tremendous-python-v5.0.0) (2025-06-09)
 
 
