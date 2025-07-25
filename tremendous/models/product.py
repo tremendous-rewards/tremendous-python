@@ -111,23 +111,23 @@ class Product(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in skus (list)
         _items = []
         if self.skus:
-            for _item in self.skus:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_skus in self.skus:
+                if _item_skus:
+                    _items.append(_item_skus.to_dict())
             _dict['skus'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in countries (list)
         _items = []
         if self.countries:
-            for _item in self.countries:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_countries in self.countries:
+                if _item_countries:
+                    _items.append(_item_countries.to_dict())
             _dict['countries'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in images (list)
         _items = []
         if self.images:
-            for _item in self.images:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_images in self.images:
+                if _item_images:
+                    _items.append(_item_images.to_dict())
             _dict['images'] = _items
         # override the default output from pydantic by calling `to_dict()` of documents
         if self.documents:

@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictBytes, StrictInt, StrictStr, field_validator
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Tuple, Union
 from typing_extensions import Annotated
 from tremendous.models.create_api_key200_response import CreateApiKey200Response
 from tremendous.models.create_campaign200_response import CreateCampaign200Response
@@ -34,7 +34,6 @@ from tremendous.models.create_invoice_request import CreateInvoiceRequest
 from tremendous.models.create_member200_response import CreateMember200Response
 from tremendous.models.create_member_request import CreateMemberRequest
 from tremendous.models.create_order200_response import CreateOrder200Response
-from tremendous.models.create_order_request import CreateOrderRequest
 from tremendous.models.create_organization200_response import CreateOrganization200Response
 from tremendous.models.create_organization_request import CreateOrganizationRequest
 from tremendous.models.create_report200_response import CreateReport200Response
@@ -72,6 +71,7 @@ from tremendous.models.list_webhook_events200_response import ListWebhookEvents2
 from tremendous.models.list_webhooks200_response import ListWebhooks200Response
 from tremendous.models.resend_reward_request import ResendRewardRequest
 from tremendous.models.simulate_webhook_request import SimulateWebhookRequest
+from tremendous.models.single_reward_order import SingleRewardOrder
 from tremendous.models.update_campaign_request import UpdateCampaignRequest
 from tremendous.models.update_fraud_rule_list200_response import UpdateFraudRuleList200Response
 from tremendous.models.update_fraud_rule_list_request import UpdateFraudRuleListRequest
@@ -330,7 +330,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -343,11 +345,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -600,7 +603,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -613,11 +618,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -873,7 +879,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -886,11 +894,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1130,7 +1139,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1141,11 +1152,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1395,7 +1407,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1408,11 +1422,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -1681,7 +1696,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1694,11 +1711,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -1967,7 +1985,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1980,11 +2000,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -2266,7 +2287,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2281,11 +2304,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -2551,7 +2575,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2564,11 +2590,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -2834,7 +2861,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2847,11 +2876,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -2893,7 +2923,7 @@ class TremendousApi:
     @validate_call
     def create_order(
         self,
-        create_order_request: Annotated[CreateOrderRequest, Field(description="Order to create")],
+        single_reward_order: Annotated[SingleRewardOrder, Field(description="Order to create")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2911,8 +2941,8 @@ class TremendousApi:
 
         Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">external_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference for this order, supplied by the customer.</p>  <p>When set, <code>external_id</code> makes order idempotent. All requests that use the same <code>external_id</code> after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a <code>201</code> response code. These responses <strong>fail</strong> to create any further orders.</p>  <p>It also allows for retrieving by <code>external_id</code> instead of <code>id</code> only.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">payment</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">funding_source_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the funding source that will be used to pay for the order. Use <code>balance</code> to use your Tremendous&#39;s balance.</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">reward</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>A single reward, sent to a recipient. A reward is always part of an order.</p>  <p>Either <code>products</code> or <code>campaign_id</code> must be specified.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the reward</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the order this reward is part of.</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date-time</span></td><td><p>Date the reward was created</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">products</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.</p>  <p>Providing a <code>products</code> array will override the products made available by the campaign specified using the <code>campaign_id</code> property unless the <code>products</code> array is empty. It will <em>not</em> override other campaign attributes, like the message and customization of the look and feel.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">denomination</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the reward</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency_code</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the reward</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">recipient</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details of the recipient of the reward</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Name of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">email</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Email address of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">phone</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">deliver_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">custom_fields</code> </div> </td><td><span class=\"property-type\">array</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show array item type</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the custom field</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Value of the custom field</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">label</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Label of the custom field</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">language</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Set this to translate the redemption experience for this reward. Pass a 2-letter <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1 code</a> for the desired language. Defaults to <code>en</code>.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details on how the reward is delivered to the recipient.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>How to deliver the reward to the recipient.</p>  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">meta</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Customizable reward delivery metadata, taking precedence over the related campaign settings.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">sender_name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The &quot;sender name&quot; used in the delivery. If it&#39;s an email reward, &quot;via Tremendous&quot; will be appended to the value. Please note that you cannot customize the sender email.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">subject_line</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The subject line used in the delivery.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">message</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The content of the message of the reward, shown in the email / SMS and on the landing page.</p> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://developers.tremendous.com/reference/list-funding-sources).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://developers.tremendous.com/docs/sandbox-environment).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same `external_id` are idempotent.  Submitting an order with an already existing `external_id` will not create a new order.  If the payload is the same as a previously issued order, our API will return a `201` response code, along with a representation of the already-existing order in the response body.  If the `external_id` used is for an order with different parameters (e.g. amount, recipient), our API will return a `409` response code, indicating a conflicting resource. 
 
-        :param create_order_request: Order to create (required)
-        :type create_order_request: CreateOrderRequest
+        :param single_reward_order: Order to create (required)
+        :type single_reward_order: SingleRewardOrder
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2936,7 +2966,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_order_serialize(
-            create_order_request=create_order_request,
+            single_reward_order=single_reward_order,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2968,7 +2998,7 @@ class TremendousApi:
     @validate_call
     def create_order_with_http_info(
         self,
-        create_order_request: Annotated[CreateOrderRequest, Field(description="Order to create")],
+        single_reward_order: Annotated[SingleRewardOrder, Field(description="Order to create")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2986,8 +3016,8 @@ class TremendousApi:
 
         Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">external_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference for this order, supplied by the customer.</p>  <p>When set, <code>external_id</code> makes order idempotent. All requests that use the same <code>external_id</code> after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a <code>201</code> response code. These responses <strong>fail</strong> to create any further orders.</p>  <p>It also allows for retrieving by <code>external_id</code> instead of <code>id</code> only.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">payment</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">funding_source_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the funding source that will be used to pay for the order. Use <code>balance</code> to use your Tremendous&#39;s balance.</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">reward</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>A single reward, sent to a recipient. A reward is always part of an order.</p>  <p>Either <code>products</code> or <code>campaign_id</code> must be specified.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the reward</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the order this reward is part of.</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date-time</span></td><td><p>Date the reward was created</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">products</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.</p>  <p>Providing a <code>products</code> array will override the products made available by the campaign specified using the <code>campaign_id</code> property unless the <code>products</code> array is empty. It will <em>not</em> override other campaign attributes, like the message and customization of the look and feel.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">denomination</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the reward</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency_code</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the reward</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">recipient</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details of the recipient of the reward</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Name of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">email</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Email address of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">phone</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">deliver_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">custom_fields</code> </div> </td><td><span class=\"property-type\">array</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show array item type</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the custom field</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Value of the custom field</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">label</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Label of the custom field</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">language</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Set this to translate the redemption experience for this reward. Pass a 2-letter <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1 code</a> for the desired language. Defaults to <code>en</code>.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details on how the reward is delivered to the recipient.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>How to deliver the reward to the recipient.</p>  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">meta</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Customizable reward delivery metadata, taking precedence over the related campaign settings.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">sender_name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The &quot;sender name&quot; used in the delivery. If it&#39;s an email reward, &quot;via Tremendous&quot; will be appended to the value. Please note that you cannot customize the sender email.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">subject_line</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The subject line used in the delivery.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">message</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The content of the message of the reward, shown in the email / SMS and on the landing page.</p> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://developers.tremendous.com/reference/list-funding-sources).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://developers.tremendous.com/docs/sandbox-environment).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same `external_id` are idempotent.  Submitting an order with an already existing `external_id` will not create a new order.  If the payload is the same as a previously issued order, our API will return a `201` response code, along with a representation of the already-existing order in the response body.  If the `external_id` used is for an order with different parameters (e.g. amount, recipient), our API will return a `409` response code, indicating a conflicting resource. 
 
-        :param create_order_request: Order to create (required)
-        :type create_order_request: CreateOrderRequest
+        :param single_reward_order: Order to create (required)
+        :type single_reward_order: SingleRewardOrder
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3011,7 +3041,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_order_serialize(
-            create_order_request=create_order_request,
+            single_reward_order=single_reward_order,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3043,7 +3073,7 @@ class TremendousApi:
     @validate_call
     def create_order_without_preload_content(
         self,
-        create_order_request: Annotated[CreateOrderRequest, Field(description="Order to create")],
+        single_reward_order: Annotated[SingleRewardOrder, Field(description="Order to create")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3061,8 +3091,8 @@ class TremendousApi:
 
         Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">external_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference for this order, supplied by the customer.</p>  <p>When set, <code>external_id</code> makes order idempotent. All requests that use the same <code>external_id</code> after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a <code>201</code> response code. These responses <strong>fail</strong> to create any further orders.</p>  <p>It also allows for retrieving by <code>external_id</code> instead of <code>id</code> only.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">payment</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">funding_source_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the funding source that will be used to pay for the order. Use <code>balance</code> to use your Tremendous&#39;s balance.</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">reward</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>A single reward, sent to a recipient. A reward is always part of an order.</p>  <p>Either <code>products</code> or <code>campaign_id</code> must be specified.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the reward</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the order this reward is part of.</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date-time</span></td><td><p>Date the reward was created</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">products</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.</p>  <p>Providing a <code>products</code> array will override the products made available by the campaign specified using the <code>campaign_id</code> property unless the <code>products</code> array is empty. It will <em>not</em> override other campaign attributes, like the message and customization of the look and feel.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">denomination</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the reward</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency_code</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the reward</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">recipient</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details of the recipient of the reward</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Name of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">email</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Email address of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">phone</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">deliver_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">custom_fields</code> </div> </td><td><span class=\"property-type\">array</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show array item type</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the custom field</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Value of the custom field</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">label</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Label of the custom field</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">language</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Set this to translate the redemption experience for this reward. Pass a 2-letter <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1 code</a> for the desired language. Defaults to <code>en</code>.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details on how the reward is delivered to the recipient.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>How to deliver the reward to the recipient.</p>  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">meta</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Customizable reward delivery metadata, taking precedence over the related campaign settings.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">sender_name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The &quot;sender name&quot; used in the delivery. If it&#39;s an email reward, &quot;via Tremendous&quot; will be appended to the value. Please note that you cannot customize the sender email.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">subject_line</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The subject line used in the delivery.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">message</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The content of the message of the reward, shown in the email / SMS and on the landing page.</p> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://developers.tremendous.com/reference/list-funding-sources).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://developers.tremendous.com/docs/sandbox-environment).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same `external_id` are idempotent.  Submitting an order with an already existing `external_id` will not create a new order.  If the payload is the same as a previously issued order, our API will return a `201` response code, along with a representation of the already-existing order in the response body.  If the `external_id` used is for an order with different parameters (e.g. amount, recipient), our API will return a `409` response code, indicating a conflicting resource. 
 
-        :param create_order_request: Order to create (required)
-        :type create_order_request: CreateOrderRequest
+        :param single_reward_order: Order to create (required)
+        :type single_reward_order: SingleRewardOrder
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3086,7 +3116,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_order_serialize(
-            create_order_request=create_order_request,
+            single_reward_order=single_reward_order,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3113,7 +3143,7 @@ class TremendousApi:
 
     def _create_order_serialize(
         self,
-        create_order_request,
+        single_reward_order,
         _request_auth,
         _content_type,
         _headers,
@@ -3129,7 +3159,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -3137,16 +3169,17 @@ class TremendousApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if create_order_request is not None:
-            _body_params = create_order_request
+        if single_reward_order is not None:
+            _body_params = single_reward_order
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -3412,7 +3445,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -3425,11 +3460,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -3698,7 +3734,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -3711,11 +3749,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -3981,7 +4020,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -3994,11 +4035,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -4264,7 +4306,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -4277,11 +4321,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4534,7 +4579,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -4547,11 +4594,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4804,7 +4852,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -4817,11 +4867,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5077,7 +5128,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -5090,12 +5143,13 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'text/csv', 
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/csv', 
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5348,7 +5402,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -5361,12 +5417,13 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/pdf', 
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/pdf', 
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5638,7 +5695,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -5653,11 +5712,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -5926,7 +5986,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -5939,11 +6001,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -6196,7 +6259,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -6209,11 +6274,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -6469,7 +6535,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -6482,11 +6550,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -6742,7 +6811,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -6755,11 +6826,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -7012,7 +7084,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -7025,11 +7099,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -7282,7 +7357,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -7295,11 +7372,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -7552,7 +7630,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -7565,11 +7645,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -7819,7 +7900,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -7832,11 +7915,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -8089,7 +8173,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -8102,11 +8188,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -8356,7 +8443,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -8369,11 +8458,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -8626,7 +8716,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -8639,11 +8731,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -8899,7 +8992,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -8912,11 +9007,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -9169,7 +9265,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -9182,11 +9280,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -9439,7 +9538,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -9452,11 +9553,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -9748,7 +9850,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -9775,11 +9879,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -10016,7 +10121,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -10027,11 +10134,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -10310,7 +10418,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -10333,11 +10443,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -10603,7 +10714,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -10622,11 +10735,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -10863,7 +10977,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -10874,11 +10990,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -11128,7 +11245,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -11143,11 +11262,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -11475,7 +11595,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -11514,11 +11636,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -11755,7 +11878,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -11766,11 +11891,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -12007,7 +12133,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -12018,11 +12146,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -12285,7 +12414,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -12304,11 +12435,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -12545,7 +12677,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -12556,11 +12690,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -12875,7 +13010,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -12910,11 +13047,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -13151,7 +13289,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -13162,11 +13302,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -13429,7 +13570,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -13448,11 +13591,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -13715,7 +13859,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -13734,11 +13880,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -13975,7 +14122,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -13986,11 +14135,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -14243,7 +14393,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -14256,11 +14408,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -14497,7 +14650,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -14508,11 +14663,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -14771,7 +14927,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -14784,11 +14942,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -15041,7 +15200,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -15054,11 +15215,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -15327,7 +15489,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -15342,11 +15506,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -15628,7 +15793,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -15643,12 +15810,13 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'text/html', 
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html', 
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -15924,7 +16092,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -15939,11 +16109,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -16225,7 +16396,9 @@ class TremendousApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -16240,11 +16413,12 @@ class TremendousApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:

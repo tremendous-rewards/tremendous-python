@@ -18,18 +18,31 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_members200_response_members_inner import ListMembers200ResponseMembersInner
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListMembers200Response(BaseModel):
+class InlineObject1Reward(BaseModel):
     """
-    ListMembers200Response
+    The redemption token for a reward.
     """ # noqa: E501
-    members: List[ListMembers200ResponseMembersInner]
-    __properties: ClassVar[List[str]] = ["members"]
+    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward")
+    token: Optional[StrictStr] = Field(default=None, description="The token to redeem the reward. ")
+    expires_at: Optional[datetime] = Field(default=None, description="Date the token expires")
+    __properties: ClassVar[List[str]] = ["id", "token", "expires_at"]
+
+    @field_validator('id')
+    def id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"[A-Z0-9]{4,20}", value):
+            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +62,7 @@ class ListMembers200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListMembers200Response from a JSON string"""
+        """Create an instance of InlineObject1Reward from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -70,18 +83,11 @@ class ListMembers200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in members (list)
-        _items = []
-        if self.members:
-            for _item_members in self.members:
-                if _item_members:
-                    _items.append(_item_members.to_dict())
-            _dict['members'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListMembers200Response from a dict"""
+        """Create an instance of InlineObject1Reward from a dict"""
         if obj is None:
             return None
 
@@ -89,7 +95,9 @@ class ListMembers200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "members": [ListMembers200ResponseMembersInner.from_dict(_item) for _item in obj["members"]] if obj.get("members") is not None else None
+            "id": obj.get("id"),
+            "token": obj.get("token"),
+            "expires_at": obj.get("expires_at")
         })
         return _obj
 

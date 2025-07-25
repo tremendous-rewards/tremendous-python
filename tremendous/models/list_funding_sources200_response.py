@@ -73,9 +73,9 @@ class ListFundingSources200Response(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in funding_sources (list)
         _items = []
         if self.funding_sources:
-            for _item in self.funding_sources:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_funding_sources in self.funding_sources:
+                if _item_funding_sources:
+                    _items.append(_item_funding_sources.to_dict())
             _dict['funding_sources'] = _items
         return _dict
 

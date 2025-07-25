@@ -133,9 +133,9 @@ class SingleRewardOrderWithLinkOrder(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in rewards (list)
         _items = []
         if self.rewards:
-            for _item in self.rewards:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_rewards in self.rewards:
+                if _item_rewards:
+                    _items.append(_item_rewards.to_dict())
             _dict['rewards'] = _items
         # set to None if external_id (nullable) is None
         # and model_fields_set contains the field
