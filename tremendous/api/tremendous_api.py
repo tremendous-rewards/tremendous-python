@@ -11814,7 +11814,7 @@ class TremendousApi:
     ) -> ListFundingSources200Response:
         """List funding sources
 
-        Retrieve a list of all funding sources available for ordering through the API in your organization's account. 
+        Retrieve a list of all funding sources in your organization's account. 
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -11880,7 +11880,7 @@ class TremendousApi:
     ) -> ApiResponse[ListFundingSources200Response]:
         """List funding sources
 
-        Retrieve a list of all funding sources available for ordering through the API in your organization's account. 
+        Retrieve a list of all funding sources in your organization's account. 
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -11946,7 +11946,7 @@ class TremendousApi:
     ) -> RESTResponseType:
         """List funding sources
 
-        Retrieve a list of all funding sources available for ordering through the API in your organization's account. 
+        Retrieve a list of all funding sources in your organization's account. 
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -12594,7 +12594,7 @@ class TremendousApi:
         external_id: Annotated[Optional[StrictStr], Field(description="Only return results with a matching external_id.")] = None,
         created_at_gte: Annotated[Optional[StrictStr], Field(description="Only return results where the created_at field is greater than or equal to the supplied value. The string needs to be an ISO 8601 datetime.")] = None,
         created_at_lte: Annotated[Optional[StrictStr], Field(description="Only return results where the created_at field is less than or equal to the supplied value. The string needs to be an ISO 8601 datetime.")] = None,
-        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of orders listed. The maximum value is 100 and the default is 10.")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of orders listed. The maximum value is 500 and the default is 10.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12622,7 +12622,7 @@ class TremendousApi:
         :type created_at_gte: str
         :param created_at_lte: Only return results where the created_at field is less than or equal to the supplied value. The string needs to be an ISO 8601 datetime.
         :type created_at_lte: str
-        :param limit: Limits the number of orders listed. The maximum value is 100 and the default is 10.
+        :param limit: Limits the number of orders listed. The maximum value is 500 and the default is 10.
         :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -12684,7 +12684,7 @@ class TremendousApi:
         external_id: Annotated[Optional[StrictStr], Field(description="Only return results with a matching external_id.")] = None,
         created_at_gte: Annotated[Optional[StrictStr], Field(description="Only return results where the created_at field is greater than or equal to the supplied value. The string needs to be an ISO 8601 datetime.")] = None,
         created_at_lte: Annotated[Optional[StrictStr], Field(description="Only return results where the created_at field is less than or equal to the supplied value. The string needs to be an ISO 8601 datetime.")] = None,
-        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of orders listed. The maximum value is 100 and the default is 10.")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of orders listed. The maximum value is 500 and the default is 10.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12712,7 +12712,7 @@ class TremendousApi:
         :type created_at_gte: str
         :param created_at_lte: Only return results where the created_at field is less than or equal to the supplied value. The string needs to be an ISO 8601 datetime.
         :type created_at_lte: str
-        :param limit: Limits the number of orders listed. The maximum value is 100 and the default is 10.
+        :param limit: Limits the number of orders listed. The maximum value is 500 and the default is 10.
         :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -12774,7 +12774,7 @@ class TremendousApi:
         external_id: Annotated[Optional[StrictStr], Field(description="Only return results with a matching external_id.")] = None,
         created_at_gte: Annotated[Optional[StrictStr], Field(description="Only return results where the created_at field is greater than or equal to the supplied value. The string needs to be an ISO 8601 datetime.")] = None,
         created_at_lte: Annotated[Optional[StrictStr], Field(description="Only return results where the created_at field is less than or equal to the supplied value. The string needs to be an ISO 8601 datetime.")] = None,
-        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of orders listed. The maximum value is 100 and the default is 10.")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of orders listed. The maximum value is 500 and the default is 10.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12802,7 +12802,7 @@ class TremendousApi:
         :type created_at_gte: str
         :param created_at_lte: Only return results where the created_at field is less than or equal to the supplied value. The string needs to be an ISO 8601 datetime.
         :type created_at_lte: str
-        :param limit: Limits the number of orders listed. The maximum value is 100 and the default is 10.
+        :param limit: Limits the number of orders listed. The maximum value is 500 and the default is 10.
         :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -13482,6 +13482,7 @@ class TremendousApi:
     def list_rewards(
         self,
         offset: Annotated[Optional[StrictInt], Field(description="Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of rewards listed. The maximum value is 500 and the default is 100.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -13501,6 +13502,8 @@ class TremendousApi:
 
         :param offset: Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).
         :type offset: int
+        :param limit: Limits the number of rewards listed. The maximum value is 500 and the default is 100.
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13525,6 +13528,7 @@ class TremendousApi:
 
         _param = self._list_rewards_serialize(
             offset=offset,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13552,6 +13556,7 @@ class TremendousApi:
     def list_rewards_with_http_info(
         self,
         offset: Annotated[Optional[StrictInt], Field(description="Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of rewards listed. The maximum value is 500 and the default is 100.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -13571,6 +13576,8 @@ class TremendousApi:
 
         :param offset: Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).
         :type offset: int
+        :param limit: Limits the number of rewards listed. The maximum value is 500 and the default is 100.
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13595,6 +13602,7 @@ class TremendousApi:
 
         _param = self._list_rewards_serialize(
             offset=offset,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13622,6 +13630,7 @@ class TremendousApi:
     def list_rewards_without_preload_content(
         self,
         offset: Annotated[Optional[StrictInt], Field(description="Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of rewards listed. The maximum value is 500 and the default is 100.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -13641,6 +13650,8 @@ class TremendousApi:
 
         :param offset: Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).
         :type offset: int
+        :param limit: Limits the number of rewards listed. The maximum value is 500 and the default is 100.
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13665,6 +13676,7 @@ class TremendousApi:
 
         _param = self._list_rewards_serialize(
             offset=offset,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13687,6 +13699,7 @@ class TremendousApi:
     def _list_rewards_serialize(
         self,
         offset,
+        limit,
         _request_auth,
         _content_type,
         _headers,
@@ -13710,6 +13723,10 @@ class TremendousApi:
         if offset is not None:
             
             _query_params.append(('offset', offset))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
             
         # process the header parameters
         # process the form parameters
