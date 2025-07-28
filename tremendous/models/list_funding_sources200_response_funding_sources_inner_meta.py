@@ -30,8 +30,9 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
     """
     ListFundingSources200ResponseFundingSourcesInnerMeta
     """ # noqa: E501
-    available_cents: Optional[StrictInt] = Field(default=None, description="**Only available when `method` is set to `balance`.**  Available amount for this funding source (in Cents USD) ")
+    available_cents: Optional[StrictInt] = Field(default=None, description="**Only exists for balance and commercial invoicing.**  For balance: available amount (in cents USD) For commercial invoicing: available credit amount calculated as (credit limit - outstanding balance) (in cents USD) ")
     pending_cents: Optional[StrictInt] = Field(default=None, description="**Only available when `method` is set to `balance`.**  Funds that are already registered on your Tremendous account but which have not yet been deposited in your account (e.g. unpaid invoices) (in Cents USD). ")
+    credit_limit_cents: Optional[StrictInt] = Field(default=None, description="**Only exists for commercial invoicing.**  Available credit limit (in cents USD) ")
     accountholder_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account` or `credit_card`.**  Name of the holder of the bank account or credit_card ")
     account_type: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Is this a checking or savings account ")
     bank_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Name of the bank ")
@@ -44,8 +45,20 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
     year: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Year part of card's expiration date ")
     month: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Month part of card's expiration date ")
     last_payment_failed_at: Optional[datetime] = Field(default=None, description="**Only available when `method` is set to `bank_account` or `credit_card`.**  Point in time when the last order failed using this bank account or credit card as a funding source. ")
+    invoice_type: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Type of invoice account (e.g., commercial, pro_forma, prefunding_only) ")
+    interval: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Billing interval for commercial invoice generation (e.g., daily, weekly, monthly, twice_monthly). Returns `null` for pro forma invoices. ")
+    day_of_week: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Day of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Returns `null` for pro forma invoices. ")
+    net: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Net payment terms in days (e.g., \"30\" for Net 30) ")
+    company_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Company name for invoice billing ")
+    address_1: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Primary billing address line ")
+    address_2: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Secondary billing address line ")
+    city: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Billing address city ")
+    state: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Billing address state or province ")
+    zip: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Billing address postal code ")
+    phone: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Contact phone number for billing ")
+    emails: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Email addresses for invoice delivery (comma-separated) ")
     failure_details: Optional[ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails] = None
-    __properties: ClassVar[List[str]] = ["available_cents", "pending_cents", "accountholder_name", "account_type", "bank_name", "account_number_mask", "account_routing_mask", "refundable", "network", "last4", "expired", "year", "month", "last_payment_failed_at", "failure_details"]
+    __properties: ClassVar[List[str]] = ["available_cents", "pending_cents", "credit_limit_cents", "accountholder_name", "account_type", "bank_name", "account_number_mask", "account_routing_mask", "refundable", "network", "last4", "expired", "year", "month", "last_payment_failed_at", "invoice_type", "interval", "day_of_week", "net", "company_name", "address_1", "address_2", "city", "state", "zip", "phone", "emails", "failure_details"]
 
     @field_validator('account_type')
     def account_type_validate_enum(cls, value):
@@ -149,6 +162,16 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
         if self.last_payment_failed_at is None and "last_payment_failed_at" in self.model_fields_set:
             _dict['last_payment_failed_at'] = None
 
+        # set to None if interval (nullable) is None
+        # and model_fields_set contains the field
+        if self.interval is None and "interval" in self.model_fields_set:
+            _dict['interval'] = None
+
+        # set to None if day_of_week (nullable) is None
+        # and model_fields_set contains the field
+        if self.day_of_week is None and "day_of_week" in self.model_fields_set:
+            _dict['day_of_week'] = None
+
         # set to None if failure_details (nullable) is None
         # and model_fields_set contains the field
         if self.failure_details is None and "failure_details" in self.model_fields_set:
@@ -168,6 +191,7 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
         _obj = cls.model_validate({
             "available_cents": obj.get("available_cents"),
             "pending_cents": obj.get("pending_cents"),
+            "credit_limit_cents": obj.get("credit_limit_cents"),
             "accountholder_name": obj.get("accountholder_name"),
             "account_type": obj.get("account_type"),
             "bank_name": obj.get("bank_name"),
@@ -180,6 +204,18 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
             "year": obj.get("year"),
             "month": obj.get("month"),
             "last_payment_failed_at": obj.get("last_payment_failed_at"),
+            "invoice_type": obj.get("invoice_type"),
+            "interval": obj.get("interval"),
+            "day_of_week": obj.get("day_of_week"),
+            "net": obj.get("net"),
+            "company_name": obj.get("company_name"),
+            "address_1": obj.get("address_1"),
+            "address_2": obj.get("address_2"),
+            "city": obj.get("city"),
+            "state": obj.get("state"),
+            "zip": obj.get("zip"),
+            "phone": obj.get("phone"),
+            "emails": obj.get("emails"),
             "failure_details": ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails.from_dict(obj["failure_details"]) if obj.get("failure_details") is not None else None
         })
         return _obj

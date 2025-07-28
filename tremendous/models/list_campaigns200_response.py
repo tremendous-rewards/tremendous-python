@@ -73,9 +73,9 @@ class ListCampaigns200Response(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in campaigns (list)
         _items = []
         if self.campaigns:
-            for _item in self.campaigns:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_campaigns in self.campaigns:
+                if _item_campaigns:
+                    _items.append(_item_campaigns.to_dict())
             _dict['campaigns'] = _items
         return _dict
 

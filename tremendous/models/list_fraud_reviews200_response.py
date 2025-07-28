@@ -74,9 +74,9 @@ class ListFraudReviews200Response(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in fraud_reviews (list)
         _items = []
         if self.fraud_reviews:
-            for _item in self.fraud_reviews:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_fraud_reviews in self.fraud_reviews:
+                if _item_fraud_reviews:
+                    _items.append(_item_fraud_reviews.to_dict())
             _dict['fraud_reviews'] = _items
         return _dict
 

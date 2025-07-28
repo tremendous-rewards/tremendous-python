@@ -73,9 +73,9 @@ class ListWebhooks200Response(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in webhooks (list)
         _items = []
         if self.webhooks:
-            for _item in self.webhooks:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_webhooks in self.webhooks:
+                if _item_webhooks:
+                    _items.append(_item_webhooks.to_dict())
             _dict['webhooks'] = _items
         return _dict
 

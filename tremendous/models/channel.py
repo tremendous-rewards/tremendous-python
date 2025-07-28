@@ -34,6 +34,7 @@ class Channel(str, Enum):
     QUALTRICS = 'QUALTRICS'
     TYPEFORM = 'TYPEFORM'
     SURVEY_MONKEY = 'SURVEY MONKEY'
+    YOTPO = 'YOTPO'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

@@ -132,6 +132,9 @@ from tremendous.models.get_order200_response import GetOrder200Response
 from tremendous.models.get_organization200_response import GetOrganization200Response
 from tremendous.models.get_product_response import GetProductResponse
 from tremendous.models.get_reward200_response import GetReward200Response
+from tremendous.models.inline_object import InlineObject
+from tremendous.models.inline_object1 import InlineObject1
+from tremendous.models.inline_object1_reward import InlineObject1Reward
 from tremendous.models.invoice import Invoice
 from tremendous.models.list_balance_transactions200_response import ListBalanceTransactions200Response
 from tremendous.models.list_balance_transactions200_response_transactions_inner import ListBalanceTransactions200ResponseTransactionsInner

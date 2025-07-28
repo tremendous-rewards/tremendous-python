@@ -74,9 +74,9 @@ class ListConnectedOrganizations200Response(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in connected_organizations (list)
         _items = []
         if self.connected_organizations:
-            for _item in self.connected_organizations:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_connected_organizations in self.connected_organizations:
+                if _item_connected_organizations:
+                    _items.append(_item_connected_organizations.to_dict())
             _dict['connected_organizations'] = _items
         return _dict
 

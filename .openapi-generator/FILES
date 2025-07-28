@@ -107,6 +107,9 @@ tremendous/models/get_order200_response.py
 tremendous/models/get_organization200_response.py
 tremendous/models/get_product_response.py
 tremendous/models/get_reward200_response.py
+tremendous/models/inline_object.py
+tremendous/models/inline_object1.py
+tremendous/models/inline_object1_reward.py
 tremendous/models/invoice.py
 tremendous/models/list_balance_transactions200_response.py
 tremendous/models/list_balance_transactions200_response_transactions_inner.py

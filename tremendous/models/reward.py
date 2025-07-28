@@ -129,9 +129,9 @@ class Reward(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in custom_fields (list)
         _items = []
         if self.custom_fields:
-            for _item in self.custom_fields:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_custom_fields in self.custom_fields:
+                if _item_custom_fields:
+                    _items.append(_item_custom_fields.to_dict())
             _dict['custom_fields'] = _items
         # override the default output from pydantic by calling `to_dict()` of delivery
         if self.delivery:

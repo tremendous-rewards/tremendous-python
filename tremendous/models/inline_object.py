@@ -18,18 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
-from tremendous.models.list_members200_response_members_inner import ListMembers200ResponseMembersInner
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListMembers200Response(BaseModel):
+class InlineObject(BaseModel):
     """
-    ListMembers200Response
+    InlineObject
     """ # noqa: E501
-    members: List[ListMembers200ResponseMembersInner]
-    __properties: ClassVar[List[str]] = ["members"]
+    status: Optional[StrictInt] = Field(default=None, description="HTTP status code of the response")
+    error: Optional[StrictStr] = Field(default=None, description="Error message")
+    __properties: ClassVar[List[str]] = ["status", "error"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +49,7 @@ class ListMembers200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListMembers200Response from a JSON string"""
+        """Create an instance of InlineObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -70,18 +70,11 @@ class ListMembers200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in members (list)
-        _items = []
-        if self.members:
-            for _item_members in self.members:
-                if _item_members:
-                    _items.append(_item_members.to_dict())
-            _dict['members'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListMembers200Response from a dict"""
+        """Create an instance of InlineObject from a dict"""
         if obj is None:
             return None
 
@@ -89,7 +82,8 @@ class ListMembers200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "members": [ListMembers200ResponseMembersInner.from_dict(_item) for _item in obj["members"]] if obj.get("members") is not None else None
+            "status": obj.get("status"),
+            "error": obj.get("error")
         })
         return _obj
 
