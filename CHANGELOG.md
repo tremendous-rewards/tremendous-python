@@ -1,11 +1,7 @@
 # Changelog
 
-## [6.0.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.1.0...tremendous-python-v6.0.0) (2025-07-28)
+## [5.2.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.1.0...tremendous-python-v5.2.0) (2025-07-28)
 
-
-### ⚠ BREAKING CHANGES
-
-* update amount_money to amount in topup api
 
 ### Features
 
