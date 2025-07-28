@@ -1,5 +1,20 @@
 # Changelog
 
+## [5.2.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.1.0...tremendous-python-v5.2.0) (2025-07-28)
+
+
+### Features
+
+* add credit_limit_cents to funding source for commercial invoicing ([e41dc35](https://github.com/tremendous-rewards/tremendous-python/commit/e41dc359cbcad24d86a84f952349ebeb2e1f201e))
+* include invoice data in funding sources schema ([e41dc35](https://github.com/tremendous-rewards/tremendous-python/commit/e41dc359cbcad24d86a84f952349ebeb2e1f201e))
+* regenerate SDK ([#57](https://github.com/tremendous-rewards/tremendous-python/issues/57)) ([e41dc35](https://github.com/tremendous-rewards/tremendous-python/commit/e41dc359cbcad24d86a84f952349ebeb2e1f201e))
+* update limit param in List rewards ([e41dc35](https://github.com/tremendous-rewards/tremendous-python/commit/e41dc359cbcad24d86a84f952349ebeb2e1f201e)), closes [#55](https://github.com/tremendous-rewards/tremendous-python/issues/55)
+
+
+### Bug Fixes
+
+* update amount_money to amount in topup api ([e41dc35](https://github.com/tremendous-rewards/tremendous-python/commit/e41dc359cbcad24d86a84f952349ebeb2e1f201e))
+
 ## [5.1.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.0.0...tremendous-python-v5.1.0) (2025-06-24)
 
 
