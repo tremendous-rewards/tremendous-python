@@ -172,6 +172,16 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
         if self.day_of_week is None and "day_of_week" in self.model_fields_set:
             _dict['day_of_week'] = None
 
+        # set to None if address_1 (nullable) is None
+        # and model_fields_set contains the field
+        if self.address_1 is None and "address_1" in self.model_fields_set:
+            _dict['address_1'] = None
+
+        # set to None if address_2 (nullable) is None
+        # and model_fields_set contains the field
+        if self.address_2 is None and "address_2" in self.model_fields_set:
+            _dict['address_2'] = None
+
         # set to None if failure_details (nullable) is None
         # and model_fields_set contains the field
         if self.failure_details is None and "failure_details" in self.model_fields_set:

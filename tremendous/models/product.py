@@ -35,7 +35,7 @@ class Product(BaseModel):
     id: Annotated[str, Field(strict=True)]
     name: StrictStr = Field(description="Name of the product")
     description: StrictStr = Field(description="Detailed description of the product. Mostly used for products with a `category` of `charities`.")
-    category: StrictStr = Field(description="The category of this product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>   </tbody> </table> ")
+    category: StrictStr = Field(description="The category of this product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>     <tr>       <td><code>cash_app</code></td>       <td>Payout via Cash App</td>     </tr>   </tbody> </table> ")
     disclosure: StrictStr = Field(description="Legal disclosures for this product. Can be in HTML format.")
     skus: Optional[List[ListProductsResponseProductsInnerSkusInner]] = Field(default=None, description="Products are restricted in their usage based on the amount of the reward. The `skus` array defines bands of denominations in which this product may be used for payouts. ")
     currency_codes: Annotated[List[StrictStr], Field(min_length=1)] = Field(description="Available currencies for this product")
@@ -55,8 +55,8 @@ class Product(BaseModel):
     @field_validator('category')
     def category_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card']):
-            raise ValueError("must be one of enum values ('ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card')")
+        if value not in set(['ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card', 'cash_app']):
+            raise ValueError("must be one of enum values ('ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card', 'cash_app')")
         return value
 
     @field_validator('currency_codes')
