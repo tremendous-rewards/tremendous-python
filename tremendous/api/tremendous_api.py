@@ -15250,7 +15250,7 @@ class TremendousApi:
     def resend_reward(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the reward that should be resent")],
-        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="_Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
+        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -15266,11 +15266,11 @@ class TremendousApi:
     ) -> object:
         """Resend reward
 
-        Resends a reward, identified by the given `id` in the URL, to its recipient. 
+        Resends a reward, identified by the given `id` in the URL, to its recipient. Only rewards with a previous delivery failure can be resent. 
 
         :param id: ID of the reward that should be resent (required)
         :type id: str
-        :param resend_reward_request: _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
+        :param resend_reward_request: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
         :type resend_reward_request: ResendRewardRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -15326,7 +15326,7 @@ class TremendousApi:
     def resend_reward_with_http_info(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the reward that should be resent")],
-        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="_Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
+        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -15342,11 +15342,11 @@ class TremendousApi:
     ) -> ApiResponse[object]:
         """Resend reward
 
-        Resends a reward, identified by the given `id` in the URL, to its recipient. 
+        Resends a reward, identified by the given `id` in the URL, to its recipient. Only rewards with a previous delivery failure can be resent. 
 
         :param id: ID of the reward that should be resent (required)
         :type id: str
-        :param resend_reward_request: _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
+        :param resend_reward_request: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
         :type resend_reward_request: ResendRewardRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -15402,7 +15402,7 @@ class TremendousApi:
     def resend_reward_without_preload_content(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the reward that should be resent")],
-        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="_Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
+        resend_reward_request: Annotated[Optional[ResendRewardRequest], Field(description="You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -15418,11 +15418,11 @@ class TremendousApi:
     ) -> RESTResponseType:
         """Resend reward
 
-        Resends a reward, identified by the given `id` in the URL, to its recipient. 
+        Resends a reward, identified by the given `id` in the URL, to its recipient. Only rewards with a previous delivery failure can be resent. 
 
         :param id: ID of the reward that should be resent (required)
         :type id: str
-        :param resend_reward_request: _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
+        :param resend_reward_request: You can update the email or phone number used for the resend. You can only provide one of `updated_email` or `updated_phone`, not both. 
         :type resend_reward_request: ResendRewardRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
