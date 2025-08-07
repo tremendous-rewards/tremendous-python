@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.3.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.2.0...tremendous-python-v5.3.0) (2025-08-07)
+
+
+### Features
+
+* add address fields to funding sources meta schema ([ad6e0b5](https://github.com/tremendous-rewards/tremendous-python/commit/ad6e0b5e3732d7c12b4ec117a9020cac5e932f78))
+* add Cash App as product category ([ad6e0b5](https://github.com/tremendous-rewards/tremendous-python/commit/ad6e0b5e3732d7c12b4ec117a9020cac5e932f78))
+* regenerate SDK ([#59](https://github.com/tremendous-rewards/tremendous-python/issues/59)) ([ad6e0b5](https://github.com/tremendous-rewards/tremendous-python/commit/ad6e0b5e3732d7c12b4ec117a9020cac5e932f78))
+
+
+### Documentation
+
+* clarify resend reward API restrictions ([ad6e0b5](https://github.com/tremendous-rewards/tremendous-python/commit/ad6e0b5e3732d7c12b4ec117a9020cac5e932f78))
+
 ## [5.2.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.1.0...tremendous-python-v5.2.0) (2025-07-28)
 
 
