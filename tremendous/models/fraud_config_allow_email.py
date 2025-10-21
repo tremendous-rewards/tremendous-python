@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +28,7 @@ class FraudConfigAllowEmail(BaseModel):
     """
     FraudConfigAllowEmail
     """ # noqa: E501
-    emails: List[StrictStr] = Field(description="The list of emails.")
+    emails: Annotated[List[StrictStr], Field(max_length=50000)] = Field(description="The list of emails.")
     __properties: ClassVar[List[str]] = ["emails"]
 
     model_config = ConfigDict(

@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +28,7 @@ class AllowIp(BaseModel):
     """
     Ignore flagging rules for rewards redeemed by an IP matching this list.
     """ # noqa: E501
-    ips: List[StrictStr] = Field(description="The list of IP addresses to flag or allow. Accepts both IPv4 and IPv6 addresses using CIDR notation. ")
+    ips: Annotated[List[StrictStr], Field(max_length=50000)] = Field(description="The list of IP addresses to flag or allow. Accepts both IPv4 and IPv6 addresses using CIDR notation. ")
     __properties: ClassVar[List[str]] = ["ips"]
 
     model_config = ConfigDict(
