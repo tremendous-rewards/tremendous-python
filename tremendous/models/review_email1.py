@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +28,7 @@ class ReviewEmail1(BaseModel):
     """
     The list of emails and/or domains where a matching redemption will trigger a review. At least one email or domain is required.
     """ # noqa: E501
-    emails: Optional[List[StrictStr]] = Field(default=None, description="The list of emails.")
+    emails: Optional[Annotated[List[StrictStr], Field(max_length=50000)]] = Field(default=None, description="The list of emails.")
     domains: Optional[List[StrictStr]] = Field(default=None, description="The list of domains. Any subdomains will also be matched against each entry in the list.")
     __properties: ClassVar[List[str]] = ["emails", "domains"]
 

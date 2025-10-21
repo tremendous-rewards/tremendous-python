@@ -13338,6 +13338,7 @@ class TremendousApi:
         self,
         country: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries")] = None,
         currency: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies")] = None,
+        subcategory: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -13359,6 +13360,8 @@ class TremendousApi:
         :type country: str
         :param currency: Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies
         :type currency: str
+        :param subcategory: Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories
+        :type subcategory: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13384,6 +13387,7 @@ class TremendousApi:
         _param = self._list_products_serialize(
             country=country,
             currency=currency,
+            subcategory=subcategory,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13412,6 +13416,7 @@ class TremendousApi:
         self,
         country: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries")] = None,
         currency: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies")] = None,
+        subcategory: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -13433,6 +13438,8 @@ class TremendousApi:
         :type country: str
         :param currency: Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies
         :type currency: str
+        :param subcategory: Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories
+        :type subcategory: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13458,6 +13465,7 @@ class TremendousApi:
         _param = self._list_products_serialize(
             country=country,
             currency=currency,
+            subcategory=subcategory,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13486,6 +13494,7 @@ class TremendousApi:
         self,
         country: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries")] = None,
         currency: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies")] = None,
+        subcategory: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -13507,6 +13516,8 @@ class TremendousApi:
         :type country: str
         :param currency: Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies
         :type currency: str
+        :param subcategory: Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories
+        :type subcategory: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -13532,6 +13543,7 @@ class TremendousApi:
         _param = self._list_products_serialize(
             country=country,
             currency=currency,
+            subcategory=subcategory,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -13555,6 +13567,7 @@ class TremendousApi:
         self,
         country,
         currency,
+        subcategory,
         _request_auth,
         _content_type,
         _headers,
@@ -13584,6 +13597,10 @@ class TremendousApi:
         if currency is not None:
             
             _query_params.append(('currency', currency))
+            
+        if subcategory is not None:
+            
+            _query_params.append(('subcategory', subcategory))
             
         # process the header parameters
         # process the form parameters
@@ -13642,7 +13659,7 @@ class TremendousApi:
     ) -> ListRewards200Response:
         """List rewards
 
-        Retrieve a list of all created rewards 
+        Retrieve a list of all created rewards. You can query for rewards by custom field attributes using the field label and values as query params. [Learn more](https://developers.tremendous.com/docs/using-custom-fields-to-add-custom-data-to-rewards#querying-by-custom-fields) 
 
         :param offset: Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).
         :type offset: int
@@ -13716,7 +13733,7 @@ class TremendousApi:
     ) -> ApiResponse[ListRewards200Response]:
         """List rewards
 
-        Retrieve a list of all created rewards 
+        Retrieve a list of all created rewards. You can query for rewards by custom field attributes using the field label and values as query params. [Learn more](https://developers.tremendous.com/docs/using-custom-fields-to-add-custom-data-to-rewards#querying-by-custom-fields) 
 
         :param offset: Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).
         :type offset: int
@@ -13790,7 +13807,7 @@ class TremendousApi:
     ) -> RESTResponseType:
         """List rewards
 
-        Retrieve a list of all created rewards 
+        Retrieve a list of all created rewards. You can query for rewards by custom field attributes using the field label and values as query params. [Learn more](https://developers.tremendous.com/docs/using-custom-fields-to-add-custom-data-to-rewards#querying-by-custom-fields) 
 
         :param offset: Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).
         :type offset: int

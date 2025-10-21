@@ -35,7 +35,8 @@ class ListProductsResponseProductsInner(BaseModel):
     id: Annotated[str, Field(strict=True)]
     name: StrictStr = Field(description="Name of the product")
     description: StrictStr = Field(description="Detailed description of the product. Mostly used for products with a `category` of `charities`.")
-    category: StrictStr = Field(description="The category of this product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>     <tr>       <td><code>cash_app</code></td>       <td>Payout via Cash App</td>     </tr>   </tbody> </table> ")
+    category: StrictStr = Field(description="The category of the product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>     <tr>       <td><code>cash_app</code></td>       <td>Payout via Cash App</td>     </tr>   </tbody> </table> ")
+    subcategory: Optional[StrictStr] = Field(default=None, description="Additional classification for the product. Only applicable to products with a `category` of `merchant_card`. Possible subcategories:  * `beauty_and_health` * `digital_financial_services` * `electronics` * `entertainment` * `fashion` * `food_and_drink` * `general_merchandise` * `grocery_and_supermarkets` * `home_and_living` * `mobility_and_fuel` * `sports_and_outdoor_gear` * `travel_and_hospitality` ")
     disclosure: StrictStr = Field(description="Legal disclosures for this product. Can be in HTML format.")
     skus: Optional[List[ListProductsResponseProductsInnerSkusInner]] = Field(default=None, description="Products are restricted in their usage based on the amount of the reward. The `skus` array defines bands of denominations in which this product may be used for payouts. ")
     currency_codes: Annotated[List[StrictStr], Field(min_length=1)] = Field(description="Available currencies for this product")
@@ -43,7 +44,7 @@ class ListProductsResponseProductsInner(BaseModel):
     images: Annotated[List[ListProductsResponseProductsInnerImagesInner], Field(min_length=0)] = Field(description="List of product images associated with this product (e.g. logos or images of the gift cards)")
     usage_instructions: Optional[StrictStr] = Field(default=None, description="Instructions for how to use the product, if applicable. Mostly used for products with a `category` of `merchant_card`.")
     documents: Optional[ListProductsResponseProductsInnerDocuments] = None
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "category", "disclosure", "skus", "currency_codes", "countries", "images", "usage_instructions", "documents"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "category", "subcategory", "disclosure", "skus", "currency_codes", "countries", "images", "usage_instructions", "documents"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -57,6 +58,16 @@ class ListProductsResponseProductsInner(BaseModel):
         """Validates the enum"""
         if value not in set(['ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card', 'cash_app']):
             raise ValueError("must be one of enum values ('ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card', 'cash_app')")
+        return value
+
+    @field_validator('subcategory')
+    def subcategory_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['beauty_and_health', 'digital_financial_services', 'electronics', 'entertainment', 'fashion', 'food_and_drink', 'general_merchandise', 'grocery_and_supermarkets', 'home_and_living', 'mobility_and_fuel', 'sports_and_outdoor_gear', 'travel_and_hospitality']):
+            raise ValueError("must be one of enum values ('beauty_and_health', 'digital_financial_services', 'electronics', 'entertainment', 'fashion', 'food_and_drink', 'general_merchandise', 'grocery_and_supermarkets', 'home_and_living', 'mobility_and_fuel', 'sports_and_outdoor_gear', 'travel_and_hospitality')")
         return value
 
     @field_validator('currency_codes')
@@ -151,6 +162,7 @@ class ListProductsResponseProductsInner(BaseModel):
             "name": obj.get("name"),
             "description": obj.get("description"),
             "category": obj.get("category"),
+            "subcategory": obj.get("subcategory"),
             "disclosure": obj.get("disclosure"),
             "skus": [ListProductsResponseProductsInnerSkusInner.from_dict(_item) for _item in obj["skus"]] if obj.get("skus") is not None else None,
             "currency_codes": obj.get("currency_codes"),
