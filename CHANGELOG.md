@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.4.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.3.0...tremendous-python-v5.4.0) (2025-10-21)
+
+
+### Features
+
+* add `subcategory` enum to Products ([532da8d](https://github.com/tremendous-rewards/tremendous-python/commit/532da8db4bfb151931f695a0bb7cb6a4dac7e19e))
+* enforce a 50000 limit for the IP/email list on custom fraud rules ([532da8d](https://github.com/tremendous-rewards/tremendous-python/commit/532da8db4bfb151931f695a0bb7cb6a4dac7e19e))
+* regen SDK ([#64](https://github.com/tremendous-rewards/tremendous-python/issues/64)) ([532da8d](https://github.com/tremendous-rewards/tremendous-python/commit/532da8db4bfb151931f695a0bb7cb6a4dac7e19e))
+* remove `pending_confirmation` status from Funding Sources ([532da8d](https://github.com/tremendous-rewards/tremendous-python/commit/532da8db4bfb151931f695a0bb7cb6a4dac7e19e))
+
 ## [5.3.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.2.0...tremendous-python-v5.3.0) (2025-08-07)
 
 
