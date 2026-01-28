@@ -21,13 +21,12 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.get_fraud_review200_response_fraud_review_related_rewards import GetFraudReview200ResponseFraudReviewRelatedRewards
 from tremendous.models.list_fraud_reviews200_response_fraud_reviews_inner_geo import ListFraudReviews200ResponseFraudReviewsInnerGeo
 from tremendous.models.order_without_link_rewards_inner import OrderWithoutLinkRewardsInner
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FraudReview(BaseModel):
+class FraudReviewBase(BaseModel):
     """
     The fraud review associated with a reward.
     """ # noqa: E501
@@ -41,9 +40,7 @@ class FraudReview(BaseModel):
     reviewed_by: Optional[StrictStr] = Field(default=None, description="The name of the person who reviewed the reward, or `Automatic Review` if the reward was blocked automatically. Rewards can be automatically blocked if they remain in the flagged fraud queue for more than 30 days.  This field is only present if the status is not `flagged`. ")
     reviewed_at: Optional[datetime] = Field(default=None, description="When the reward was blocked or released following fraud review.  This field is only present if the status is not `flagged`. ")
     redemption_method_account_hash: Optional[StrictStr] = Field(default=None, description="A hash of the destination account for redemption methods that require providing 3rd party account details (e.g., PayPal, Venmo, ACH/CashApp, international bank transfers, etc.). The hash is globally unique by redemption method + account combination. This field is omitted for redemption methods that don't have a destination account (e.g., merchant cards, charities, etc.). ")
-    risk: Optional[StrictStr] = Field(default=None, description="The fraud risk associated with the reward.")
-    related_rewards: Optional[GetFraudReview200ResponseFraudReviewRelatedRewards] = None
-    __properties: ClassVar[List[str]] = ["status", "reasons", "device_id", "redemption_method", "redeemed_at", "geo", "reward", "reviewed_by", "reviewed_at", "redemption_method_account_hash", "risk", "related_rewards"]
+    __properties: ClassVar[List[str]] = ["status", "reasons", "device_id", "redemption_method", "redeemed_at", "geo", "reward", "reviewed_by", "reviewed_at", "redemption_method_account_hash"]
 
     @field_validator('status')
     def status_validate_enum(cls, value):
@@ -76,16 +73,6 @@ class FraudReview(BaseModel):
             raise ValueError("must be one of enum values ('bank transfer', 'charity', 'instant debit transfer', 'international bank transfer', 'merchant card', 'paypal', 'venmo', 'visa card')")
         return value
 
-    @field_validator('risk')
-    def risk_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['high', 'medium', 'low']):
-            raise ValueError("must be one of enum values ('high', 'medium', 'low')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
@@ -104,7 +91,7 @@ class FraudReview(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FraudReview from a JSON string"""
+        """Create an instance of FraudReviewBase from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -120,14 +107,12 @@ class FraudReview(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
-        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "status",
             "reasons",
             "redemption_method",
             "redemption_method_account_hash",
-            "risk",
         ])
 
         _dict = self.model_dump(
@@ -141,14 +126,11 @@ class FraudReview(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of reward
         if self.reward:
             _dict['reward'] = self.reward.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of related_rewards
-        if self.related_rewards:
-            _dict['related_rewards'] = self.related_rewards.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FraudReview from a dict"""
+        """Create an instance of FraudReviewBase from a dict"""
         if obj is None:
             return None
 
@@ -165,9 +147,7 @@ class FraudReview(BaseModel):
             "reward": OrderWithoutLinkRewardsInner.from_dict(obj["reward"]) if obj.get("reward") is not None else None,
             "reviewed_by": obj.get("reviewed_by"),
             "reviewed_at": obj.get("reviewed_at"),
-            "redemption_method_account_hash": obj.get("redemption_method_account_hash"),
-            "risk": obj.get("risk"),
-            "related_rewards": GetFraudReview200ResponseFraudReviewRelatedRewards.from_dict(obj["related_rewards"]) if obj.get("related_rewards") is not None else None
+            "redemption_method_account_hash": obj.get("redemption_method_account_hash")
         })
         return _obj
 

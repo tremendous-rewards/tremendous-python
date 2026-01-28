@@ -21,8 +21,8 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.get_fraud_review200_response_fraud_review_geo import GetFraudReview200ResponseFraudReviewGeo
 from tremendous.models.get_fraud_review200_response_fraud_review_related_rewards import GetFraudReview200ResponseFraudReviewRelatedRewards
+from tremendous.models.list_fraud_reviews200_response_fraud_reviews_inner_geo import ListFraudReviews200ResponseFraudReviewsInnerGeo
 from tremendous.models.list_rewards200_response_rewards_inner import ListRewards200ResponseRewardsInner
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,17 +32,18 @@ class GetFraudReview200ResponseFraudReview(BaseModel):
     The fraud review associated with a reward.
     """ # noqa: E501
     status: Optional[StrictStr] = Field(default=None, description="The current status of the fraud review:  * `flagged` - The reward has been flagged for and waiting manual review. * `blocked` - The reward was reviewed and blocked. * `released` - The reward was reviewed and released. ")
-    risk: Optional[StrictStr] = Field(default=None, description="The fraud risk associated with the reward.")
     reasons: Optional[List[StrictStr]] = Field(default=None, description="The array may contain multiple reasons, depending on which rule(s) flagged the reward for review. Reasons can be any of the following:  * `Disallowed IP` * `Disallowed email` * `Disallowed country` * `Over reward dollar limit` * `Over reward count limit` * `VPN detected` * `Device related to multiple emails` * `Device or account related to multiple emails` * `IP on a Tremendous fraud list` * `Bank account on a Tremendous fraud list` * `Fingerprint on a Tremendous fraud list` * `Email on a Tremendous fraud list` * `Phone on a Tremendous fraud list` * `IP related to a blocked reward` * `Device related to a blocked reward` * `Bank account related to a blocked reward` * `Fingerprint related to a blocked reward` * `Email related to a blocked reward` * `Phone related to a blocked reward` * `Allowed IP` * `Allowed email` ")
-    reviewed_by: Optional[StrictStr] = Field(default=None, description="The name of the person who reviewed the reward, or `Automatic Review` if the reward was blocked automatically. Rewards can be automatically blocked if they remain in the flagged fraud queue for more than 30 days.  This field is only present if the status is not `flagged`. ")
-    reviewed_at: Optional[datetime] = Field(default=None, description="When the reward was blocked or released following fraud review.  This field is only present if the status is not `flagged`. ")
-    related_rewards: Optional[GetFraudReview200ResponseFraudReviewRelatedRewards] = None
     device_id: Optional[StrictStr] = Field(default=None, description="The device fingerprint, if known.")
     redemption_method: Optional[StrictStr] = Field(default=None, description="The product selected to claim the reward")
     redeemed_at: Optional[datetime] = Field(default=None, description="Date the reward was redeemed")
-    geo: Optional[GetFraudReview200ResponseFraudReviewGeo] = None
+    geo: Optional[ListFraudReviews200ResponseFraudReviewsInnerGeo] = None
     reward: Optional[ListRewards200ResponseRewardsInner] = None
-    __properties: ClassVar[List[str]] = ["status", "risk", "reasons", "reviewed_by", "reviewed_at", "related_rewards", "device_id", "redemption_method", "redeemed_at", "geo", "reward"]
+    reviewed_by: Optional[StrictStr] = Field(default=None, description="The name of the person who reviewed the reward, or `Automatic Review` if the reward was blocked automatically. Rewards can be automatically blocked if they remain in the flagged fraud queue for more than 30 days.  This field is only present if the status is not `flagged`. ")
+    reviewed_at: Optional[datetime] = Field(default=None, description="When the reward was blocked or released following fraud review.  This field is only present if the status is not `flagged`. ")
+    redemption_method_account_hash: Optional[StrictStr] = Field(default=None, description="A hash of the destination account for redemption methods that require providing 3rd party account details (e.g., PayPal, Venmo, ACH/CashApp, international bank transfers, etc.). The hash is globally unique by redemption method + account combination. This field is omitted for redemption methods that don't have a destination account (e.g., merchant cards, charities, etc.). ")
+    risk: Optional[StrictStr] = Field(default=None, description="The fraud risk associated with the reward.")
+    related_rewards: Optional[GetFraudReview200ResponseFraudReviewRelatedRewards] = None
+    __properties: ClassVar[List[str]] = ["status", "reasons", "device_id", "redemption_method", "redeemed_at", "geo", "reward", "reviewed_by", "reviewed_at", "redemption_method_account_hash", "risk", "related_rewards"]
 
     @field_validator('status')
     def status_validate_enum(cls, value):
@@ -52,16 +53,6 @@ class GetFraudReview200ResponseFraudReview(BaseModel):
 
         if value not in set(['flagged', 'blocked', 'released']):
             raise ValueError("must be one of enum values ('flagged', 'blocked', 'released')")
-        return value
-
-    @field_validator('risk')
-    def risk_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['high', 'medium', 'low']):
-            raise ValueError("must be one of enum values ('high', 'medium', 'low')")
         return value
 
     @field_validator('reasons')
@@ -81,8 +72,18 @@ class GetFraudReview200ResponseFraudReview(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['paypal', 'bank', 'merchant card', 'visa card', 'charity', 'venmo']):
-            raise ValueError("must be one of enum values ('paypal', 'bank', 'merchant card', 'visa card', 'charity', 'venmo')")
+        if value not in set(['bank transfer', 'charity', 'instant debit transfer', 'international bank transfer', 'merchant card', 'paypal', 'venmo', 'visa card']):
+            raise ValueError("must be one of enum values ('bank transfer', 'charity', 'instant debit transfer', 'international bank transfer', 'merchant card', 'paypal', 'venmo', 'visa card')")
+        return value
+
+    @field_validator('risk')
+    def risk_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['high', 'medium', 'low']):
+            raise ValueError("must be one of enum values ('high', 'medium', 'low')")
         return value
 
     model_config = ConfigDict(
@@ -124,15 +125,15 @@ class GetFraudReview200ResponseFraudReview(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of related_rewards
-        if self.related_rewards:
-            _dict['related_rewards'] = self.related_rewards.to_dict()
         # override the default output from pydantic by calling `to_dict()` of geo
         if self.geo:
             _dict['geo'] = self.geo.to_dict()
         # override the default output from pydantic by calling `to_dict()` of reward
         if self.reward:
             _dict['reward'] = self.reward.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of related_rewards
+        if self.related_rewards:
+            _dict['related_rewards'] = self.related_rewards.to_dict()
         return _dict
 
     @classmethod
@@ -146,16 +147,17 @@ class GetFraudReview200ResponseFraudReview(BaseModel):
 
         _obj = cls.model_validate({
             "status": obj.get("status"),
-            "risk": obj.get("risk"),
             "reasons": obj.get("reasons"),
-            "reviewed_by": obj.get("reviewed_by"),
-            "reviewed_at": obj.get("reviewed_at"),
-            "related_rewards": GetFraudReview200ResponseFraudReviewRelatedRewards.from_dict(obj["related_rewards"]) if obj.get("related_rewards") is not None else None,
             "device_id": obj.get("device_id"),
             "redemption_method": obj.get("redemption_method"),
             "redeemed_at": obj.get("redeemed_at"),
-            "geo": GetFraudReview200ResponseFraudReviewGeo.from_dict(obj["geo"]) if obj.get("geo") is not None else None,
-            "reward": ListRewards200ResponseRewardsInner.from_dict(obj["reward"]) if obj.get("reward") is not None else None
+            "geo": ListFraudReviews200ResponseFraudReviewsInnerGeo.from_dict(obj["geo"]) if obj.get("geo") is not None else None,
+            "reward": ListRewards200ResponseRewardsInner.from_dict(obj["reward"]) if obj.get("reward") is not None else None,
+            "reviewed_by": obj.get("reviewed_by"),
+            "reviewed_at": obj.get("reviewed_at"),
+            "redemption_method_account_hash": obj.get("redemption_method_account_hash"),
+            "risk": obj.get("risk"),
+            "related_rewards": GetFraudReview200ResponseFraudReviewRelatedRewards.from_dict(obj["related_rewards"]) if obj.get("related_rewards") is not None else None
         })
         return _obj
 

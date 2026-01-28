@@ -39,6 +39,8 @@ from tremendous.models.create_organization200_response import CreateOrganization
 from tremendous.models.create_organization_request import CreateOrganizationRequest
 from tremendous.models.create_report200_response import CreateReport200Response
 from tremendous.models.create_report_request import CreateReportRequest
+from tremendous.models.create_topup200_response import CreateTopup200Response
+from tremendous.models.create_topup_request import CreateTopupRequest
 from tremendous.models.create_webhook200_response import CreateWebhook200Response
 from tremendous.models.create_webhook_request import CreateWebhookRequest
 from tremendous.models.delete_fraud_rule200_response import DeleteFraudRule200Response
@@ -68,6 +70,7 @@ from tremendous.models.list_organizations200_response import ListOrganizations20
 from tremendous.models.list_products_response import ListProductsResponse
 from tremendous.models.list_rewards200_response import ListRewards200Response
 from tremendous.models.list_roles200_response import ListRoles200Response
+from tremendous.models.list_topups200_response import ListTopups200Response
 from tremendous.models.list_webhook_events200_response import ListWebhookEvents200Response
 from tremendous.models.list_webhooks200_response import ListWebhooks200Response
 from tremendous.models.resend_reward_request import ResendRewardRequest
@@ -1523,7 +1526,6 @@ class TremendousApi:
             '200': "CreateConnectedOrganization200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -1595,7 +1597,6 @@ class TremendousApi:
             '200': "CreateConnectedOrganization200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -1667,7 +1668,6 @@ class TremendousApi:
             '200': "CreateConnectedOrganization200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -1812,7 +1812,6 @@ class TremendousApi:
             '200': "CreateConnectedOrganizationMember200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -1884,7 +1883,6 @@ class TremendousApi:
             '200': "CreateConnectedOrganizationMember200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -1956,7 +1954,6 @@ class TremendousApi:
             '200': "CreateConnectedOrganizationMember200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -2105,7 +2102,6 @@ class TremendousApi:
             '200': "CreateConnectedOrganizationMemberSession200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -2181,7 +2177,6 @@ class TremendousApi:
             '200': "CreateConnectedOrganizationMemberSession200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -2257,7 +2252,6 @@ class TremendousApi:
             '200': "CreateConnectedOrganizationMemberSession200Response",
             '400': "ResendReward422Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -2367,7 +2361,7 @@ class TremendousApi:
     ) -> CreateInvoice200Response:
         """Create invoice
 
-        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice in USD</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
+        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the invoice</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
 
         :param create_invoice_request: Invoice details (required)
         :type create_invoice_request: CreateInvoiceRequest
@@ -2438,7 +2432,7 @@ class TremendousApi:
     ) -> ApiResponse[CreateInvoice200Response]:
         """Create invoice
 
-        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice in USD</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
+        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the invoice</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
 
         :param create_invoice_request: Invoice details (required)
         :type create_invoice_request: CreateInvoiceRequest
@@ -2509,7 +2503,7 @@ class TremendousApi:
     ) -> RESTResponseType:
         """Create invoice
 
-        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice in USD</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
+        Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the invoice</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
 
         :param create_invoice_request: Invoice details (required)
         :type create_invoice_request: CreateInvoiceRequest
@@ -3778,6 +3772,295 @@ class TremendousApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/reports',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def create_topup(
+        self,
+        create_topup_request: Annotated[Optional[CreateTopupRequest], Field(description="Parameters required to create a new topup. The `idempotency_key` should be unique for each request.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CreateTopup200Response:
+        """Create a topup
+
+
+        :param create_topup_request: Parameters required to create a new topup. The `idempotency_key` should be unique for each request.
+        :type create_topup_request: CreateTopupRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_topup_serialize(
+            create_topup_request=create_topup_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CreateTopup200Response",
+            '400': "ResendReward422Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '409': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def create_topup_with_http_info(
+        self,
+        create_topup_request: Annotated[Optional[CreateTopupRequest], Field(description="Parameters required to create a new topup. The `idempotency_key` should be unique for each request.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CreateTopup200Response]:
+        """Create a topup
+
+
+        :param create_topup_request: Parameters required to create a new topup. The `idempotency_key` should be unique for each request.
+        :type create_topup_request: CreateTopupRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_topup_serialize(
+            create_topup_request=create_topup_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CreateTopup200Response",
+            '400': "ResendReward422Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '409': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def create_topup_without_preload_content(
+        self,
+        create_topup_request: Annotated[Optional[CreateTopupRequest], Field(description="Parameters required to create a new topup. The `idempotency_key` should be unique for each request.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create a topup
+
+
+        :param create_topup_request: Parameters required to create a new topup. The `idempotency_key` should be unique for each request.
+        :type create_topup_request: CreateTopupRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._create_topup_serialize(
+            create_topup_request=create_topup_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CreateTopup200Response",
+            '400': "ResendReward422Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '409': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _create_topup_serialize(
+        self,
+        create_topup_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if create_topup_request is not None:
+            _body_params = create_topup_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/topups',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -6361,7 +6644,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganization200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
@@ -6433,7 +6715,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganization200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
@@ -6505,7 +6786,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganization200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
@@ -6637,7 +6917,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganizationMember200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
@@ -6709,7 +6988,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganizationMember200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
@@ -6781,7 +7059,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganizationMember200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '404': "ListRewards401Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
@@ -7133,7 +7410,7 @@ class TremendousApi:
     @validate_call
     def get_funding_source(
         self,
-        id: Annotated[str, Field(strict=True, description="ID of the funding source that should be retrieved")],
+        id: Annotated[str, Field(strict=True, description="ID of the funding source that should be retrieved. Can also use \"BALANCE\" (case-insensitive) to retrieve the organization's balance funding source. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7149,9 +7426,9 @@ class TremendousApi:
     ) -> GetFundingSource200Response:
         """Retrieve funding source
 
-        Retrieve a funding source, identified by the given `id` in the URL 
+        Retrieve a funding source, identified by the given `id` in the URL.  You can also use the special keyword `BALANCE` (case-insensitive) to retrieve the organization's balance funding source. 
 
-        :param id: ID of the funding source that should be retrieved (required)
+        :param id: ID of the funding source that should be retrieved. Can also use \"BALANCE\" (case-insensitive) to retrieve the organization's balance funding source.  (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -7204,7 +7481,7 @@ class TremendousApi:
     @validate_call
     def get_funding_source_with_http_info(
         self,
-        id: Annotated[str, Field(strict=True, description="ID of the funding source that should be retrieved")],
+        id: Annotated[str, Field(strict=True, description="ID of the funding source that should be retrieved. Can also use \"BALANCE\" (case-insensitive) to retrieve the organization's balance funding source. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7220,9 +7497,9 @@ class TremendousApi:
     ) -> ApiResponse[GetFundingSource200Response]:
         """Retrieve funding source
 
-        Retrieve a funding source, identified by the given `id` in the URL 
+        Retrieve a funding source, identified by the given `id` in the URL.  You can also use the special keyword `BALANCE` (case-insensitive) to retrieve the organization's balance funding source. 
 
-        :param id: ID of the funding source that should be retrieved (required)
+        :param id: ID of the funding source that should be retrieved. Can also use \"BALANCE\" (case-insensitive) to retrieve the organization's balance funding source.  (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -7275,7 +7552,7 @@ class TremendousApi:
     @validate_call
     def get_funding_source_without_preload_content(
         self,
-        id: Annotated[str, Field(strict=True, description="ID of the funding source that should be retrieved")],
+        id: Annotated[str, Field(strict=True, description="ID of the funding source that should be retrieved. Can also use \"BALANCE\" (case-insensitive) to retrieve the organization's balance funding source. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7291,9 +7568,9 @@ class TremendousApi:
     ) -> RESTResponseType:
         """Retrieve funding source
 
-        Retrieve a funding source, identified by the given `id` in the URL 
+        Retrieve a funding source, identified by the given `id` in the URL.  You can also use the special keyword `BALANCE` (case-insensitive) to retrieve the organization's balance funding source. 
 
-        :param id: ID of the funding source that should be retrieved (required)
+        :param id: ID of the funding source that should be retrieved. Can also use \"BALANCE\" (case-insensitive) to retrieve the organization's balance funding source.  (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -9312,6 +9589,279 @@ class TremendousApi:
 
 
     @validate_call
+    def get_topup(
+        self,
+        id: Annotated[str, Field(strict=True, description="ID of the topup request that should be retrieved")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> CreateTopup200Response:
+        """Retrieve single topup
+
+        Retrieve a topup, identified by the given `id` in the URL. 
+
+        :param id: ID of the topup request that should be retrieved (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_topup_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CreateTopup200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_topup_with_http_info(
+        self,
+        id: Annotated[str, Field(strict=True, description="ID of the topup request that should be retrieved")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[CreateTopup200Response]:
+        """Retrieve single topup
+
+        Retrieve a topup, identified by the given `id` in the URL. 
+
+        :param id: ID of the topup request that should be retrieved (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_topup_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CreateTopup200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_topup_without_preload_content(
+        self,
+        id: Annotated[str, Field(strict=True, description="ID of the topup request that should be retrieved")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Retrieve single topup
+
+        Retrieve a topup, identified by the given `id` in the URL. 
+
+        :param id: ID of the topup request that should be retrieved (required)
+        :type id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_topup_serialize(
+            id=id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CreateTopup200Response",
+            '401': "ListRewards401Response",
+            '404': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_topup_serialize(
+        self,
+        id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if id is not None:
+            _path_params['id'] = id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/topups/{id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def get_webhook(
         self,
         id: Annotated[str, Field(strict=True, description="ID of the webhook to retrieve")],
@@ -10229,7 +10779,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizationMembers200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -10308,7 +10857,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizationMembers200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -10387,7 +10935,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizationMembers200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -10534,7 +11081,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizations200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -10609,7 +11155,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizations200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -10684,7 +11229,6 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizations200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
             '429': "ListRewards429Response",
             '500': "ListRewards401Response",
         }
@@ -14168,6 +14712,278 @@ class TremendousApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/roles',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_topups(
+        self,
+        offset: Annotated[Optional[StrictInt], Field(description="Offsets the returned list by the given number of topups. The returned topups are ordered and offset by their creation date (DESC).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListTopups200Response:
+        """List topups
+
+        Retrieve a list of all topup requests. 
+
+        :param offset: Offsets the returned list by the given number of topups. The returned topups are ordered and offset by their creation date (DESC).
+        :type offset: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_topups_serialize(
+            offset=offset,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListTopups200Response",
+            '401': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def list_topups_with_http_info(
+        self,
+        offset: Annotated[Optional[StrictInt], Field(description="Offsets the returned list by the given number of topups. The returned topups are ordered and offset by their creation date (DESC).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListTopups200Response]:
+        """List topups
+
+        Retrieve a list of all topup requests. 
+
+        :param offset: Offsets the returned list by the given number of topups. The returned topups are ordered and offset by their creation date (DESC).
+        :type offset: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_topups_serialize(
+            offset=offset,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListTopups200Response",
+            '401': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def list_topups_without_preload_content(
+        self,
+        offset: Annotated[Optional[StrictInt], Field(description="Offsets the returned list by the given number of topups. The returned topups are ordered and offset by their creation date (DESC).")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List topups
+
+        Retrieve a list of all topup requests. 
+
+        :param offset: Offsets the returned list by the given number of topups. The returned topups are ordered and offset by their creation date (DESC).
+        :type offset: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_topups_serialize(
+            offset=offset,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListTopups200Response",
+            '401': "ListRewards401Response",
+            '429': "ListRewards429Response",
+            '500': "ListRewards401Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_topups_serialize(
+        self,
+        offset,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if offset is not None:
+            
+            _query_params.append(('offset', offset))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerApiKey'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/topups',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

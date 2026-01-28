@@ -182,6 +182,31 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
         if self.address_2 is None and "address_2" in self.model_fields_set:
             _dict['address_2'] = None
 
+        # set to None if city (nullable) is None
+        # and model_fields_set contains the field
+        if self.city is None and "city" in self.model_fields_set:
+            _dict['city'] = None
+
+        # set to None if state (nullable) is None
+        # and model_fields_set contains the field
+        if self.state is None and "state" in self.model_fields_set:
+            _dict['state'] = None
+
+        # set to None if zip (nullable) is None
+        # and model_fields_set contains the field
+        if self.zip is None and "zip" in self.model_fields_set:
+            _dict['zip'] = None
+
+        # set to None if phone (nullable) is None
+        # and model_fields_set contains the field
+        if self.phone is None and "phone" in self.model_fields_set:
+            _dict['phone'] = None
+
+        # set to None if emails (nullable) is None
+        # and model_fields_set contains the field
+        if self.emails is None and "emails" in self.model_fields_set:
+            _dict['emails'] = None
+
         # set to None if failure_details (nullable) is None
         # and model_fields_set contains the field
         if self.failure_details is None and "failure_details" in self.model_fields_set:

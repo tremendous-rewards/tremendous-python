@@ -27,12 +27,14 @@ class FraudReviewRedemptionMethod(str, Enum):
     """
     allowed enum values
     """
-    PAYPAL = 'paypal'
-    BANK = 'bank'
-    MERCHANT_CARD = 'merchant card'
-    VISA_CARD = 'visa card'
+    BANK_TRANSFER = 'bank transfer'
     CHARITY = 'charity'
+    INSTANT_DEBIT_TRANSFER = 'instant debit transfer'
+    INTERNATIONAL_BANK_TRANSFER = 'international bank transfer'
+    MERCHANT_CARD = 'merchant card'
+    PAYPAL = 'paypal'
     VENMO = 'venmo'
+    VISA_CARD = 'visa card'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
