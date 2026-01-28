@@ -1,5 +1,22 @@
 # Changelog
 
+## [5.5.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.4.0...tremendous-python-v5.5.0) (2026-01-28)
+
+
+### Features
+
+* add currency support to invoices (USD, EUR, GBP) ([d0bfb27](https://github.com/tremendous-rewards/tremendous-python/commit/d0bfb27297560ea01fcbbbd72de5d727088c8f7f))
+* add new Topups API (create, get, list) ([d0bfb27](https://github.com/tremendous-rewards/tremendous-python/commit/d0bfb27297560ea01fcbbbd72de5d727088c8f7f))
+* allow BALANCE keyword in get_funding_source ([d0bfb27](https://github.com/tremendous-rewards/tremendous-python/commit/d0bfb27297560ea01fcbbbd72de5d727088c8f7f))
+* expand fraud review schema with additional fields ([d0bfb27](https://github.com/tremendous-rewards/tremendous-python/commit/d0bfb27297560ea01fcbbbd72de5d727088c8f7f))
+* regenerate SDK ([#67](https://github.com/tremendous-rewards/tremendous-python/issues/67)) ([d0bfb27](https://github.com/tremendous-rewards/tremendous-python/commit/d0bfb27297560ea01fcbbbd72de5d727088c8f7f))
+
+
+### Bug Fixes
+
+* make funding source meta fields nullable ([d0bfb27](https://github.com/tremendous-rewards/tremendous-python/commit/d0bfb27297560ea01fcbbbd72de5d727088c8f7f))
+* update redemption method enum values ([d0bfb27](https://github.com/tremendous-rewards/tremendous-python/commit/d0bfb27297560ea01fcbbbd72de5d727088c8f7f))
+
 ## [5.4.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.3.0...tremendous-python-v5.4.0) (2025-10-21)
 
 
