@@ -31,14 +31,25 @@ class ListInvoices200ResponseInvoicesInner(BaseModel):
     """ # noqa: E501
     id: StrictStr = Field(description="The invoice number")
     po_number: Optional[StrictStr] = Field(default=None, description="Reference to the purchase order number within your organization")
-    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the invoice in USD")
+    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the invoice")
+    currency: Optional[StrictStr] = Field(default='USD', description="Currency of the invoice")
     international: Optional[StrictBool] = None
     status: StrictStr = Field(description="Status of this invoice  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>DELETED</code></td>       <td>Invoice has been deleted by your organization</td>     </tr>     <tr>       <td><code>PAID</code></td>       <td>Invoice has been paid by your organization</td>     </tr>     <tr>       <td><code>OPEN</code></td>       <td>Invoice has been created by your organization but has not been paid, yet</td>     </tr>   </tbody> </table> ")
     orders: Optional[List[Annotated[str, Field(strict=True)]]] = Field(default=None, description="List of orders related to the invoice (it doesn't apply to prefunding)")
     rewards: Optional[List[Annotated[str, Field(strict=True)]]] = Field(default=None, description="List of rewards related to the invoice (it doesn't apply to prefunding)")
     created_at: datetime = Field(description="Timestamp of when the invoice has been created. ")
     paid_at: Optional[datetime] = Field(description="Timestamp of when the invoice has been paid. ")
-    __properties: ClassVar[List[str]] = ["id", "po_number", "amount", "international", "status", "orders", "rewards", "created_at", "paid_at"]
+    __properties: ClassVar[List[str]] = ["id", "po_number", "amount", "currency", "international", "status", "orders", "rewards", "created_at", "paid_at"]
+
+    @field_validator('currency')
+    def currency_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['USD', 'EUR', 'GBP']):
+            raise ValueError("must be one of enum values ('USD', 'EUR', 'GBP')")
+        return value
 
     @field_validator('status')
     def status_validate_enum(cls, value):
@@ -111,6 +122,7 @@ class ListInvoices200ResponseInvoicesInner(BaseModel):
             "id": obj.get("id"),
             "po_number": obj.get("po_number"),
             "amount": obj.get("amount"),
+            "currency": obj.get("currency") if obj.get("currency") is not None else 'USD',
             "international": obj.get("international"),
             "status": obj.get("status"),
             "orders": obj.get("orders"),

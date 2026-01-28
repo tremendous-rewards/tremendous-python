@@ -18,30 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateInvoiceRequest(BaseModel):
+class CreateTopupRequest(BaseModel):
     """
-    CreateInvoiceRequest
+    CreateTopupRequest
     """ # noqa: E501
-    po_number: Optional[StrictStr] = Field(default=None, description="Reference to the purchase order number within your organization")
-    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the invoice")
-    currency: Optional[StrictStr] = Field(default='USD', description="Currency of the invoice")
-    memo: Optional[StrictStr] = Field(default=None, description="A note to be included in the invoice. This is for your internal use and will not be visible to the recipient. ")
-    __properties: ClassVar[List[str]] = ["po_number", "amount", "currency", "memo"]
-
-    @field_validator('currency')
-    def currency_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['USD', 'EUR', 'GBP']):
-            raise ValueError("must be one of enum values ('USD', 'EUR', 'GBP')")
-        return value
+    funding_source_id: StrictStr = Field(description="The ID of the funding source to top up.")
+    idempotency_key: StrictStr = Field(description="Unique key that ensures this request is only processed once. ")
+    amount: Union[StrictFloat, StrictInt] = Field(description="Amount in USD intended to be added to your organization’s balance.")
+    __properties: ClassVar[List[str]] = ["funding_source_id", "idempotency_key", "amount"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +50,7 @@ class CreateInvoiceRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateInvoiceRequest from a JSON string"""
+        """Create an instance of CreateTopupRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -82,21 +71,11 @@ class CreateInvoiceRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if po_number (nullable) is None
-        # and model_fields_set contains the field
-        if self.po_number is None and "po_number" in self.model_fields_set:
-            _dict['po_number'] = None
-
-        # set to None if memo (nullable) is None
-        # and model_fields_set contains the field
-        if self.memo is None and "memo" in self.model_fields_set:
-            _dict['memo'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateInvoiceRequest from a dict"""
+        """Create an instance of CreateTopupRequest from a dict"""
         if obj is None:
             return None
 
@@ -104,10 +83,9 @@ class CreateInvoiceRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "po_number": obj.get("po_number"),
-            "amount": obj.get("amount"),
-            "currency": obj.get("currency") if obj.get("currency") is not None else 'USD',
-            "memo": obj.get("memo")
+            "funding_source_id": obj.get("funding_source_id"),
+            "idempotency_key": obj.get("idempotency_key"),
+            "amount": obj.get("amount")
         })
         return _obj
 
