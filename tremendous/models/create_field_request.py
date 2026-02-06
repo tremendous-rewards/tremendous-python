@@ -20,39 +20,24 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
-from tremendous.models.list_fields200_response_fields_inner_data import ListFields200ResponseFieldsInnerData
+from tremendous.models.create_field_request_data import CreateFieldRequestData
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListFields200ResponseFieldsInner(BaseModel):
+class CreateFieldRequest(BaseModel):
     """
-    ListFields200ResponseFieldsInner
+    CreateFieldRequest
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = None
-    label: Optional[StrictStr] = Field(default=None, description="Label of the field")
-    data_type: Optional[StrictStr] = Field(default=None, description="Type of the values of the field  <table>   <thead>     <tr>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>Checkbox</code></td>       <td>A boolean value (true/false)</td>     </tr>     <tr>       <td><code>Currency</code></td>       <td>A monetary value</td>     </tr>     <tr>       <td><code>Date</code></td>       <td>A date value</td>     </tr>     <tr>       <td><code>Dropdown</code></td>       <td>A single selection from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Email</code></td>       <td>An email address</td>     </tr>     <tr>       <td><code>List</code></td>       <td>Multiple selections from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Number</code></td>       <td>A numeric value</td>     </tr>     <tr>       <td><code>Phone</code></td>       <td>A phone number</td>     </tr>     <tr>       <td><code>Text</code></td>       <td>A single-line text value</td>     </tr>     <tr>       <td><code>TextArea</code></td>       <td>A multi-line text value</td>     </tr>   </tbody> </table> ")
-    data: Optional[ListFields200ResponseFieldsInnerData] = None
-    required: Optional[StrictBool] = Field(default=None, description="Is this field required (true) or optional (false)")
-    scope: Optional[StrictStr] = Field(default=None, description="Type of objects this field gets associated with")
-    __properties: ClassVar[List[str]] = ["id", "label", "data_type", "data", "required", "scope"]
-
-    @field_validator('id')
-    def id_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"[A-Z0-9]{4,20}", value):
-            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
-        return value
+    display_name: StrictStr = Field(description="A human-readable name for the field. Can contain letters, numbers, spaces, and underscores. The field's `label` (a reference name used in API requests) will be automatically derived from this value. ")
+    data_type: StrictStr = Field(description="Type of the values of the field  <table>   <thead>     <tr>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>Checkbox</code></td>       <td>A boolean value (true/false)</td>     </tr>     <tr>       <td><code>Currency</code></td>       <td>A monetary value</td>     </tr>     <tr>       <td><code>Date</code></td>       <td>A date value</td>     </tr>     <tr>       <td><code>Dropdown</code></td>       <td>A single selection from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Email</code></td>       <td>An email address</td>     </tr>     <tr>       <td><code>List</code></td>       <td>Multiple selections from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Number</code></td>       <td>A numeric value</td>     </tr>     <tr>       <td><code>Phone</code></td>       <td>A phone number</td>     </tr>     <tr>       <td><code>Text</code></td>       <td>A single-line text value</td>     </tr>     <tr>       <td><code>TextArea</code></td>       <td>A multi-line text value</td>     </tr>   </tbody> </table> ")
+    data: Optional[CreateFieldRequestData] = None
+    required: Optional[StrictBool] = Field(default=False, description="Is this field required (true) or optional (false). Defaults to false.")
+    description: Optional[StrictStr] = Field(default=None, description="A description of the field's purpose")
+    __properties: ClassVar[List[str]] = ["display_name", "data_type", "data", "required", "description"]
 
     @field_validator('data_type')
     def data_type_validate_enum(cls, value):
         """Validates the enum"""
-        if value is None:
-            return value
-
         if value not in set(['Checkbox', 'Currency', 'Date', 'Dropdown', 'Email', 'List', 'Number', 'Phone', 'Text', 'TextArea']):
             raise ValueError("must be one of enum values ('Checkbox', 'Currency', 'Date', 'Dropdown', 'Email', 'List', 'Number', 'Phone', 'Text', 'TextArea')")
         return value
@@ -75,7 +60,7 @@ class ListFields200ResponseFieldsInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListFields200ResponseFieldsInner from a JSON string"""
+        """Create an instance of CreateFieldRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -103,7 +88,7 @@ class ListFields200ResponseFieldsInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListFields200ResponseFieldsInner from a dict"""
+        """Create an instance of CreateFieldRequest from a dict"""
         if obj is None:
             return None
 
@@ -111,12 +96,11 @@ class ListFields200ResponseFieldsInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "label": obj.get("label"),
+            "display_name": obj.get("display_name"),
             "data_type": obj.get("data_type"),
-            "data": ListFields200ResponseFieldsInnerData.from_dict(obj["data"]) if obj.get("data") is not None else None,
-            "required": obj.get("required"),
-            "scope": obj.get("scope")
+            "data": CreateFieldRequestData.from_dict(obj["data"]) if obj.get("data") is not None else None,
+            "required": obj.get("required") if obj.get("required") is not None else False,
+            "description": obj.get("description")
         })
         return _obj
 
