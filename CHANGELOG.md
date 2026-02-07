@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.6.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.5.0...tremendous-python-v5.6.0) (2026-02-07)
+
+
+### Features
+
+* add create field endpoint (POST /fields) ([972b8d9](https://github.com/tremendous-rewards/tremendous-python/commit/972b8d950be83abf0a4aa164e2a274437b5d5d03))
+* regenerate SDK ([#70](https://github.com/tremendous-rewards/tremendous-python/issues/70)) ([972b8d9](https://github.com/tremendous-rewards/tremendous-python/commit/972b8d950be83abf0a4aa164e2a274437b5d5d03))
+
+
+### Bug Fixes
+
+* type field data as structured object instead of untyped dict ([972b8d9](https://github.com/tremendous-rewards/tremendous-python/commit/972b8d950be83abf0a4aa164e2a274437b5d5d03))
+
 ## [5.5.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.4.0...tremendous-python-v5.5.0) (2026-01-28)
 
 
