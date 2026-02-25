@@ -39,7 +39,6 @@ class CurrencyCodes(str, Enum):
     AZN = 'AZN'
     BAM = 'BAM'
     BDT = 'BDT'
-    BGN = 'BGN'
     BHD = 'BHD'
     BIF = 'BIF'
     BND = 'BND'

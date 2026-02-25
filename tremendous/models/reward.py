@@ -36,6 +36,7 @@ class Reward(BaseModel):
     id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward")
     order_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the order this reward is part of.")
     created_at: Optional[datetime] = Field(default=None, description="Date the reward was created")
+    expires_at: Optional[datetime] = Field(default=None, description="Expiration date of the reward. If null, the reward does not expire.")
     campaign_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. ")
     products: Optional[Annotated[List[Annotated[str, Field(strict=True)]], Field(min_length=1)]] = Field(default=None, description="List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.  Providing a `products` array will override the products made available by the campaign specified using the `campaign_id` property unless the `products` array is empty. It will _not_ override other campaign attributes, like the message and customization of the look and feel. ")
     value: Optional[ListRewards200ResponseRewardsInnerValue] = None
@@ -43,7 +44,7 @@ class Reward(BaseModel):
     deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.")
     custom_fields: Optional[List[RewardBaseCustomFieldsInner]] = None
     delivery: Optional[RewardWithoutLinkDelivery] = None
-    __properties: ClassVar[List[str]] = ["id", "order_id", "created_at", "campaign_id", "products", "value", "recipient", "deliver_at", "custom_fields", "delivery"]
+    __properties: ClassVar[List[str]] = ["id", "order_id", "created_at", "expires_at", "campaign_id", "products", "value", "recipient", "deliver_at", "custom_fields", "delivery"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -108,11 +109,13 @@ class Reward(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "id",
             "order_id",
             "created_at",
+            "expires_at",
         ])
 
         _dict = self.model_dump(
@@ -136,6 +139,11 @@ class Reward(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of delivery
         if self.delivery:
             _dict['delivery'] = self.delivery.to_dict()
+        # set to None if expires_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.expires_at is None and "expires_at" in self.model_fields_set:
+            _dict['expires_at'] = None
+
         # set to None if campaign_id (nullable) is None
         # and model_fields_set contains the field
         if self.campaign_id is None and "campaign_id" in self.model_fields_set:
@@ -156,6 +164,7 @@ class Reward(BaseModel):
             "id": obj.get("id"),
             "order_id": obj.get("order_id"),
             "created_at": obj.get("created_at"),
+            "expires_at": obj.get("expires_at"),
             "campaign_id": obj.get("campaign_id"),
             "products": obj.get("products"),
             "value": ListRewards200ResponseRewardsInnerValue.from_dict(obj["value"]) if obj.get("value") is not None else None,
