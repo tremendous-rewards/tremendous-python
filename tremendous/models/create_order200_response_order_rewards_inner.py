@@ -36,12 +36,13 @@ class CreateOrder200ResponseOrderRewardsInner(BaseModel):
     id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward")
     order_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the order this reward is part of.")
     created_at: Optional[datetime] = Field(default=None, description="Date the reward was created")
+    expires_at: Optional[datetime] = Field(default=None, description="Expiration date of the reward. If null, the reward does not expire.")
     value: Optional[ListRewards200ResponseRewardsInnerValue] = None
     recipient: Optional[ListRewards200ResponseRewardsInnerRecipient] = None
     deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.")
     custom_fields: Optional[List[ListRewards200ResponseRewardsInnerCustomFieldsInner]] = None
     delivery: Optional[CreateOrder200ResponseOrderRewardsInnerDelivery] = None
-    __properties: ClassVar[List[str]] = ["id", "order_id", "created_at", "value", "recipient", "deliver_at", "custom_fields", "delivery"]
+    __properties: ClassVar[List[str]] = ["id", "order_id", "created_at", "expires_at", "value", "recipient", "deliver_at", "custom_fields", "delivery"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -118,6 +119,11 @@ class CreateOrder200ResponseOrderRewardsInner(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of delivery
         if self.delivery:
             _dict['delivery'] = self.delivery.to_dict()
+        # set to None if expires_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.expires_at is None and "expires_at" in self.model_fields_set:
+            _dict['expires_at'] = None
+
         return _dict
 
     @classmethod
@@ -133,6 +139,7 @@ class CreateOrder200ResponseOrderRewardsInner(BaseModel):
             "id": obj.get("id"),
             "order_id": obj.get("order_id"),
             "created_at": obj.get("created_at"),
+            "expires_at": obj.get("expires_at"),
             "value": ListRewards200ResponseRewardsInnerValue.from_dict(obj["value"]) if obj.get("value") is not None else None,
             "recipient": ListRewards200ResponseRewardsInnerRecipient.from_dict(obj["recipient"]) if obj.get("recipient") is not None else None,
             "deliver_at": obj.get("deliver_at"),
