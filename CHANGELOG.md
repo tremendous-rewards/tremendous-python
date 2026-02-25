@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.7.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.6.0...tremendous-python-v5.7.0) (2026-02-25)
+
+
+### Features
+
+* add nullable `expires_at` field to Reward responses across all ([9f1b2d8](https://github.com/tremendous-rewards/tremendous-python/commit/9f1b2d80f24bffdf262bef525fc6c4283480372a))
+
+
+### Bug Fixes
+
+* Remove `BGN` currency code reference ([9f1b2d8](https://github.com/tremendous-rewards/tremendous-python/commit/9f1b2d80f24bffdf262bef525fc6c4283480372a))
+
 ## [5.6.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.5.0...tremendous-python-v5.6.0) (2026-02-07)
 
 
