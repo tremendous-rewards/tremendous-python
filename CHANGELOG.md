@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.8.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.7.0...tremendous-python-v5.8.0) (2026-02-27)
+
+
+### Features
+
+* rename order `status` enum value `CART` to `OPEN` ([389b231](https://github.com/tremendous-rewards/tremendous-python/commit/389b2314f919b43e756e64e6c9fb95243f5fd8b7))
+
 ## [5.7.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.6.0...tremendous-python-v5.7.0) (2026-02-25)
 
 
