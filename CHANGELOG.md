@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.9.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.8.0...tremendous-python-v5.9.0) (2026-03-19)
+
+
+### Features
+
+* add `international_bank` product category ([ccc2fbe](https://github.com/tremendous-rewards/tremendous-python/commit/ccc2fbe17c375bcc7250769af82cc8192466f387))
+
 ## [5.8.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.7.0...tremendous-python-v5.8.0) (2026-02-27)
 
 
