@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.10.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.9.0...tremendous-python-v5.10.0) (2026-03-20)
+
+
+### Features
+
+* add `PENDING SETTLEMENT` to order `status` enum ([cae7e06](https://github.com/tremendous-rewards/tremendous-python/commit/cae7e063448867b20ef54b19a0e9324b23799fc9))
+
 ## [5.9.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.8.0...tremendous-python-v5.9.0) (2026-03-19)
 
 
