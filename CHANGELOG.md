@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.10.1](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.10.0...tremendous-python-v5.10.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* remove obsolete currency codes `EEK`, `LTL`, `LVL`, `ZMK` ([f0f62c7](https://github.com/tremendous-rewards/tremendous-python/commit/f0f62c7c27883e95c01f1a760f225897c9696f35))
+* replace `BYR` with `BYN` in currency codes ([f0f62c7](https://github.com/tremendous-rewards/tremendous-python/commit/f0f62c7c27883e95c01f1a760f225897c9696f35))
+
 ## [5.10.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.9.0...tremendous-python-v5.10.0) (2026-03-20)
 
 
