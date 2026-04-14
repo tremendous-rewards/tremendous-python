@@ -45,7 +45,7 @@ class CurrencyCodes(str, Enum):
     BOB = 'BOB'
     BRL = 'BRL'
     BWP = 'BWP'
-    BYR = 'BYR'
+    BYN = 'BYN'
     BZD = 'BZD'
     CDF = 'CDF'
     CHF = 'CHF'
@@ -59,7 +59,6 @@ class CurrencyCodes(str, Enum):
     DKK = 'DKK'
     DOP = 'DOP'
     DZD = 'DZD'
-    EEK = 'EEK'
     EGP = 'EGP'
     ERN = 'ERN'
     ETB = 'ETB'
@@ -88,8 +87,6 @@ class CurrencyCodes(str, Enum):
     KZT = 'KZT'
     LBP = 'LBP'
     LKR = 'LKR'
-    LTL = 'LTL'
-    LVL = 'LVL'
     MAD = 'MAD'
     MDL = 'MDL'
     MGA = 'MGA'
@@ -141,7 +138,6 @@ class CurrencyCodes(str, Enum):
     XOF = 'XOF'
     YER = 'YER'
     ZAR = 'ZAR'
-    ZMK = 'ZMK'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
