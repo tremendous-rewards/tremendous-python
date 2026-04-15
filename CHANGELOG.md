@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.11.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.10.1...tremendous-python-v5.11.0) (2026-04-15)
+
+
+### Features
+
+* add delete connected organization endpoint ([52e3a6f](https://github.com/tremendous-rewards/tremendous-python/commit/52e3a6fbd6858c1eccb30a417187b735078a2d8b))
+* add delete connected organization member endpoint ([52e3a6f](https://github.com/tremendous-rewards/tremendous-python/commit/52e3a6fbd6858c1eccb30a417187b735078a2d8b))
+
 ## [5.10.1](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.10.0...tremendous-python-v5.10.1) (2026-04-14)
 
 
