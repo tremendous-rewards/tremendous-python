@@ -29,9 +29,20 @@ class CreateInvoiceRequest(BaseModel):
     """ # noqa: E501
     po_number: Optional[StrictStr] = Field(default=None, description="Reference to the purchase order number within your organization")
     amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the invoice")
-    currency: Optional[StrictStr] = Field(default='USD', description="Currency of the invoice")
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the invoice. Defaults to the organization's currency if not provided.")
+    currency: Optional[StrictStr] = Field(default=None, description="Deprecated: Use `currency_code` instead.")
     memo: Optional[StrictStr] = Field(default=None, description="A note to be included in the invoice. This is for your internal use and will not be visible to the recipient. ")
-    __properties: ClassVar[List[str]] = ["po_number", "amount", "currency", "memo"]
+    __properties: ClassVar[List[str]] = ["po_number", "amount", "currency_code", "currency", "memo"]
+
+    @field_validator('currency_code')
+    def currency_code_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['USD', 'EUR', 'GBP']):
+            raise ValueError("must be one of enum values ('USD', 'EUR', 'GBP')")
+        return value
 
     @field_validator('currency')
     def currency_validate_enum(cls, value):
@@ -106,7 +117,8 @@ class CreateInvoiceRequest(BaseModel):
         _obj = cls.model_validate({
             "po_number": obj.get("po_number"),
             "amount": obj.get("amount"),
-            "currency": obj.get("currency") if obj.get("currency") is not None else 'USD',
+            "currency_code": obj.get("currency_code"),
+            "currency": obj.get("currency"),
             "memo": obj.get("memo")
         })
         return _obj
