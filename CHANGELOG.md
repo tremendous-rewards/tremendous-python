@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.12.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.11.0...tremendous-python-v5.12.0) (2026-04-16)
+
+
+### Features
+
+* add `currency_code` field to invoice creation ([070b04b](https://github.com/tremendous-rewards/tremendous-python/commit/070b04b9c4edf2b5345e342cfdf23c116820ced2))
+* add enum validation for `currency_code` (USD, EUR, GBP) ([070b04b](https://github.com/tremendous-rewards/tremendous-python/commit/070b04b9c4edf2b5345e342cfdf23c116820ced2))
+
+
+### Bug Fixes
+
+* deprecate `currency` in favor of `currency_code` ([070b04b](https://github.com/tremendous-rewards/tremendous-python/commit/070b04b9c4edf2b5345e342cfdf23c116820ced2))
+* remove default `USD` value from `currency` field ([070b04b](https://github.com/tremendous-rewards/tremendous-python/commit/070b04b9c4edf2b5345e342cfdf23c116820ced2))
+
 ## [5.11.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.10.1...tremendous-python-v5.11.0) (2026-04-15)
 
 
