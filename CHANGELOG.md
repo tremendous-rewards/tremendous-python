@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.13.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.12.0...tremendous-python-v5.13.0) (2026-04-17)
+
+
+### Features
+
+* add `currency_code` field to invoices ([cd80e6c](https://github.com/tremendous-rewards/tremendous-python/commit/cd80e6cc6c3b678d3a595231797eb41fdaf1b8fe))
+
+
+### Bug Fixes
+
+* deprecate `currency` in favor of `currency_code` ([cd80e6c](https://github.com/tremendous-rewards/tremendous-python/commit/cd80e6cc6c3b678d3a595231797eb41fdaf1b8fe))
+
 ## [5.12.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.11.0...tremendous-python-v5.12.0) (2026-04-16)
 
 
