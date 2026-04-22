@@ -31,8 +31,9 @@ class GetFraudReview200ResponseFraudReviewRelatedRewards(BaseModel):
     ids: Optional[List[StrictStr]] = Field(default=None, description="The IDs of rewards that have similar attributes to the fraud reward. A maximum of 100 IDs is returned. ")
     count: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="How many related rewards were found in total.")
     blocked_count: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="How many related rewards have been blocked.")
-    aggregated_value: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total amount claimed by the related rewards (in USD).")
-    __properties: ClassVar[List[str]] = ["ids", "count", "blocked_count", "aggregated_value"]
+    aggregated_value: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total amount claimed by the related rewards, denominated in `currency_code`. ")
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the aggregated value. Always matches the organization's currency.")
+    __properties: ClassVar[List[str]] = ["ids", "count", "blocked_count", "aggregated_value", "currency_code"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,7 +89,8 @@ class GetFraudReview200ResponseFraudReviewRelatedRewards(BaseModel):
             "ids": obj.get("ids"),
             "count": obj.get("count"),
             "blocked_count": obj.get("blocked_count"),
-            "aggregated_value": obj.get("aggregated_value")
+            "aggregated_value": obj.get("aggregated_value"),
+            "currency_code": obj.get("currency_code")
         })
         return _obj
 

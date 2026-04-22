@@ -19,8 +19,8 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from tremendous.models.list_funding_sources200_response_funding_sources_inner_meta_failure_details import ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails
 from typing import Optional, Set
@@ -30,9 +30,13 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
     """
     ListFundingSources200ResponseFundingSourcesInnerMeta
     """ # noqa: E501
-    available_cents: Optional[StrictInt] = Field(default=None, description="**Only exists for balance and commercial invoicing.**  For balance: available amount (in cents USD) For commercial invoicing: available credit amount calculated as (credit limit - outstanding balance) (in cents USD)  *Caution: In the \"list funding sources\" endpoint this value is cached and may not be up to date. Use the \"get funding source\" endpoint to get the most up to date value.* ")
-    pending_cents: Optional[StrictInt] = Field(default=None, description="**Only available when `method` is set to `balance`.**  Funds that are already registered on your Tremendous account but which have not yet been deposited in your account (e.g. payments that need to be manually reviewed by our ops team) (in Cents USD). ")
-    credit_limit_cents: Optional[StrictInt] = Field(default=None, description="**Only exists for commercial invoicing.**  Available credit limit (in cents USD) ")
+    available_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="**Only exists for balance and commercial invoicing.**  For balance: available amount denominated in `currency_code`. For commercial invoicing: available credit amount denominated in `currency_code`, calculated as (credit limit - outstanding balance).  *Caution: In the \"list funding sources\" endpoint this value is cached and may not be up to date. Use the \"get funding source\" endpoint to get the most up to date value.* ")
+    available_cents: Optional[StrictInt] = Field(default=None, description="Same as `available_amount`, but in cents.")
+    currency_code: Optional[StrictStr] = Field(default=None, description="**Only exists for balance and commercial invoicing.**  The currency of the balance or credit amounts (e.g. `available_amount`, `pending_amount`, `credit_limit_amount`).  Always matches the organization's currency. ")
+    pending_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="**Only available when `method` is set to `balance`.**  Funds registered on your Tremendous account but not yet deposited in your account (e.g. payments that need to be manually reviewed by our ops team). Denominated in `currency_code`. ")
+    pending_cents: Optional[StrictInt] = Field(default=None, description="Same as `pending_amount`, but in cents.")
+    credit_limit_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="**Only exists for commercial invoicing.**  Available credit limit denominated in `currency_code`. ")
+    credit_limit_cents: Optional[StrictInt] = Field(default=None, description="Same as `credit_limit_amount`, but in cents.")
     accountholder_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account` or `credit_card`.**  Name of the holder of the bank account or credit_card ")
     account_type: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Is this a checking or savings account ")
     bank_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Name of the bank ")
@@ -58,7 +62,7 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
     phone: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Contact phone number for billing ")
     emails: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Email addresses for invoice delivery (comma-separated) ")
     failure_details: Optional[ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails] = None
-    __properties: ClassVar[List[str]] = ["available_cents", "pending_cents", "credit_limit_cents", "accountholder_name", "account_type", "bank_name", "account_number_mask", "account_routing_mask", "refundable", "network", "last4", "expired", "year", "month", "last_payment_failed_at", "invoice_type", "interval", "day_of_week", "net", "company_name", "address_1", "address_2", "city", "state", "zip", "phone", "emails", "failure_details"]
+    __properties: ClassVar[List[str]] = ["available_amount", "available_cents", "currency_code", "pending_amount", "pending_cents", "credit_limit_amount", "credit_limit_cents", "accountholder_name", "account_type", "bank_name", "account_number_mask", "account_routing_mask", "refundable", "network", "last4", "expired", "year", "month", "last_payment_failed_at", "invoice_type", "interval", "day_of_week", "net", "company_name", "address_1", "address_2", "city", "state", "zip", "phone", "emails", "failure_details"]
 
     @field_validator('account_type')
     def account_type_validate_enum(cls, value):
@@ -224,8 +228,12 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "available_amount": obj.get("available_amount"),
             "available_cents": obj.get("available_cents"),
+            "currency_code": obj.get("currency_code"),
+            "pending_amount": obj.get("pending_amount"),
             "pending_cents": obj.get("pending_cents"),
+            "credit_limit_amount": obj.get("credit_limit_amount"),
             "credit_limit_cents": obj.get("credit_limit_cents"),
             "accountholder_name": obj.get("accountholder_name"),
             "account_type": obj.get("account_type"),

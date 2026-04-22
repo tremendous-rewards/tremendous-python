@@ -33,9 +33,20 @@ class UpdateCampaignRequest(BaseModel):
     name: Optional[StrictStr] = Field(default=None, description="Name of the campaign")
     description: Optional[StrictStr] = Field(default=None, description="Description of the campaign")
     products: Optional[List[Annotated[str, Field(strict=True)]]] = Field(default=None, description="List of IDs of products (different gift cards, charity, etc.) that are available in this campaign. ")
+    fee_charged_to: Optional[StrictStr] = Field(default=None, description="Determines whether fees for premium products are added to the order total (`SENDER`) or deducted from the recipient's reward amount (`RECIPIENT`). Campaigns with `RECIPIENT` must include at least one fee-free product. ")
     webpage_style: Optional[ListCampaigns200ResponseCampaignsInnerWebpageStyle] = None
     email_style: Optional[ListCampaigns200ResponseCampaignsInnerEmailStyle] = None
-    __properties: ClassVar[List[str]] = ["name", "description", "products", "webpage_style", "email_style"]
+    __properties: ClassVar[List[str]] = ["name", "description", "products", "fee_charged_to", "webpage_style", "email_style"]
+
+    @field_validator('fee_charged_to')
+    def fee_charged_to_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['SENDER', 'RECIPIENT']):
+            raise ValueError("must be one of enum values ('SENDER', 'RECIPIENT')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,6 +98,11 @@ class UpdateCampaignRequest(BaseModel):
         if self.description is None and "description" in self.model_fields_set:
             _dict['description'] = None
 
+        # set to None if fee_charged_to (nullable) is None
+        # and model_fields_set contains the field
+        if self.fee_charged_to is None and "fee_charged_to" in self.model_fields_set:
+            _dict['fee_charged_to'] = None
+
         return _dict
 
     @classmethod
@@ -102,6 +118,7 @@ class UpdateCampaignRequest(BaseModel):
             "name": obj.get("name"),
             "description": obj.get("description"),
             "products": obj.get("products"),
+            "fee_charged_to": obj.get("fee_charged_to"),
             "webpage_style": ListCampaigns200ResponseCampaignsInnerWebpageStyle.from_dict(obj["webpage_style"]) if obj.get("webpage_style") is not None else None,
             "email_style": ListCampaigns200ResponseCampaignsInnerEmailStyle.from_dict(obj["email_style"]) if obj.get("email_style") is not None else None
         })

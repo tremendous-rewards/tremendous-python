@@ -29,7 +29,7 @@ class TopupCreateRequest(BaseModel):
     """ # noqa: E501
     funding_source_id: StrictStr = Field(description="The ID of the funding source to top up.")
     idempotency_key: StrictStr = Field(description="Unique key that ensures this request is only processed once. ")
-    amount: Union[StrictFloat, StrictInt] = Field(description="Amount in USD intended to be added to your organization’s balance.")
+    amount: Union[StrictFloat, StrictInt] = Field(description="Amount to add to your organization's balance, denominated in `currency_code`.")
     __properties: ClassVar[List[str]] = ["funding_source_id", "idempotency_key", "amount"]
 
     model_config = ConfigDict(

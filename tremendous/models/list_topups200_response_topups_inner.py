@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
+from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
@@ -29,17 +29,21 @@ class ListTopups200ResponseTopupsInner(BaseModel):
     ListTopups200ResponseTopupsInner
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="Unique identifier for the topup request.")
-    amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount in USD intended to be added to your organization’s balance.")
+    amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount to add to your organization's balance, denominated in `currency_code`.")
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the topup amount. Always matches the organization's currency.")
     processing_fee: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of the processing fee for the topup (typically reserved for credit card topups).")
     funding_source_id: Optional[StrictStr] = Field(default=None, description="ID of the funding_source object used for this topup.")
-    status: Optional[StrictStr] = Field(default=None, description="Status of the topup <table>   <thead>     <tr>       <th>         Status       </th>       <th>         Description       </th>     </tr>   </thead>   <tbody>     <tr>       <td>         <code>           created         </code>       </td>       <td>         The topup is processing (and may be under review).       </td>     </tr>     <tr>       <td>         <code>           fully_credited         </code>       </td>       <td>         The funds have been added to the balance.       </td>     </tr>     <tr>       <td>         <code>           reversed         </code>       </td>       <td>         The topup was credited, but then reversed due to a chargeback or ACH return.       </td>     </tr>     <tr>       <td>         <code>           rejected         </code>       </td>       <td>         The topup was rejected by an admin.       </td>     </tr>   </tbody> </table> ")
+    status: Optional[StrictStr] = Field(default=None, description="Status of the topup <table>   <thead>     <tr>       <th>         Status       </th>       <th>         Description       </th>     </tr>   </thead>   <tbody>     <tr>       <td>         <code>           created         </code>       </td>       <td>         The topup is processing (and may be under review).       </td>     </tr>     <tr>       <td>         <code>           partially_credited         </code>       </td>       <td>         Some funds have been credited to the balance. The remainder will be credited by <code>expected_settlement_at</code>.       </td>     </tr>     <tr>       <td>         <code>           fully_credited         </code>       </td>       <td>         All funds have been added to the balance.       </td>     </tr>     <tr>       <td>         <code>           reversed         </code>       </td>       <td>         The topup was credited, but then reversed due to a chargeback or ACH return.       </td>     </tr>     <tr>       <td>         <code>           rejected         </code>       </td>       <td>         The topup was rejected by an admin.       </td>     </tr>   </tbody> </table> ")
     created_at: Optional[datetime] = Field(default=None, description="Timestamp indicating when the topup object was created (when the request was made).")
     fully_credited_at: Optional[datetime] = Field(default=None, description="Timestamp indicating when the topup amount was fully credited to the balance.")
     rejected_at: Optional[datetime] = Field(default=None, description="Timestamp indicating when the topup was rejected.")
     reversed_at: Optional[datetime] = Field(default=None, description="Timestamp indicating when the topup was reversed.")
     reversed_reason: Optional[StrictStr] = Field(default=None, description="A sentence explaining why the topup was reversed.")
     idempotency_key: Optional[StrictStr] = Field(default=None, description="Idempotency key to prevent duplicate requests.")
-    __properties: ClassVar[List[str]] = ["id", "amount", "processing_fee", "funding_source_id", "status", "created_at", "fully_credited_at", "rejected_at", "reversed_at", "reversed_reason", "idempotency_key"]
+    instant_credit_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount credited to the balance immediately. Equals `amount` for non-ACH topups or ACH debits fully within instant funding limits. Can be 0 if nothing was credited instantly.")
+    settled_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount that will be available once the settlement period elapses. 0 if nothing is settling.")
+    expected_settlement_at: Optional[date] = Field(default=None, description="Timestamp indicating when the pending amount will be credited to the balance. Null if the topup was fully credited immediately.")
+    __properties: ClassVar[List[str]] = ["id", "amount", "currency_code", "processing_fee", "funding_source_id", "status", "created_at", "fully_credited_at", "rejected_at", "reversed_at", "reversed_reason", "idempotency_key", "instant_credit_amount", "settled_amount", "expected_settlement_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -105,6 +109,11 @@ class ListTopups200ResponseTopupsInner(BaseModel):
         if self.idempotency_key is None and "idempotency_key" in self.model_fields_set:
             _dict['idempotency_key'] = None
 
+        # set to None if expected_settlement_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.expected_settlement_at is None and "expected_settlement_at" in self.model_fields_set:
+            _dict['expected_settlement_at'] = None
+
         return _dict
 
     @classmethod
@@ -119,6 +128,7 @@ class ListTopups200ResponseTopupsInner(BaseModel):
         _obj = cls.model_validate({
             "id": obj.get("id"),
             "amount": obj.get("amount"),
+            "currency_code": obj.get("currency_code"),
             "processing_fee": obj.get("processing_fee"),
             "funding_source_id": obj.get("funding_source_id"),
             "status": obj.get("status"),
@@ -127,7 +137,10 @@ class ListTopups200ResponseTopupsInner(BaseModel):
             "rejected_at": obj.get("rejected_at"),
             "reversed_at": obj.get("reversed_at"),
             "reversed_reason": obj.get("reversed_reason"),
-            "idempotency_key": obj.get("idempotency_key")
+            "idempotency_key": obj.get("idempotency_key"),
+            "instant_credit_amount": obj.get("instant_credit_amount"),
+            "settled_amount": obj.get("settled_amount"),
+            "expected_settlement_at": obj.get("expected_settlement_at")
         })
         return _obj
 

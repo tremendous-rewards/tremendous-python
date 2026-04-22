@@ -35,9 +35,10 @@ class CreateOrganization200ResponseOrganization(BaseModel):
     website: StrictStr = Field(description="URL of the website of that organization")
     copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
     phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).")
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency code for the new organization. Defaults to the current organization's currency if not provided.")
     created_at: Optional[date] = Field(default=None, description="Timestamp of when the organization has been created. ")
     api_key: Optional[StrictStr] = Field(default=None, description="The API key for the created organization. This property is only returned when `api_key` is set to `true`. ")
-    __properties: ClassVar[List[str]] = ["id", "name", "website", "copy_settings", "phone", "created_at", "api_key"]
+    __properties: ClassVar[List[str]] = ["id", "name", "website", "copy_settings", "phone", "currency_code", "created_at", "api_key"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -113,6 +114,7 @@ class CreateOrganization200ResponseOrganization(BaseModel):
             "website": obj.get("website"),
             "copy_settings": CreateOrganizationRequestCopySettings.from_dict(obj["copy_settings"]) if obj.get("copy_settings") is not None else None,
             "phone": obj.get("phone"),
+            "currency_code": obj.get("currency_code"),
             "created_at": obj.get("created_at"),
             "api_key": obj.get("api_key")
         })

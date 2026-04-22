@@ -26,13 +26,14 @@ from typing_extensions import Self
 
 class FraudReviewRelatedRewards(BaseModel):
     """
-    FraudReviewRelatedRewards
+    The related rewards associated with the fraud review.
     """ # noqa: E501
     ids: Optional[List[StrictStr]] = Field(default=None, description="The IDs of rewards that have similar attributes to the fraud reward. A maximum of 100 IDs is returned. ")
     count: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="How many related rewards were found in total.")
     blocked_count: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="How many related rewards have been blocked.")
-    aggregated_value: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total amount claimed by the related rewards (in USD).")
-    __properties: ClassVar[List[str]] = ["ids", "count", "blocked_count", "aggregated_value"]
+    aggregated_value: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total amount claimed by the related rewards, denominated in `currency_code`. ")
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the aggregated value. Always matches the organization's currency.")
+    __properties: ClassVar[List[str]] = ["ids", "count", "blocked_count", "aggregated_value", "currency_code"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -64,8 +65,10 @@ class FraudReviewRelatedRewards(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "currency_code",
         ])
 
         _dict = self.model_dump(
@@ -88,7 +91,8 @@ class FraudReviewRelatedRewards(BaseModel):
             "ids": obj.get("ids"),
             "count": obj.get("count"),
             "blocked_count": obj.get("blocked_count"),
-            "aggregated_value": obj.get("aggregated_value")
+            "aggregated_value": obj.get("aggregated_value"),
+            "currency_code": obj.get("currency_code")
         })
         return _obj
 

@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Union
 from typing_extensions import Annotated
 from typing import Optional, Set
@@ -28,8 +28,9 @@ class RefundDetails(BaseModel):
     """
     RefundDetails
     """ # noqa: E501
-    total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total amount of the order refunds (in USD)")
-    __properties: ClassVar[List[str]] = ["total"]
+    total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total amount of the order refunds, denominated in `currency_code`.")
+    currency_code: StrictStr = Field(description="Currency of the refund. Always matches the organization's currency.")
+    __properties: ClassVar[List[str]] = ["total", "currency_code"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -62,9 +63,11 @@ class RefundDetails(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "total",
+            "currency_code",
         ])
 
         _dict = self.model_dump(
@@ -84,7 +87,8 @@ class RefundDetails(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "total": obj.get("total")
+            "total": obj.get("total"),
+            "currency_code": obj.get("currency_code")
         })
         return _obj
 
