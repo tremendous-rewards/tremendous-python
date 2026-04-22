@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,10 @@ class CreateConnectedOrganizationMemberRequest(BaseModel):
     CreateConnectedOrganizationMemberRequest
     """ # noqa: E501
     connected_organization_id: StrictStr = Field(description="The ID of the connected organization.")
-    __properties: ClassVar[List[str]] = ["connected_organization_id"]
+    external_name: Optional[StrictStr] = Field(default=None, description="The name associated with the user in your systems.")
+    external_email: Optional[StrictStr] = Field(default=None, description="The email associated with the user in your systems.")
+    role: Optional[StrictStr] = Field(default=None, description="The role ID to assign to the member within the organization. Only applicable when the connected organization is already linked to an existing Tremendous organization. ")
+    __properties: ClassVar[List[str]] = ["connected_organization_id", "external_name", "external_email", "role"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -81,7 +84,10 @@ class CreateConnectedOrganizationMemberRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "connected_organization_id": obj.get("connected_organization_id")
+            "connected_organization_id": obj.get("connected_organization_id"),
+            "external_name": obj.get("external_name"),
+            "external_email": obj.get("external_email"),
+            "role": obj.get("role")
         })
         return _obj
 
