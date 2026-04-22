@@ -6,7 +6,21 @@
 ### Features
 
 * add `currency_code` to balance transactions ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+* add `currency_code` to order payments and refunds ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+* add `currency_code` to funding source meta ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+* add `available_amount`, `pending_amount`, `credit_limit_amount` to funding source meta ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+* add `currency_code` to organizations ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+* add `currency_code` to create organization request ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+* add `fee_charged_to` field to campaigns ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+* add `currency_code` to topups ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+* add `instant_credit_amount`, `settled_amount`, `expected_settlement_at` to topups ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+* add `partially_credited` topup status ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+* add `currency_code` to fraud review related rewards ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
 
+
+### Bug Fixes
+
+* make recipient `name` field nullable ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
 ## [5.13.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.12.0...tremendous-python-v5.13.0) (2026-04-17)
 
 
