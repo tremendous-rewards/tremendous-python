@@ -28,7 +28,7 @@ class ReviewRedeemedRewardsAmount(BaseModel):
     """
     If a recipient, device, or IP redeems more than this dollar value of rewards, flag for review.
     """ # noqa: E501
-    amount: Union[Annotated[float, Field(strict=True, ge=1)], Annotated[int, Field(strict=True, ge=1)]] = Field(description="The total amount in USD of redeemed rewards to use as a threshold.")
+    amount: Union[Annotated[float, Field(strict=True, ge=1)], Annotated[int, Field(strict=True, ge=1)]] = Field(description="The total amount of redeemed rewards to use as a threshold. The amount is denominated in the organization's currency.")
     period: StrictStr = Field(description="The period, in days, to consider for the count. Use `all_time` to consider any redeemed rewards.")
     __properties: ClassVar[List[str]] = ["amount", "period"]
 

@@ -21,7 +21,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.get_fraud_review200_response_fraud_review_related_rewards import GetFraudReview200ResponseFraudReviewRelatedRewards
+from tremendous.models.fraud_review_related_rewards import FraudReviewRelatedRewards
 from tremendous.models.list_fraud_reviews200_response_fraud_reviews_inner_geo import ListFraudReviews200ResponseFraudReviewsInnerGeo
 from tremendous.models.order_without_link_rewards_inner import OrderWithoutLinkRewardsInner
 from typing import Optional, Set
@@ -42,7 +42,7 @@ class FraudReview(BaseModel):
     reviewed_at: Optional[datetime] = Field(default=None, description="When the reward was blocked or released following fraud review.  This field is only present if the status is not `flagged`. ")
     redemption_method_account_hash: Optional[StrictStr] = Field(default=None, description="A hash of the destination account for redemption methods that require providing 3rd party account details (e.g., PayPal, Venmo, ACH/CashApp, international bank transfers, etc.). The hash is globally unique by redemption method + account combination. This field is omitted for redemption methods that don't have a destination account (e.g., merchant cards, charities, etc.). ")
     risk: Optional[StrictStr] = Field(default=None, description="The fraud risk associated with the reward.")
-    related_rewards: Optional[GetFraudReview200ResponseFraudReviewRelatedRewards] = None
+    related_rewards: Optional[FraudReviewRelatedRewards] = None
     __properties: ClassVar[List[str]] = ["status", "reasons", "device_id", "redemption_method", "redeemed_at", "geo", "reward", "reviewed_by", "reviewed_at", "redemption_method_account_hash", "risk", "related_rewards"]
 
     @field_validator('status')
@@ -167,7 +167,7 @@ class FraudReview(BaseModel):
             "reviewed_at": obj.get("reviewed_at"),
             "redemption_method_account_hash": obj.get("redemption_method_account_hash"),
             "risk": obj.get("risk"),
-            "related_rewards": GetFraudReview200ResponseFraudReviewRelatedRewards.from_dict(obj["related_rewards"]) if obj.get("related_rewards") is not None else None
+            "related_rewards": FraudReviewRelatedRewards.from_dict(obj["related_rewards"]) if obj.get("related_rewards") is not None else None
         })
         return _obj
 

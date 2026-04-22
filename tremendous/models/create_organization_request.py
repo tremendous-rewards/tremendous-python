@@ -33,7 +33,8 @@ class CreateOrganizationRequest(BaseModel):
     with_api_key: StrictBool = Field(description="Default value is `false`. Set to true to also generate an API key associated to the new organization.")
     copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
     phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).")
-    __properties: ClassVar[List[str]] = ["name", "website", "with_api_key", "copy_settings", "phone"]
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency code for the new organization. Defaults to the current organization's currency if not provided.")
+    __properties: ClassVar[List[str]] = ["name", "website", "with_api_key", "copy_settings", "phone", "currency_code"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,7 +94,8 @@ class CreateOrganizationRequest(BaseModel):
             "website": obj.get("website"),
             "with_api_key": obj.get("with_api_key"),
             "copy_settings": CreateOrganizationRequestCopySettings.from_dict(obj["copy_settings"]) if obj.get("copy_settings") is not None else None,
-            "phone": obj.get("phone")
+            "phone": obj.get("phone"),
+            "currency_code": obj.get("currency_code")
         })
         return _obj
 

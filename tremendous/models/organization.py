@@ -32,9 +32,10 @@ class Organization(BaseModel):
     id: Optional[Annotated[str, Field(strict=True)]] = None
     name: StrictStr = Field(description="Name of the organization")
     website: StrictStr = Field(description="URL of the website of that organization")
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency used for this organization's balances, orders, and transactions.")
     status: Optional[StrictStr] = Field(default=None, description="Status of the organization. Organizations need to be approved to be able to use them to send out rewards.")
     created_at: Optional[date] = Field(default=None, description="Timestamp of when the organization has been created.  *This field is only returned when creating an organization.* It is not returned anymore when retrieving or listing organizations. ")
-    __properties: ClassVar[List[str]] = ["id", "name", "website", "status", "created_at"]
+    __properties: ClassVar[List[str]] = ["id", "name", "website", "currency_code", "status", "created_at"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -116,6 +117,7 @@ class Organization(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "website": obj.get("website"),
+            "currency_code": obj.get("currency_code"),
             "status": obj.get("status"),
             "created_at": obj.get("created_at")
         })

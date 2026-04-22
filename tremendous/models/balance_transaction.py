@@ -30,12 +30,13 @@ class BalanceTransaction(BaseModel):
     A balance transaction represents a specific movement or change in an account's balance. 
     """ # noqa: E501
     created_at: datetime = Field(description="Date that the transaction was created")
-    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the transaction in USD")
-    balance: Union[StrictFloat, StrictInt] = Field(description="The updated total after the transaction. Note that this running balance may be delayed and contain `null`.")
+    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the transaction, denominated in `currency_code`.")
+    currency_code: StrictStr = Field(description="Currency of the transaction amount and running balance. Always matches the organization's currency.")
+    balance: Union[StrictFloat, StrictInt] = Field(description="The updated total after the transaction, denominated in `currency_code`. Note that this running balance may be delayed and contain `null`.")
     action: StrictStr = Field(description="The action that was performed")
     description: StrictStr = Field(description="A brief description of the transaction")
     order: Optional[BalanceTransactionOrder] = None
-    __properties: ClassVar[List[str]] = ["created_at", "amount", "balance", "action", "description", "order"]
+    __properties: ClassVar[List[str]] = ["created_at", "amount", "currency_code", "balance", "action", "description", "order"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,6 +94,7 @@ class BalanceTransaction(BaseModel):
         _obj = cls.model_validate({
             "created_at": obj.get("created_at"),
             "amount": obj.get("amount"),
+            "currency_code": obj.get("currency_code"),
             "balance": obj.get("balance"),
             "action": obj.get("action"),
             "description": obj.get("description"),

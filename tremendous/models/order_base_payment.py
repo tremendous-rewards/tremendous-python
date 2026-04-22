@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from tremendous.models.payment_details_refund import PaymentDetailsRefund
@@ -27,14 +27,15 @@ from typing_extensions import Self
 
 class OrderBasePayment(BaseModel):
     """
-    Cost breakdown of the order (cost of rewards + fees). Cost and fees are always denominated in USD, independent from the currency of the ordered rewards. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
+    Cost breakdown of the order (cost of rewards + fees). Cost and fees are denominated in the organization's currency (see payment `currency_code`), independent of the ordered rewards' currency. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
     """ # noqa: E501
-    subtotal: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order before fees (in USD)")
-    total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order including fees (in USD)")
-    fees: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Fees for the order (in USD)")
-    discount: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Discount for the order (in USD)")
+    subtotal: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order before fees, denominated in `currency_code`.")
+    total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order including fees, denominated in `currency_code`.")
+    fees: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Fees for the order, denominated in `currency_code`.")
+    discount: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Discount for the order, denominated in `currency_code`.")
+    currency_code: StrictStr = Field(description="Currency in which the payment amounts (subtotal, total, fees, discount, refund) are denominated.  This always matches the organization's currency. ")
     refund: Optional[PaymentDetailsRefund] = None
-    __properties: ClassVar[List[str]] = ["subtotal", "total", "fees", "discount", "refund"]
+    __properties: ClassVar[List[str]] = ["subtotal", "total", "fees", "discount", "currency_code", "refund"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -70,12 +71,14 @@ class OrderBasePayment(BaseModel):
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
         * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
             "subtotal",
             "total",
             "fees",
             "discount",
+            "currency_code",
         ])
 
         _dict = self.model_dump(
@@ -102,6 +105,7 @@ class OrderBasePayment(BaseModel):
             "total": obj.get("total"),
             "fees": obj.get("fees"),
             "discount": obj.get("discount"),
+            "currency_code": obj.get("currency_code"),
             "refund": PaymentDetailsRefund.from_dict(obj["refund"]) if obj.get("refund") is not None else None
         })
         return _obj
