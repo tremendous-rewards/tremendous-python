@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.15.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.14.0...tremendous-python-v5.15.0) (2026-04-22)
+
+
+### Features
+
+* add `external_name`, `external_email`, `role` to connected org ([de375b6](https://github.com/tremendous-rewards/tremendous-python/commit/de375b628f05910f2907b0c275d0180b59f9b9b3))
+
 ## [5.14.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.13.0...tremendous-python-v5.14.0) (2026-04-22)
 
 
