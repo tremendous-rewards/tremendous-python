@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.14.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.13.0...tremendous-python-v5.14.0) (2026-04-22)
+
+
+### Features
+
+* add `currency_code` to balance transactions ([939f5be](https://github.com/tremendous-rewards/tremendous-python/commit/939f5be9356b573cb79bde0cb1fe80f1e3a237ff))
+
 ## [5.13.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.12.0...tremendous-python-v5.13.0) (2026-04-17)
 
 
