@@ -30,7 +30,7 @@ class FraudReviewReason(str, Enum):
     DISALLOWED_IP = 'Disallowed IP'
     DISALLOWED_EMAIL = 'Disallowed email'
     DISALLOWED_COUNTRY = 'Disallowed country'
-    OVER_REWARD_DOLLAR_LIMIT = 'Over reward dollar limit'
+    OVER_REWARD_AMOUNT_LIMIT = 'Over reward amount limit'
     OVER_REWARD_COUNT_LIMIT = 'Over reward count limit'
     VPN_DETECTED = 'VPN detected'
     DEVICE_RELATED_TO_MULTIPLE_EMAILS = 'Device related to multiple emails'
@@ -40,6 +40,7 @@ class FraudReviewReason(str, Enum):
     FINGERPRINT_ON_A_TREMENDOUS_FRAUD_LIST = 'Fingerprint on a Tremendous fraud list'
     EMAIL_ON_A_TREMENDOUS_FRAUD_LIST = 'Email on a Tremendous fraud list'
     PHONE_ON_A_TREMENDOUS_FRAUD_LIST = 'Phone on a Tremendous fraud list'
+    DEVICE_ON_A_TREMENDOUS_FRAUD_LIST = 'Device on a Tremendous fraud list'
     IP_RELATED_TO_A_BLOCKED_REWARD = 'IP related to a blocked reward'
     DEVICE_RELATED_TO_A_BLOCKED_REWARD = 'Device related to a blocked reward'
     BANK_ACCOUNT_RELATED_TO_A_BLOCKED_REWARD = 'Bank account related to a blocked reward'
@@ -48,6 +49,7 @@ class FraudReviewReason(str, Enum):
     PHONE_RELATED_TO_A_BLOCKED_REWARD = 'Phone related to a blocked reward'
     ALLOWED_IP = 'Allowed IP'
     ALLOWED_EMAIL = 'Allowed email'
+    ALLOWED_COUNTRY = 'Allowed country'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
