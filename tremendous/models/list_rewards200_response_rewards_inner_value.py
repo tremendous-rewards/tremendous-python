@@ -28,7 +28,7 @@ class ListRewards200ResponseRewardsInnerValue(BaseModel):
     ListRewards200ResponseRewardsInnerValue
     """ # noqa: E501
     denomination: Union[StrictFloat, StrictInt] = Field(description="Amount of the reward")
-    currency_code: Optional[StrictStr] = Field(default='USD', description="Currency of the reward")
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the reward. Defaults to the organization's currency if not provided.")
     __properties: ClassVar[List[str]] = ["denomination", "currency_code"]
 
     @field_validator('currency_code')
@@ -93,7 +93,7 @@ class ListRewards200ResponseRewardsInnerValue(BaseModel):
 
         _obj = cls.model_validate({
             "denomination": obj.get("denomination"),
-            "currency_code": obj.get("currency_code") if obj.get("currency_code") is not None else 'USD'
+            "currency_code": obj.get("currency_code")
         })
         return _obj
 
