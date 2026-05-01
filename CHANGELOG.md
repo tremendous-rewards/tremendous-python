@@ -1,5 +1,23 @@
 # Changelog
 
+## [5.16.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.15.0...tremendous-python-v5.16.0) (2026-05-01)
+
+
+### Features
+
+* add fraud reason `Allowed country` ([e13667b](https://github.com/tremendous-rewards/tremendous-python/commit/e13667b93b152efa90168d2f50ec82c40e95e3f0))
+* add fraud reason `Device on a Tremendous fraud list` ([e13667b](https://github.com/tremendous-rewards/tremendous-python/commit/e13667b93b152efa90168d2f50ec82c40e95e3f0))
+
+
+### Bug Fixes
+
+* make campaign webpage style `message` nullable ([e13667b](https://github.com/tremendous-rewards/tremendous-python/commit/e13667b93b152efa90168d2f50ec82c40e95e3f0))
+
+
+### Documentation
+
+* update `currency_code` description to note org default ([e13667b](https://github.com/tremendous-rewards/tremendous-python/commit/e13667b93b152efa90168d2f50ec82c40e95e3f0))
+
 ## [5.15.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.14.0...tremendous-python-v5.15.0) (2026-04-22)
 
 
