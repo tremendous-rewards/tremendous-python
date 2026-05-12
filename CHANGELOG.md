@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.17.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.16.0...tremendous-python-v5.17.0) (2026-05-12)
+
+
+### Features
+
+* add `auto_add_product_rule` to Campaign ([5a5ddc9](https://github.com/tremendous-rewards/tremendous-python/commit/5a5ddc98d34023f884e5e4ae564dfd3635d7de8c))
+
 ## [5.16.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.15.0...tremendous-python-v5.16.0) (2026-05-01)
 
 
