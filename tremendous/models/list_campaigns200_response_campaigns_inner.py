@@ -21,6 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
+from tremendous.models.list_campaigns200_response_campaigns_inner_auto_add_product_rule import ListCampaigns200ResponseCampaignsInnerAutoAddProductRule
 from tremendous.models.list_campaigns200_response_campaigns_inner_email_style import ListCampaigns200ResponseCampaignsInnerEmailStyle
 from tremendous.models.list_campaigns200_response_campaigns_inner_webpage_style import ListCampaigns200ResponseCampaignsInnerWebpageStyle
 from typing import Optional, Set
@@ -35,9 +36,10 @@ class ListCampaigns200ResponseCampaignsInner(BaseModel):
     description: Optional[StrictStr] = Field(description="Description of the campaign")
     products: List[Annotated[str, Field(strict=True)]] = Field(description="List of IDs of products (different gift cards, charity, etc.) that are available in this campaign. ")
     fee_charged_to: Optional[StrictStr] = Field(default=None, description="Determines whether fees for premium products are added to the order total (`SENDER`) or deducted from the recipient's reward amount (`RECIPIENT`). Campaigns with `RECIPIENT` must include at least one fee-free product. ")
+    auto_add_product_rule: Optional[ListCampaigns200ResponseCampaignsInnerAutoAddProductRule] = None
     webpage_style: Optional[ListCampaigns200ResponseCampaignsInnerWebpageStyle] = None
     email_style: Optional[ListCampaigns200ResponseCampaignsInnerEmailStyle] = None
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "products", "fee_charged_to", "webpage_style", "email_style"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "products", "fee_charged_to", "auto_add_product_rule", "webpage_style", "email_style"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -98,6 +100,9 @@ class ListCampaigns200ResponseCampaignsInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of auto_add_product_rule
+        if self.auto_add_product_rule:
+            _dict['auto_add_product_rule'] = self.auto_add_product_rule.to_dict()
         # override the default output from pydantic by calling `to_dict()` of webpage_style
         if self.webpage_style:
             _dict['webpage_style'] = self.webpage_style.to_dict()
@@ -113,6 +118,11 @@ class ListCampaigns200ResponseCampaignsInner(BaseModel):
         # and model_fields_set contains the field
         if self.fee_charged_to is None and "fee_charged_to" in self.model_fields_set:
             _dict['fee_charged_to'] = None
+
+        # set to None if auto_add_product_rule (nullable) is None
+        # and model_fields_set contains the field
+        if self.auto_add_product_rule is None and "auto_add_product_rule" in self.model_fields_set:
+            _dict['auto_add_product_rule'] = None
 
         return _dict
 
@@ -131,6 +141,7 @@ class ListCampaigns200ResponseCampaignsInner(BaseModel):
             "description": obj.get("description"),
             "products": obj.get("products"),
             "fee_charged_to": obj.get("fee_charged_to"),
+            "auto_add_product_rule": ListCampaigns200ResponseCampaignsInnerAutoAddProductRule.from_dict(obj["auto_add_product_rule"]) if obj.get("auto_add_product_rule") is not None else None,
             "webpage_style": ListCampaigns200ResponseCampaignsInnerWebpageStyle.from_dict(obj["webpage_style"]) if obj.get("webpage_style") is not None else None,
             "email_style": ListCampaigns200ResponseCampaignsInnerEmailStyle.from_dict(obj["email_style"]) if obj.get("email_style") is not None else None
         })
