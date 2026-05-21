@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: "weekly"
     cooldown:
-      default-days: 2
+      default-days: 7
 
 
   - package-ecosystem: "pip"
@@ -13,4 +13,4 @@ updates:
     schedule:
       interval: "weekly"
     cooldown:
-      default-days: 2
+      default-days: 7
