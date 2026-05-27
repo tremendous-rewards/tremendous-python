@@ -36,6 +36,6 @@ README.md
 setup.py
 setup.cfg
 requirements.txt
-text-requirements.txt
+test-requirements.txt
 pyproject.toml
 .gitignore
