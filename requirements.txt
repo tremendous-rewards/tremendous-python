@@ -1,5 +1,4 @@
 python_dateutil >= 2.5.3
-setuptools >= 82.0.1
 urllib3 >= 2.1.0, < 3.0.0
 pydantic >= 2
 typing-extensions >= 4.7.1
