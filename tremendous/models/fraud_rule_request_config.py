@@ -27,11 +27,12 @@ from tremendous.models.review_email import ReviewEmail
 from tremendous.models.review_ip import ReviewIp
 from tremendous.models.review_redeemed_rewards_amount import ReviewRedeemedRewardsAmount
 from tremendous.models.review_redeemed_rewards_count import ReviewRedeemedRewardsCount
+from tremendous.models.review_vpn import ReviewVpn
 from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
 from typing_extensions import Literal, Self
 from pydantic import Field
 
-FRAUDRULEREQUESTCONFIG_ANY_OF_SCHEMAS = ["AllowEmail", "AllowIp", "ReviewCountry", "ReviewEmail", "ReviewIp", "ReviewRedeemedRewardsAmount", "ReviewRedeemedRewardsCount"]
+FRAUDRULEREQUESTCONFIG_ANY_OF_SCHEMAS = ["AllowEmail", "AllowIp", "ReviewCountry", "ReviewEmail", "ReviewIp", "ReviewRedeemedRewardsAmount", "ReviewRedeemedRewardsCount", "ReviewVpn"]
 
 class FraudRuleRequestConfig(BaseModel):
     """
@@ -48,15 +49,17 @@ class FraudRuleRequestConfig(BaseModel):
     anyof_schema_4_validator: Optional[ReviewRedeemedRewardsCount] = None
     # data type: ReviewRedeemedRewardsAmount
     anyof_schema_5_validator: Optional[ReviewRedeemedRewardsAmount] = None
+    # data type: ReviewVpn
+    anyof_schema_6_validator: Optional[ReviewVpn] = None
     # data type: AllowIp
-    anyof_schema_6_validator: Optional[AllowIp] = None
+    anyof_schema_7_validator: Optional[AllowIp] = None
     # data type: AllowEmail
-    anyof_schema_7_validator: Optional[AllowEmail] = None
+    anyof_schema_8_validator: Optional[AllowEmail] = None
     if TYPE_CHECKING:
-        actual_instance: Optional[Union[AllowEmail, AllowIp, ReviewCountry, ReviewEmail, ReviewIp, ReviewRedeemedRewardsAmount, ReviewRedeemedRewardsCount]] = None
+        actual_instance: Optional[Union[AllowEmail, AllowIp, ReviewCountry, ReviewEmail, ReviewIp, ReviewRedeemedRewardsAmount, ReviewRedeemedRewardsCount, ReviewVpn]] = None
     else:
         actual_instance: Any = None
-    any_of_schemas: Set[str] = { "AllowEmail", "AllowIp", "ReviewCountry", "ReviewEmail", "ReviewIp", "ReviewRedeemedRewardsAmount", "ReviewRedeemedRewardsCount" }
+    any_of_schemas: Set[str] = { "AllowEmail", "AllowIp", "ReviewCountry", "ReviewEmail", "ReviewIp", "ReviewRedeemedRewardsAmount", "ReviewRedeemedRewardsCount", "ReviewVpn" }
 
     model_config = {
         "validate_assignment": True,
@@ -107,6 +110,12 @@ class FraudRuleRequestConfig(BaseModel):
         else:
             return v
 
+        # validate data type: ReviewVpn
+        if not isinstance(v, ReviewVpn):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `ReviewVpn`")
+        else:
+            return v
+
         # validate data type: AllowIp
         if not isinstance(v, AllowIp):
             error_messages.append(f"Error! Input type `{type(v)}` is not `AllowIp`")
@@ -121,7 +130,7 @@ class FraudRuleRequestConfig(BaseModel):
 
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in FraudRuleRequestConfig with anyOf schemas: AllowEmail, AllowIp, ReviewCountry, ReviewEmail, ReviewIp, ReviewRedeemedRewardsAmount, ReviewRedeemedRewardsCount. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in FraudRuleRequestConfig with anyOf schemas: AllowEmail, AllowIp, ReviewCountry, ReviewEmail, ReviewIp, ReviewRedeemedRewardsAmount, ReviewRedeemedRewardsCount, ReviewVpn. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -164,13 +173,19 @@ class FraudRuleRequestConfig(BaseModel):
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
-        # anyof_schema_6_validator: Optional[AllowIp] = None
+        # anyof_schema_6_validator: Optional[ReviewVpn] = None
+        try:
+            instance.actual_instance = ReviewVpn.from_json(json_str)
+            return instance
+        except (ValidationError, ValueError) as e:
+             error_messages.append(str(e))
+        # anyof_schema_7_validator: Optional[AllowIp] = None
         try:
             instance.actual_instance = AllowIp.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
-        # anyof_schema_7_validator: Optional[AllowEmail] = None
+        # anyof_schema_8_validator: Optional[AllowEmail] = None
         try:
             instance.actual_instance = AllowEmail.from_json(json_str)
             return instance
@@ -179,7 +194,7 @@ class FraudRuleRequestConfig(BaseModel):
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into FraudRuleRequestConfig with anyOf schemas: AllowEmail, AllowIp, ReviewCountry, ReviewEmail, ReviewIp, ReviewRedeemedRewardsAmount, ReviewRedeemedRewardsCount. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into FraudRuleRequestConfig with anyOf schemas: AllowEmail, AllowIp, ReviewCountry, ReviewEmail, ReviewIp, ReviewRedeemedRewardsAmount, ReviewRedeemedRewardsCount, ReviewVpn. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -193,7 +208,7 @@ class FraudRuleRequestConfig(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], AllowEmail, AllowIp, ReviewCountry, ReviewEmail, ReviewIp, ReviewRedeemedRewardsAmount, ReviewRedeemedRewardsCount]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], AllowEmail, AllowIp, ReviewCountry, ReviewEmail, ReviewIp, ReviewRedeemedRewardsAmount, ReviewRedeemedRewardsCount, ReviewVpn]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

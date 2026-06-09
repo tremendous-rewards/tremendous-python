@@ -33,6 +33,7 @@ class FraudReviewReason(str, Enum):
     OVER_REWARD_AMOUNT_LIMIT = 'Over reward amount limit'
     OVER_REWARD_COUNT_LIMIT = 'Over reward count limit'
     VPN_DETECTED = 'VPN detected'
+    APPLE_PRIVATE_RELAY = 'Apple Private Relay'
     DEVICE_RELATED_TO_MULTIPLE_EMAILS = 'Device related to multiple emails'
     DEVICE_OR_ACCOUNT_RELATED_TO_MULTIPLE_EMAILS = 'Device or account related to multiple emails'
     IP_ON_A_TREMENDOUS_FRAUD_LIST = 'IP on a Tremendous fraud list'

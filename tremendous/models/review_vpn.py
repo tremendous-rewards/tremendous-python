@@ -18,19 +18,17 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.create_connected_organization_request_kyb import CreateConnectedOrganizationRequestKyb
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateConnectedOrganizationRequest(BaseModel):
+class ReviewVpn(BaseModel):
     """
-    CreateConnectedOrganizationRequest
+    Flag rewards redeemed through VPN or proxy traffic. By default, Apple Private Relay traffic is flagged; set `skip_apple_private_relay` to true to exclude it.
     """ # noqa: E501
-    client_id: StrictStr = Field(description="The client ID of the OAuth application.")
-    kyb: Optional[CreateConnectedOrganizationRequestKyb] = None
-    __properties: ClassVar[List[str]] = ["client_id", "kyb"]
+    skip_apple_private_relay: Optional[StrictBool] = Field(default=False, description="Whether Apple Private Relay traffic should be excluded from VPN fraud review. When omitted or false, Apple Private Relay traffic is flagged with other VPN and proxy traffic. ")
+    __properties: ClassVar[List[str]] = ["skip_apple_private_relay"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +48,7 @@ class CreateConnectedOrganizationRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateConnectedOrganizationRequest from a JSON string"""
+        """Create an instance of ReviewVpn from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,14 +69,11 @@ class CreateConnectedOrganizationRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of kyb
-        if self.kyb:
-            _dict['kyb'] = self.kyb.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateConnectedOrganizationRequest from a dict"""
+        """Create an instance of ReviewVpn from a dict"""
         if obj is None:
             return None
 
@@ -86,8 +81,7 @@ class CreateConnectedOrganizationRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "client_id": obj.get("client_id"),
-            "kyb": CreateConnectedOrganizationRequestKyb.from_dict(obj["kyb"]) if obj.get("kyb") is not None else None
+            "skip_apple_private_relay": obj.get("skip_apple_private_relay") if obj.get("skip_apple_private_relay") is not None else False
         })
         return _obj
 

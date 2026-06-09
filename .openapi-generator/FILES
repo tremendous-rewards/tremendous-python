@@ -1,4 +1,3 @@
-test-requirements.txt
 tremendous/__init__.py
 tremendous/api/__init__.py
 tremendous/api/tremendous_api.py
@@ -33,6 +32,7 @@ tremendous/models/create_connected_organization_member_session200_response.py
 tremendous/models/create_connected_organization_member_session200_response_connected_organization_member_session.py
 tremendous/models/create_connected_organization_member_session_request.py
 tremendous/models/create_connected_organization_request.py
+tremendous/models/create_connected_organization_request_kyb.py
 tremendous/models/create_field.py
 tremendous/models/create_field200_response.py
 tremendous/models/create_field_request.py
@@ -81,6 +81,7 @@ tremendous/models/fraud_config_ip.py
 tremendous/models/fraud_config_redeemed_rewards_amount.py
 tremendous/models/fraud_config_redeemed_rewards_count.py
 tremendous/models/fraud_config_review_email.py
+tremendous/models/fraud_config_review_vpn.py
 tremendous/models/fraud_generic_response.py
 tremendous/models/fraud_review.py
 tremendous/models/fraud_review_base.py
@@ -132,6 +133,8 @@ tremendous/models/list_connected_organization_members200_response_connected_orga
 tremendous/models/list_connected_organizations200_response.py
 tremendous/models/list_connected_organizations200_response_connected_organizations_inner.py
 tremendous/models/list_connected_organizations200_response_connected_organizations_inner_organization.py
+tremendous/models/list_connected_organizations200_response_connected_organizations_inner_prefilled_kyb_details.py
+tremendous/models/list_connected_organizations200_response_connected_organizations_inner_prefilled_kyb_details_address.py
 tremendous/models/list_fields200_response.py
 tremendous/models/list_fields200_response_fields_inner.py
 tremendous/models/list_fields200_response_fields_inner_data.py
@@ -209,6 +212,7 @@ tremendous/models/review_ip.py
 tremendous/models/review_ip1.py
 tremendous/models/review_redeemed_rewards_amount.py
 tremendous/models/review_redeemed_rewards_count.py
+tremendous/models/review_vpn.py
 tremendous/models/reward.py
 tremendous/models/reward_base.py
 tremendous/models/reward_base_custom_fields_inner.py
