@@ -20,17 +20,18 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.create_connected_organization_request_kyb import CreateConnectedOrganizationRequestKyb
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateConnectedOrganizationRequest(BaseModel):
+class ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetailsAddress(BaseModel):
     """
-    CreateConnectedOrganizationRequest
+    The company's address.
     """ # noqa: E501
-    client_id: StrictStr = Field(description="The client ID of the OAuth application.")
-    kyb: Optional[CreateConnectedOrganizationRequestKyb] = None
-    __properties: ClassVar[List[str]] = ["client_id", "kyb"]
+    line1: Optional[StrictStr] = Field(default=None, description="Street address.")
+    city: Optional[StrictStr] = Field(default=None, description="City.")
+    state: Optional[StrictStr] = Field(default=None, description="State, province, or region.")
+    zip: Optional[StrictStr] = Field(default=None, description="ZIP or postal code.")
+    __properties: ClassVar[List[str]] = ["line1", "city", "state", "zip"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +51,7 @@ class CreateConnectedOrganizationRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateConnectedOrganizationRequest from a JSON string"""
+        """Create an instance of ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetailsAddress from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,14 +72,11 @@ class CreateConnectedOrganizationRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of kyb
-        if self.kyb:
-            _dict['kyb'] = self.kyb.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateConnectedOrganizationRequest from a dict"""
+        """Create an instance of ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetailsAddress from a dict"""
         if obj is None:
             return None
 
@@ -86,8 +84,10 @@ class CreateConnectedOrganizationRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "client_id": obj.get("client_id"),
-            "kyb": CreateConnectedOrganizationRequestKyb.from_dict(obj["kyb"]) if obj.get("kyb") is not None else None
+            "line1": obj.get("line1"),
+            "city": obj.get("city"),
+            "state": obj.get("state"),
+            "zip": obj.get("zip")
         })
         return _obj
 

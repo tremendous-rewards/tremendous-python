@@ -1490,7 +1490,7 @@ class TremendousApi:
     ) -> CreateConnectedOrganization200Response:
         """Create connected organization
 
-        Create a connected organization. 
+        Create a connected organization.  Optionally pass a `kyb` object to forward KYB details you have already collected for the end client. When provided, these values pre-fill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb` field is optional, but any value provided is validated — malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`.  The stored KYB details are echoed back as `prefilled_kyb_details` on this create response only. 
 
         :param create_connected_organization_request: Connected organization to create (required)
         :type create_connected_organization_request: CreateConnectedOrganizationRequest
@@ -1561,7 +1561,7 @@ class TremendousApi:
     ) -> ApiResponse[CreateConnectedOrganization200Response]:
         """Create connected organization
 
-        Create a connected organization. 
+        Create a connected organization.  Optionally pass a `kyb` object to forward KYB details you have already collected for the end client. When provided, these values pre-fill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb` field is optional, but any value provided is validated — malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`.  The stored KYB details are echoed back as `prefilled_kyb_details` on this create response only. 
 
         :param create_connected_organization_request: Connected organization to create (required)
         :type create_connected_organization_request: CreateConnectedOrganizationRequest
@@ -1632,7 +1632,7 @@ class TremendousApi:
     ) -> RESTResponseType:
         """Create connected organization
 
-        Create a connected organization. 
+        Create a connected organization.  Optionally pass a `kyb` object to forward KYB details you have already collected for the end client. When provided, these values pre-fill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb` field is optional, but any value provided is validated — malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`.  The stored KYB details are echoed back as `prefilled_kyb_details` on this create response only. 
 
         :param create_connected_organization_request: Connected organization to create (required)
         :type create_connected_organization_request: CreateConnectedOrganizationRequest
@@ -6573,7 +6573,7 @@ class TremendousApi:
     def fraud_rule(
         self,
         rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
-        fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.")] = None,
+        fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body. `review_vpn` also accepts no body for the default behavior. Pass `config.skip_apple_private_relay` only to override whether Apple Private Relay traffic is flagged. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6593,7 +6593,7 @@ class TremendousApi:
 
         :param rule_type: The rule type to create or update. (required)
         :type rule_type: str
-        :param fraud_rule_request: Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.
+        :param fraud_rule_request: Rules `review_multiple_emails`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body. `review_vpn` also accepts no body for the default behavior. Pass `config.skip_apple_private_relay` only to override whether Apple Private Relay traffic is flagged. 
         :type fraud_rule_request: FraudRuleRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -6650,7 +6650,7 @@ class TremendousApi:
     def fraud_rule_with_http_info(
         self,
         rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
-        fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.")] = None,
+        fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body. `review_vpn` also accepts no body for the default behavior. Pass `config.skip_apple_private_relay` only to override whether Apple Private Relay traffic is flagged. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6670,7 +6670,7 @@ class TremendousApi:
 
         :param rule_type: The rule type to create or update. (required)
         :type rule_type: str
-        :param fraud_rule_request: Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.
+        :param fraud_rule_request: Rules `review_multiple_emails`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body. `review_vpn` also accepts no body for the default behavior. Pass `config.skip_apple_private_relay` only to override whether Apple Private Relay traffic is flagged. 
         :type fraud_rule_request: FraudRuleRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -6727,7 +6727,7 @@ class TremendousApi:
     def fraud_rule_without_preload_content(
         self,
         rule_type: Annotated[StrictStr, Field(description="The rule type to create or update.")],
-        fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.")] = None,
+        fraud_rule_request: Annotated[Optional[FraudRuleRequest], Field(description="Rules `review_multiple_emails`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body. `review_vpn` also accepts no body for the default behavior. Pass `config.skip_apple_private_relay` only to override whether Apple Private Relay traffic is flagged. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6747,7 +6747,7 @@ class TremendousApi:
 
         :param rule_type: The rule type to create or update. (required)
         :type rule_type: str
-        :param fraud_rule_request: Rules `review_multiple_emails`, `review_vpn`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body.
+        :param fraud_rule_request: Rules `review_multiple_emails`, `review_tremendous_flaglist`, and `review_previously_blocked_recipients` require no body. `review_vpn` also accepts no body for the default behavior. Pass `config.skip_apple_private_relay` only to override whether Apple Private Relay traffic is flagged. 
         :type fraud_rule_request: FraudRuleRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
