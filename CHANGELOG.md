@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.18.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.17.0...tremendous-python-v5.18.0) (2026-06-09)
+
+
+### Features
+
+* add `Apple Private Relay` fraud review reason ([91603e7](https://github.com/tremendous-rewards/tremendous-python/commit/91603e75e809ae494ba0c1c90f62bf50624c63b3))
+* add `prefilled_kyb_details` to connected org ([91603e7](https://github.com/tremendous-rewards/tremendous-python/commit/91603e75e809ae494ba0c1c90f62bf50624c63b3))
+* add `ReviewVpn` to fraud rule request config ([91603e7](https://github.com/tremendous-rewards/tremendous-python/commit/91603e75e809ae494ba0c1c90f62bf50624c63b3))
+* add `skip_apple_private_relay` VPN fraud config ([91603e7](https://github.com/tremendous-rewards/tremendous-python/commit/91603e75e809ae494ba0c1c90f62bf50624c63b3))
+* add `wallet` product category ([91603e7](https://github.com/tremendous-rewards/tremendous-python/commit/91603e75e809ae494ba0c1c90f62bf50624c63b3))
+* add optional `kyb` to create connected org ([91603e7](https://github.com/tremendous-rewards/tremendous-python/commit/91603e75e809ae494ba0c1c90f62bf50624c63b3))
+
 ## [5.17.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.16.0...tremendous-python-v5.17.0) (2026-05-12)
 
 
