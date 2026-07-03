@@ -12,6 +12,9 @@ on:
   schedule:
     - cron: '7 12,15,18 * * 1-5'
 
+permissions:
+  contents: read
+
 jobs:
   test:
     if: github.repository == 'tremendous-rewards/tremendous-python'
@@ -29,11 +32,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'pip'
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
@@ -48,6 +52,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
       - uses: rhysd/actionlint@914e7df21a07ef503a81201c76d2b11c789d3fca # v1.7.12
 
   notify:
