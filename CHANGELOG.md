@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.19.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.18.0...tremendous-python-v5.19.0) (2026-07-03)
+
+
+### Features
+
+* rename `kyb` to `kyb_prefill` in create ([289f798](https://github.com/tremendous-rewards/tremendous-python/commit/289f7983da9af472a20a6776513f1aa82d0b2262))
+
 ## [5.18.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.17.0...tremendous-python-v5.18.0) (2026-06-09)
 
 
