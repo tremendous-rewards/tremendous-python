@@ -23,7 +23,6 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from tremendous.models.list_connected_organizations200_response_connected_organizations_inner_organization import ListConnectedOrganizations200ResponseConnectedOrganizationsInnerOrganization
-from tremendous.models.list_connected_organizations200_response_connected_organizations_inner_prefilled_kyb_details import ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetails
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,8 +34,7 @@ class ListConnectedOrganizations200ResponseConnectedOrganizationsInner(BaseModel
     client_id: StrictStr = Field(description="Client ID of the OAuth app that is to be used by the platform once the integration is complete.")
     created_at: datetime = Field(description="Timestamp of when the connected organization was created.")
     organization: Optional[ListConnectedOrganizations200ResponseConnectedOrganizationsInnerOrganization] = None
-    prefilled_kyb_details: Optional[ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetails] = None
-    __properties: ClassVar[List[str]] = ["id", "client_id", "created_at", "organization", "prefilled_kyb_details"]
+    __properties: ClassVar[List[str]] = ["id", "client_id", "created_at", "organization"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
@@ -87,18 +85,10 @@ class ListConnectedOrganizations200ResponseConnectedOrganizationsInner(BaseModel
         # override the default output from pydantic by calling `to_dict()` of organization
         if self.organization:
             _dict['organization'] = self.organization.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of prefilled_kyb_details
-        if self.prefilled_kyb_details:
-            _dict['prefilled_kyb_details'] = self.prefilled_kyb_details.to_dict()
         # set to None if organization (nullable) is None
         # and model_fields_set contains the field
         if self.organization is None and "organization" in self.model_fields_set:
             _dict['organization'] = None
-
-        # set to None if prefilled_kyb_details (nullable) is None
-        # and model_fields_set contains the field
-        if self.prefilled_kyb_details is None and "prefilled_kyb_details" in self.model_fields_set:
-            _dict['prefilled_kyb_details'] = None
 
         return _dict
 
@@ -115,8 +105,7 @@ class ListConnectedOrganizations200ResponseConnectedOrganizationsInner(BaseModel
             "id": obj.get("id"),
             "client_id": obj.get("client_id"),
             "created_at": obj.get("created_at"),
-            "organization": ListConnectedOrganizations200ResponseConnectedOrganizationsInnerOrganization.from_dict(obj["organization"]) if obj.get("organization") is not None else None,
-            "prefilled_kyb_details": ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetails.from_dict(obj["prefilled_kyb_details"]) if obj.get("prefilled_kyb_details") is not None else None
+            "organization": ListConnectedOrganizations200ResponseConnectedOrganizationsInnerOrganization.from_dict(obj["organization"]) if obj.get("organization") is not None else None
         })
         return _obj
 

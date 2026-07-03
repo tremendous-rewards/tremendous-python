@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.create_connected_organization_request_kyb import CreateConnectedOrganizationRequestKyb
+from tremendous.models.create_connected_organization_request_kyb_prefill import CreateConnectedOrganizationRequestKybPrefill
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,8 +29,8 @@ class CreateConnectedOrganizationRequest(BaseModel):
     CreateConnectedOrganizationRequest
     """ # noqa: E501
     client_id: StrictStr = Field(description="The client ID of the OAuth application.")
-    kyb: Optional[CreateConnectedOrganizationRequestKyb] = None
-    __properties: ClassVar[List[str]] = ["client_id", "kyb"]
+    kyb_prefill: Optional[CreateConnectedOrganizationRequestKybPrefill] = None
+    __properties: ClassVar[List[str]] = ["client_id", "kyb_prefill"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -71,9 +71,9 @@ class CreateConnectedOrganizationRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of kyb
-        if self.kyb:
-            _dict['kyb'] = self.kyb.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of kyb_prefill
+        if self.kyb_prefill:
+            _dict['kyb_prefill'] = self.kyb_prefill.to_dict()
         return _dict
 
     @classmethod
@@ -87,7 +87,7 @@ class CreateConnectedOrganizationRequest(BaseModel):
 
         _obj = cls.model_validate({
             "client_id": obj.get("client_id"),
-            "kyb": CreateConnectedOrganizationRequestKyb.from_dict(obj["kyb"]) if obj.get("kyb") is not None else None
+            "kyb_prefill": CreateConnectedOrganizationRequestKybPrefill.from_dict(obj["kyb_prefill"]) if obj.get("kyb_prefill") is not None else None
         })
         return _obj
 
