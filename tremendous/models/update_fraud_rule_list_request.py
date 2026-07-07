@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
@@ -36,7 +37,7 @@ class UpdateFraudRuleListRequest(BaseModel):
     def operation_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['add', 'remove']):
-            raise ValueError("must be one of enum values ('add', 'remove')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `operation`; known values are ('add', 'remove'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

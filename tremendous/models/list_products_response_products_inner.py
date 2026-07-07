@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
@@ -57,7 +58,7 @@ class ListProductsResponseProductsInner(BaseModel):
     def category_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card', 'cash_app', 'international_bank', 'wallet']):
-            raise ValueError("must be one of enum values ('ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card', 'cash_app', 'international_bank', 'wallet')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `category`; known values are ('ach', 'charity', 'instant_debit_transfer', 'merchant_card', 'paypal', 'venmo', 'visa_card', 'cash_app', 'international_bank', 'wallet'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('subcategory')
@@ -67,7 +68,7 @@ class ListProductsResponseProductsInner(BaseModel):
             return value
 
         if value not in set(['beauty_and_health', 'digital_financial_services', 'electronics', 'entertainment', 'fashion', 'food_and_drink', 'general_merchandise', 'grocery_and_supermarkets', 'home_and_living', 'mobility_and_fuel', 'sports_and_outdoor_gear', 'travel_and_hospitality']):
-            raise ValueError("must be one of enum values ('beauty_and_health', 'digital_financial_services', 'electronics', 'entertainment', 'fashion', 'food_and_drink', 'general_merchandise', 'grocery_and_supermarkets', 'home_and_living', 'mobility_and_fuel', 'sports_and_outdoor_gear', 'travel_and_hospitality')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `subcategory`; known values are ('beauty_and_health', 'digital_financial_services', 'electronics', 'entertainment', 'fashion', 'food_and_drink', 'general_merchandise', 'grocery_and_supermarkets', 'home_and_living', 'mobility_and_fuel', 'sports_and_outdoor_gear', 'travel_and_hospitality'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('currency_codes')
@@ -75,7 +76,7 @@ class ListProductsResponseProductsInner(BaseModel):
         """Validates the enum"""
         for i in value:
             if i not in set(['USD', 'CAD', 'EUR', 'AED', 'AFN', 'ALL', 'AMD', 'ARS', 'AUD', 'AZN', 'BAM', 'BDT', 'BHD', 'BIF', 'BND', 'BOB', 'BRL', 'BWP', 'BYN', 'BZD', 'CDF', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'GBP', 'GEL', 'GHS', 'GNF', 'GTQ', 'HKD', 'HNL', 'HRK', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK', 'JMD', 'JOD', 'JPY', 'KES', 'KHR', 'KRW', 'KWD', 'KZT', 'LBP', 'LKR', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MOP', 'MUR', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SDG', 'SEK', 'SGD', 'SOS', 'SYP', 'THB', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'UYU', 'UZS', 'VEF', 'VND', 'XAF', 'XOF', 'YER', 'ZAR']):
-                raise ValueError("each list item must be one of ('USD', 'CAD', 'EUR', 'AED', 'AFN', 'ALL', 'AMD', 'ARS', 'AUD', 'AZN', 'BAM', 'BDT', 'BHD', 'BIF', 'BND', 'BOB', 'BRL', 'BWP', 'BYN', 'BZD', 'CDF', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'GBP', 'GEL', 'GHS', 'GNF', 'GTQ', 'HKD', 'HNL', 'HRK', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK', 'JMD', 'JOD', 'JPY', 'KES', 'KHR', 'KRW', 'KWD', 'KZT', 'LBP', 'LKR', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MOP', 'MUR', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SDG', 'SEK', 'SGD', 'SOS', 'SYP', 'THB', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'UYU', 'UZS', 'VEF', 'VND', 'XAF', 'XOF', 'YER', 'ZAR')")
+                warnings.warn(f"Unrecognized value '{i}' in enum list field `currency_codes`; known values are ('USD', 'CAD', 'EUR', 'AED', 'AFN', 'ALL', 'AMD', 'ARS', 'AUD', 'AZN', 'BAM', 'BDT', 'BHD', 'BIF', 'BND', 'BOB', 'BRL', 'BWP', 'BYN', 'BZD', 'CDF', 'CHF', 'CLP', 'CNY', 'COP', 'CRC', 'CVE', 'CZK', 'DJF', 'DKK', 'DOP', 'DZD', 'EGP', 'ERN', 'ETB', 'GBP', 'GEL', 'GHS', 'GNF', 'GTQ', 'HKD', 'HNL', 'HRK', 'HUF', 'IDR', 'ILS', 'INR', 'IQD', 'IRR', 'ISK', 'JMD', 'JOD', 'JPY', 'KES', 'KHR', 'KRW', 'KWD', 'KZT', 'LBP', 'LKR', 'MAD', 'MDL', 'MGA', 'MKD', 'MMK', 'MOP', 'MUR', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NOK', 'NPR', 'NZD', 'OMR', 'PAB', 'PEN', 'PHP', 'PKR', 'PLN', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SDG', 'SEK', 'SGD', 'SOS', 'SYP', 'THB', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'UYU', 'UZS', 'VEF', 'VND', 'XAF', 'XOF', 'YER', 'ZAR'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

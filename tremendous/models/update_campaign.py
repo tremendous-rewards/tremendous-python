@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
@@ -58,7 +59,7 @@ class UpdateCampaign(BaseModel):
             return value
 
         if value not in set(['SENDER', 'RECIPIENT']):
-            raise ValueError("must be one of enum values ('SENDER', 'RECIPIENT')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `fee_charged_to`; known values are ('SENDER', 'RECIPIENT'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

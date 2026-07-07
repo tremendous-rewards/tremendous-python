@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Union
@@ -36,7 +37,7 @@ class FraudConfigRedeemedRewardsAmount(BaseModel):
     def period_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['7', '30', '90', '120', '365', 'all_time']):
-            raise ValueError("must be one of enum values ('7', '30', '90', '120', '365', 'all_time')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `period`; known values are ('7', '30', '90', '120', '365', 'all_time'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

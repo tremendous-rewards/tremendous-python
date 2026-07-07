@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
@@ -71,7 +72,7 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
             return value
 
         if value not in set(['checking', 'savings']):
-            raise ValueError("must be one of enum values ('checking', 'savings')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `account_type`; known values are ('checking', 'savings'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('account_number_mask')
@@ -101,7 +102,7 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
             return value
 
         if value not in set(['MasterCard', 'Amex', 'JCB', 'Diner\'s Club', 'Visa', 'Discover', 'Laser', 'Elo', 'Maestro', 'Solo']):
-            raise ValueError("must be one of enum values ('MasterCard', 'Amex', 'JCB', 'Diner\'s Club', 'Visa', 'Discover', 'Laser', 'Elo', 'Maestro', 'Solo')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `network`; known values are ('MasterCard', 'Amex', 'JCB', 'Diner\'s Club', 'Visa', 'Discover', 'Laser', 'Elo', 'Maestro', 'Solo'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('last4')

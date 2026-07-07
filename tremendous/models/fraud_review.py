@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
@@ -52,7 +53,7 @@ class FraudReview(BaseModel):
             return value
 
         if value not in set(['flagged', 'blocked', 'released']):
-            raise ValueError("must be one of enum values ('flagged', 'blocked', 'released')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `status`; known values are ('flagged', 'blocked', 'released'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('reasons')
@@ -63,7 +64,7 @@ class FraudReview(BaseModel):
 
         for i in value:
             if i not in set(['Disallowed IP', 'Disallowed email', 'Disallowed country', 'Over reward amount limit', 'Over reward count limit', 'VPN detected', 'Apple Private Relay', 'Device related to multiple emails', 'Device or account related to multiple emails', 'IP on a Tremendous fraud list', 'Bank account on a Tremendous fraud list', 'Fingerprint on a Tremendous fraud list', 'Email on a Tremendous fraud list', 'Phone on a Tremendous fraud list', 'Device on a Tremendous fraud list', 'IP related to a blocked reward', 'Device related to a blocked reward', 'Bank account related to a blocked reward', 'Fingerprint related to a blocked reward', 'Email related to a blocked reward', 'Phone related to a blocked reward', 'Allowed IP', 'Allowed email', 'Allowed country']):
-                raise ValueError("each list item must be one of ('Disallowed IP', 'Disallowed email', 'Disallowed country', 'Over reward amount limit', 'Over reward count limit', 'VPN detected', 'Apple Private Relay', 'Device related to multiple emails', 'Device or account related to multiple emails', 'IP on a Tremendous fraud list', 'Bank account on a Tremendous fraud list', 'Fingerprint on a Tremendous fraud list', 'Email on a Tremendous fraud list', 'Phone on a Tremendous fraud list', 'Device on a Tremendous fraud list', 'IP related to a blocked reward', 'Device related to a blocked reward', 'Bank account related to a blocked reward', 'Fingerprint related to a blocked reward', 'Email related to a blocked reward', 'Phone related to a blocked reward', 'Allowed IP', 'Allowed email', 'Allowed country')")
+                warnings.warn(f"Unrecognized value '{i}' in enum list field `reasons`; known values are ('Disallowed IP', 'Disallowed email', 'Disallowed country', 'Over reward amount limit', 'Over reward count limit', 'VPN detected', 'Apple Private Relay', 'Device related to multiple emails', 'Device or account related to multiple emails', 'IP on a Tremendous fraud list', 'Bank account on a Tremendous fraud list', 'Fingerprint on a Tremendous fraud list', 'Email on a Tremendous fraud list', 'Phone on a Tremendous fraud list', 'Device on a Tremendous fraud list', 'IP related to a blocked reward', 'Device related to a blocked reward', 'Bank account related to a blocked reward', 'Fingerprint related to a blocked reward', 'Email related to a blocked reward', 'Phone related to a blocked reward', 'Allowed IP', 'Allowed email', 'Allowed country'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('redemption_method')
@@ -73,7 +74,7 @@ class FraudReview(BaseModel):
             return value
 
         if value not in set(['bank transfer', 'charity', 'instant debit transfer', 'international bank transfer', 'merchant card', 'paypal', 'venmo', 'visa card']):
-            raise ValueError("must be one of enum values ('bank transfer', 'charity', 'instant debit transfer', 'international bank transfer', 'merchant card', 'paypal', 'venmo', 'visa card')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `redemption_method`; known values are ('bank transfer', 'charity', 'instant debit transfer', 'international bank transfer', 'merchant card', 'paypal', 'venmo', 'visa card'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('risk')
@@ -83,7 +84,7 @@ class FraudReview(BaseModel):
             return value
 
         if value not in set(['high', 'medium', 'low']):
-            raise ValueError("must be one of enum values ('high', 'medium', 'low')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `risk`; known values are ('high', 'medium', 'low'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
@@ -47,7 +48,7 @@ class CreateReportRequestFiltersDigitalRewards(BaseModel):
             return value
 
         if value not in set(['phone', 'email', 'link', 'mail', 'direct']):
-            raise ValueError("must be one of enum values ('phone', 'email', 'link', 'mail', 'direct')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `delivery_method`; known values are ('phone', 'email', 'link', 'mail', 'direct'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('order_status')
@@ -57,7 +58,7 @@ class CreateReportRequestFiltersDigitalRewards(BaseModel):
             return value
 
         if value not in set(['executed', 'canceled', 'failed', 'pending_approval']):
-            raise ValueError("must be one of enum values ('executed', 'canceled', 'failed', 'pending_approval')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `order_status`; known values are ('executed', 'canceled', 'failed', 'pending_approval'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('status')
@@ -68,7 +69,7 @@ class CreateReportRequestFiltersDigitalRewards(BaseModel):
 
         for i in value:
             if i not in set(['delivered', 'canceled', 'delivery_failed', 'pending_review']):
-                raise ValueError("each list item must be one of ('delivered', 'canceled', 'delivery_failed', 'pending_review')")
+                warnings.warn(f"Unrecognized value '{i}' in enum list field `status`; known values are ('delivered', 'canceled', 'delivery_failed', 'pending_review'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

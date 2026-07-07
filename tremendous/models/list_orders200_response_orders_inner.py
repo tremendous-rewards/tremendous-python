@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
@@ -63,7 +64,7 @@ class ListOrders200ResponseOrdersInner(BaseModel):
     def status_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['CANCELED', 'OPEN', 'EXECUTED', 'FAILED', 'PENDING APPROVAL', 'PENDING INTERNAL PAYMENT APPROVAL', 'PENDING SETTLEMENT']):
-            raise ValueError("must be one of enum values ('CANCELED', 'OPEN', 'EXECUTED', 'FAILED', 'PENDING APPROVAL', 'PENDING INTERNAL PAYMENT APPROVAL', 'PENDING SETTLEMENT')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `status`; known values are ('CANCELED', 'OPEN', 'EXECUTED', 'FAILED', 'PENDING APPROVAL', 'PENDING INTERNAL PAYMENT APPROVAL', 'PENDING SETTLEMENT'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('channel')
@@ -73,7 +74,7 @@ class ListOrders200ResponseOrdersInner(BaseModel):
             return value
 
         if value not in set(['UI', 'API', 'EMBED', 'DECIPHER', 'QUALTRICS', 'TYPEFORM', 'SURVEY MONKEY', 'YOTPO']):
-            raise ValueError("must be one of enum values ('UI', 'API', 'EMBED', 'DECIPHER', 'QUALTRICS', 'TYPEFORM', 'SURVEY MONKEY', 'YOTPO')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `channel`; known values are ('UI', 'API', 'EMBED', 'DECIPHER', 'QUALTRICS', 'TYPEFORM', 'SURVEY MONKEY', 'YOTPO'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

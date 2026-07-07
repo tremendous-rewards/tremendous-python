@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
@@ -38,7 +39,7 @@ class ListFraudRules200ResponseFraudRulesInner(BaseModel):
             return value
 
         if value not in set(['review_country', 'review_ip', 'review_email', 'review_redeemed_rewards_count', 'review_redeemed_rewards_amount', 'review_multiple_emails', 'review_vpn', 'review_tremendous_flag_list', 'review_previously_blocked_recipients', 'allow_ip', 'allow_email']):
-            raise ValueError("must be one of enum values ('review_country', 'review_ip', 'review_email', 'review_redeemed_rewards_count', 'review_redeemed_rewards_amount', 'review_multiple_emails', 'review_vpn', 'review_tremendous_flag_list', 'review_previously_blocked_recipients', 'allow_ip', 'allow_email')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `rule_type`; known values are ('review_country', 'review_ip', 'review_email', 'review_redeemed_rewards_count', 'review_redeemed_rewards_amount', 'review_multiple_emails', 'review_vpn', 'review_tremendous_flag_list', 'review_previously_blocked_recipients', 'allow_ip', 'allow_email'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

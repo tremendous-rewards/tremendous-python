@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
@@ -55,7 +56,7 @@ class Payout(BaseModel):
             return value
 
         if value not in set(['UNEXECUTED', 'COMPLETED', 'FAILED', 'CANCELED', 'ORGANIZATION_REVIEW', 'ADMIN_HELD']):
-            raise ValueError("must be one of enum values ('UNEXECUTED', 'COMPLETED', 'FAILED', 'CANCELED', 'ORGANIZATION_REVIEW', 'ADMIN_HELD')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `status`; known values are ('UNEXECUTED', 'COMPLETED', 'FAILED', 'CANCELED', 'ORGANIZATION_REVIEW', 'ADMIN_HELD'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('product_id')

@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
@@ -37,14 +38,14 @@ class CreateReportRequest(BaseModel):
     def report_type_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['digital_rewards']):
-            raise ValueError("must be one of enum values ('digital_rewards')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `report_type`; known values are ('digital_rewards'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('format')
     def format_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['csv']):
-            raise ValueError("must be one of enum values ('csv')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `format`; known values are ('csv'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

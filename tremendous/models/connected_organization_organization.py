@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
@@ -54,7 +55,7 @@ class ConnectedOrganizationOrganization(BaseModel):
             return value
 
         if value not in set(['PENDING', 'APPROVED', 'REJECTED']):
-            raise ValueError("must be one of enum values ('PENDING', 'APPROVED', 'REJECTED')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `status`; known values are ('PENDING', 'APPROVED', 'REJECTED'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

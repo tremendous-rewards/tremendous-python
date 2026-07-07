@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
@@ -38,7 +39,7 @@ class ListRewards200ResponseRewardsInnerDelivery(BaseModel):
             return value
 
         if value not in set(['EMAIL', 'LINK', 'PHONE']):
-            raise ValueError("must be one of enum values ('EMAIL', 'LINK', 'PHONE')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `method`; known values are ('EMAIL', 'LINK', 'PHONE'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('status')
@@ -48,7 +49,7 @@ class ListRewards200ResponseRewardsInnerDelivery(BaseModel):
             return value
 
         if value not in set(['SCHEDULED', 'FAILED', 'SUCCEEDED', 'PENDING']):
-            raise ValueError("must be one of enum values ('SCHEDULED', 'FAILED', 'SUCCEEDED', 'PENDING')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `status`; known values are ('SCHEDULED', 'FAILED', 'SUCCEEDED', 'PENDING'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

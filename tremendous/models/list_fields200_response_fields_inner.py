@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
@@ -54,7 +55,7 @@ class ListFields200ResponseFieldsInner(BaseModel):
             return value
 
         if value not in set(['Checkbox', 'Currency', 'Date', 'Dropdown', 'Email', 'List', 'Number', 'Phone', 'Text', 'TextArea']):
-            raise ValueError("must be one of enum values ('Checkbox', 'Currency', 'Date', 'Dropdown', 'Email', 'List', 'Number', 'Phone', 'Text', 'TextArea')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `data_type`; known values are ('Checkbox', 'Currency', 'Date', 'Dropdown', 'Email', 'List', 'Number', 'Phone', 'Text', 'TextArea'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

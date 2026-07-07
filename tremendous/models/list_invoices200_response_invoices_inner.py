@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
@@ -49,7 +50,7 @@ class ListInvoices200ResponseInvoicesInner(BaseModel):
             return value
 
         if value not in set(['USD', 'EUR', 'GBP']):
-            raise ValueError("must be one of enum values ('USD', 'EUR', 'GBP')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `currency_code`; known values are ('USD', 'EUR', 'GBP'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('currency')
@@ -59,14 +60,14 @@ class ListInvoices200ResponseInvoicesInner(BaseModel):
             return value
 
         if value not in set(['USD', 'EUR', 'GBP']):
-            raise ValueError("must be one of enum values ('USD', 'EUR', 'GBP')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `currency`; known values are ('USD', 'EUR', 'GBP'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['DELETED', 'PAID', 'OPEN', 'MARKED_AS_PAID']):
-            raise ValueError("must be one of enum values ('DELETED', 'PAID', 'OPEN', 'MARKED_AS_PAID')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `status`; known values are ('DELETED', 'PAID', 'OPEN', 'MARKED_AS_PAID'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(

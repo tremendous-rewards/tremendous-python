@@ -17,6 +17,7 @@ from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
+import warnings  # noqa: F401
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
@@ -48,7 +49,7 @@ class FundingSource(BaseModel):
     def method_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(['balance', 'bank_account', 'credit_card', 'invoice']):
-            raise ValueError("must be one of enum values ('balance', 'bank_account', 'credit_card', 'invoice')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `method`; known values are ('balance', 'bank_account', 'credit_card', 'invoice'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('usage_permissions')
@@ -59,7 +60,7 @@ class FundingSource(BaseModel):
 
         for i in value:
             if i not in set(['api_orders', 'dashboard_orders', 'balance_funding']):
-                raise ValueError("each list item must be one of ('api_orders', 'dashboard_orders', 'balance_funding')")
+                warnings.warn(f"Unrecognized value '{i}' in enum list field `usage_permissions`; known values are ('api_orders', 'dashboard_orders', 'balance_funding'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('status')
@@ -69,7 +70,7 @@ class FundingSource(BaseModel):
             return value
 
         if value not in set(['active', 'deleted', 'failed']):
-            raise ValueError("must be one of enum values ('active', 'deleted', 'failed')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `status`; known values are ('active', 'deleted', 'failed'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     @field_validator('type')
@@ -79,7 +80,7 @@ class FundingSource(BaseModel):
             return value
 
         if value not in set(['COMMERCIAL', 'PRO_FORMA', 'PREFUNDING_ONLY']):
-            raise ValueError("must be one of enum values ('COMMERCIAL', 'PRO_FORMA', 'PREFUNDING_ONLY')")
+            warnings.warn(f"Unrecognized value '{value}' for enum field `type`; known values are ('COMMERCIAL', 'PRO_FORMA', 'PREFUNDING_ONLY'). The API may have added values unknown to this version of the SDK; consider upgrading tremendous-python.", stacklevel=2)
         return value
 
     model_config = ConfigDict(
