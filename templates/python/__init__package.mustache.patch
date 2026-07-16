@@ -1,0 +1,12 @@
+--- __init__package.mustache (openapi-generator v7.12.0)
++++ __init__package.mustache (tremendous)
+@@ -4,7 +4,8 @@
+ 
+ {{>partial_header}}
+ 
+-__version__ = "{{packageVersion}}"
++{{! Edited by Tremendous, lines 8 !}}
++from tremendous.version import __version__
+ 
+ # import apis into sdk package
+ {{#apiInfo}}{{#apis}}from {{apiPackage}}.{{classFilename}} import {{classname}}

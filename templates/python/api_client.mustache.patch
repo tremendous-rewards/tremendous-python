@@ -1,0 +1,12 @@
+--- api_client.mustache (openapi-generator v7.12.0)
++++ api_client.mustache (tremendous)
+@@ -83,7 +83,8 @@
+             self.default_headers[header_name] = header_value
+         self.cookie = cookie
+         # Set default User-Agent.
+-        self.user_agent = '{{{httpUserAgent}}}{{^httpUserAgent}}OpenAPI-Generator/{{{packageVersion}}}/python{{/httpUserAgent}}'
++        {{! Edited by Tremendous, line 86 !}}
++        self.user_agent = f"Tremendous Python v{tremendous.__version__}"
+         self.client_side_validation = configuration.client_side_validation
+ 
+ {{#asyncio}}
