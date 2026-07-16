@@ -1,0 +1,45 @@
+--- model_generic.mustache (openapi-generator v7.12.0)
++++ model_generic.mustache (tremendous)
+@@ -56,41 +56,7 @@
+             raise ValueError(r"must validate the regular expression {{{vendorExtensions.x-pattern}}}")
+         return value
+     {{/vendorExtensions.x-regex}}
+-    {{#isEnum}}
+-
+-    @field_validator('{{{name}}}')
+-    def {{{name}}}_validate_enum(cls, value):
+-        """Validates the enum"""
+-        {{^required}}
+-        if value is None:
+-            return value
+-
+-        {{/required}}
+-        {{#required}}
+-        {{#isNullable}}
+-        if value is None:
+-            return value
+-
+-        {{/isNullable}}
+-        {{/required}}
+-        {{#isContainer}}
+-        {{#isArray}}
+-        for i in value:
+-            if i not in set([{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]):
+-                raise ValueError("each list item must be one of ({{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}})")
+-        {{/isArray}}
+-        {{#isMap}}
+-        for i in value.values():
+-            if i not in set([{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]):
+-                raise ValueError("dict values must be one of enum values ({{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}})")
+-        {{/isMap}}
+-        {{/isContainer}}
+-        {{^isContainer}}
+-        if value not in set([{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}]):
+-            raise ValueError("must be one of enum values ({{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}})")
+-        {{/isContainer}}
+-        return value
+-    {{/isEnum}}
++    {{! Edited by Tremendous: enum membership is not validated, so enum values added to the API do not break deserialization on older versions of this package. Type and required checks still come from pydantic. !}}
+ {{/vars}}
+ 
+     model_config = ConfigDict(

@@ -31,13 +31,6 @@ class FraudConfigCountry(BaseModel):
     countries: List[StrictStr] = Field(description="An array of country codes (ISO-3166 alpha-2 character code)")
     __properties: ClassVar[List[str]] = ["type", "countries"]
 
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['whitelist', 'blacklist']):
-            raise ValueError("must be one of enum values ('whitelist', 'blacklist')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

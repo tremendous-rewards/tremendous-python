@@ -48,16 +48,6 @@ class Payout(BaseModel):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['UNEXECUTED', 'COMPLETED', 'FAILED', 'CANCELED', 'ORGANIZATION_REVIEW', 'ADMIN_HELD']):
-            raise ValueError("must be one of enum values ('UNEXECUTED', 'COMPLETED', 'FAILED', 'CANCELED', 'ORGANIZATION_REVIEW', 'ADMIN_HELD')")
-        return value
-
     @field_validator('product_id')
     def product_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""

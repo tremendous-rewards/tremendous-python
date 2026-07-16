@@ -64,16 +64,6 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
     failure_details: Optional[ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails] = None
     __properties: ClassVar[List[str]] = ["available_amount", "available_cents", "currency_code", "pending_amount", "pending_cents", "credit_limit_amount", "credit_limit_cents", "accountholder_name", "account_type", "bank_name", "account_number_mask", "account_routing_mask", "refundable", "network", "last4", "expired", "year", "month", "last_payment_failed_at", "invoice_type", "interval", "day_of_week", "net", "company_name", "address_1", "address_2", "city", "state", "zip", "phone", "emails", "failure_details"]
 
-    @field_validator('account_type')
-    def account_type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['checking', 'savings']):
-            raise ValueError("must be one of enum values ('checking', 'savings')")
-        return value
-
     @field_validator('account_number_mask')
     def account_number_mask_validate_regular_expression(cls, value):
         """Validates the regular expression"""
@@ -92,16 +82,6 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
 
         if not re.match(r"[0-9]{4}", value):
             raise ValueError(r"must validate the regular expression /[0-9]{4}/")
-        return value
-
-    @field_validator('network')
-    def network_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['MasterCard', 'Amex', 'JCB', 'Diner\'s Club', 'Visa', 'Discover', 'Laser', 'Elo', 'Maestro', 'Solo']):
-            raise ValueError("must be one of enum values ('MasterCard', 'Amex', 'JCB', 'Diner\'s Club', 'Visa', 'Discover', 'Laser', 'Elo', 'Maestro', 'Solo')")
         return value
 
     @field_validator('last4')

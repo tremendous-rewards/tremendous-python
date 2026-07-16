@@ -46,13 +46,6 @@ class Member(BaseModel):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['REGISTERED', 'INVITED']):
-            raise ValueError("must be one of enum values ('REGISTERED', 'INVITED')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

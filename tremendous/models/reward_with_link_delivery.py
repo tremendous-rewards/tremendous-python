@@ -32,20 +32,6 @@ class RewardWithLinkDelivery(BaseModel):
     link: Optional[StrictStr] = Field(default=None, description="Link to redeem the reward at. You need to deliver this link to the recipient. ")
     __properties: ClassVar[List[str]] = ["method", "status", "link"]
 
-    @field_validator('method')
-    def method_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['EMAIL', 'LINK', 'PHONE']):
-            raise ValueError("must be one of enum values ('EMAIL', 'LINK', 'PHONE')")
-        return value
-
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['SCHEDULED', 'FAILED', 'SUCCEEDED', 'PENDING']):
-            raise ValueError("must be one of enum values ('SCHEDULED', 'FAILED', 'SUCCEEDED', 'PENDING')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

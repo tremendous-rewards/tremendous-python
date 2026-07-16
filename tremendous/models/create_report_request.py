@@ -33,20 +33,6 @@ class CreateReportRequest(BaseModel):
     filters: Optional[CreateReportRequestFilters] = None
     __properties: ClassVar[List[str]] = ["report_type", "format", "filters"]
 
-    @field_validator('report_type')
-    def report_type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['digital_rewards']):
-            raise ValueError("must be one of enum values ('digital_rewards')")
-        return value
-
-    @field_validator('format')
-    def format_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['csv']):
-            raise ValueError("must be one of enum values ('csv')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

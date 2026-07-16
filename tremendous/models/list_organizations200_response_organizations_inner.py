@@ -47,16 +47,6 @@ class ListOrganizations200ResponseOrganizationsInner(BaseModel):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['PENDING', 'APPROVED', 'REJECTED']):
-            raise ValueError("must be one of enum values ('PENDING', 'APPROVED', 'REJECTED')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

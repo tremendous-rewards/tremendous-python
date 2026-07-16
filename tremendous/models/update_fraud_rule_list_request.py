@@ -32,13 +32,6 @@ class UpdateFraudRuleListRequest(BaseModel):
     config: UpdateFraudRuleListRequestConfig
     __properties: ClassVar[List[str]] = ["operation", "config"]
 
-    @field_validator('operation')
-    def operation_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['add', 'remove']):
-            raise ValueError("must be one of enum values ('add', 'remove')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

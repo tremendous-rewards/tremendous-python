@@ -51,16 +51,6 @@ class ListCampaigns200ResponseCampaignsInner(BaseModel):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('fee_charged_to')
-    def fee_charged_to_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['SENDER', 'RECIPIENT']):
-            raise ValueError("must be one of enum values ('SENDER', 'RECIPIENT')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

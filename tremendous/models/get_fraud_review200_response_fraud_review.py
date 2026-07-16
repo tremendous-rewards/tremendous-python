@@ -45,47 +45,6 @@ class GetFraudReview200ResponseFraudReview(BaseModel):
     related_rewards: Optional[GetFraudReview200ResponseFraudReviewRelatedRewards] = None
     __properties: ClassVar[List[str]] = ["status", "reasons", "device_id", "redemption_method", "redeemed_at", "geo", "reward", "reviewed_by", "reviewed_at", "redemption_method_account_hash", "risk", "related_rewards"]
 
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['flagged', 'blocked', 'released']):
-            raise ValueError("must be one of enum values ('flagged', 'blocked', 'released')")
-        return value
-
-    @field_validator('reasons')
-    def reasons_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        for i in value:
-            if i not in set(['Disallowed IP', 'Disallowed email', 'Disallowed country', 'Over reward amount limit', 'Over reward count limit', 'VPN detected', 'Apple Private Relay', 'Device related to multiple emails', 'Device or account related to multiple emails', 'IP on a Tremendous fraud list', 'Bank account on a Tremendous fraud list', 'Fingerprint on a Tremendous fraud list', 'Email on a Tremendous fraud list', 'Phone on a Tremendous fraud list', 'Device on a Tremendous fraud list', 'IP related to a blocked reward', 'Device related to a blocked reward', 'Bank account related to a blocked reward', 'Fingerprint related to a blocked reward', 'Email related to a blocked reward', 'Phone related to a blocked reward', 'Allowed IP', 'Allowed email', 'Allowed country']):
-                raise ValueError("each list item must be one of ('Disallowed IP', 'Disallowed email', 'Disallowed country', 'Over reward amount limit', 'Over reward count limit', 'VPN detected', 'Apple Private Relay', 'Device related to multiple emails', 'Device or account related to multiple emails', 'IP on a Tremendous fraud list', 'Bank account on a Tremendous fraud list', 'Fingerprint on a Tremendous fraud list', 'Email on a Tremendous fraud list', 'Phone on a Tremendous fraud list', 'Device on a Tremendous fraud list', 'IP related to a blocked reward', 'Device related to a blocked reward', 'Bank account related to a blocked reward', 'Fingerprint related to a blocked reward', 'Email related to a blocked reward', 'Phone related to a blocked reward', 'Allowed IP', 'Allowed email', 'Allowed country')")
-        return value
-
-    @field_validator('redemption_method')
-    def redemption_method_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['bank transfer', 'charity', 'instant debit transfer', 'international bank transfer', 'merchant card', 'paypal', 'venmo', 'visa card']):
-            raise ValueError("must be one of enum values ('bank transfer', 'charity', 'instant debit transfer', 'international bank transfer', 'merchant card', 'paypal', 'venmo', 'visa card')")
-        return value
-
-    @field_validator('risk')
-    def risk_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['high', 'medium', 'low']):
-            raise ValueError("must be one of enum values ('high', 'medium', 'low')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

@@ -32,16 +32,6 @@ class SingleRewardOrderRewardDelivery(BaseModel):
     meta: Optional[SingleRewardOrderRewardDeliveryMeta] = None
     __properties: ClassVar[List[str]] = ["method", "meta"]
 
-    @field_validator('method')
-    def method_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['EMAIL', 'LINK', 'PHONE']):
-            raise ValueError("must be one of enum values ('EMAIL', 'LINK', 'PHONE')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

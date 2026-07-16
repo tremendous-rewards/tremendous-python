@@ -31,16 +31,6 @@ class ListFraudRules200ResponseFraudRulesInner(BaseModel):
     config: Optional[Dict[str, Any]] = Field(default=None, description="The configuration associated with the rule. The properties allowed depend on the type of rule. This property is only present for rules that require configuration. ")
     __properties: ClassVar[List[str]] = ["rule_type", "config"]
 
-    @field_validator('rule_type')
-    def rule_type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['review_country', 'review_ip', 'review_email', 'review_redeemed_rewards_count', 'review_redeemed_rewards_amount', 'review_multiple_emails', 'review_vpn', 'review_tremendous_flag_list', 'review_previously_blocked_recipients', 'allow_ip', 'allow_email']):
-            raise ValueError("must be one of enum values ('review_country', 'review_ip', 'review_email', 'review_redeemed_rewards_count', 'review_redeemed_rewards_amount', 'review_multiple_emails', 'review_vpn', 'review_tremendous_flag_list', 'review_previously_blocked_recipients', 'allow_ip', 'allow_email')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
