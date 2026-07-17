@@ -3,6 +3,7 @@
 set -e
 
 DIR="$(dirname "$(realpath "$0")")"
+ROOT="$(realpath "${DIR}/..")"
 
 test -f "$1" && spec="$1" || spec=$(./bin/download-spec)
 
@@ -10,23 +11,36 @@ test -f "$1" && spec="$1" || spec=$(./bin/download-spec)
 # so a single TremendousApi class is generated
 yq -i '.paths.*.*.tags = ["Tremendous"]' "$spec"
 
-openapi_generator_version=$(xargs < "${DIR}/../.openapi-generator/VERSION")
+openapi_generator_version=$(xargs < "${ROOT}/.openapi-generator/VERSION")
+image="openapitools/openapi-generator-cli:v${openapi_generator_version}"
+
+# Build the custom templates from source instead of keeping full copies in the
+# repo: extract the pristine templates from the pinned generator version, then
+# apply our patches (templates/python/*.mustache.patch) on top. When a
+# generator bump changes a template we customize, the patch fails to apply and
+# this script aborts, instead of the copies silently drifting from upstream.
+build_dir="${ROOT}/tmp/templates/python"
+rm -rf "$build_dir"
+mkdir -p "$build_dir/pristine"
+
+docker run --rm --user "$(id -u):$(id -g)" \
+  -v "$build_dir/pristine":/pristine \
+  "$image" author template -g python -o /pristine > /dev/null
+
+for patch_file in "${ROOT}"/templates/python/*.mustache.patch; do
+  template="$(basename "${patch_file%.patch}")"
+  cp "$build_dir/pristine/$template" "$build_dir/$template"
+  patch -s -F0 "$build_dir/$template" "$patch_file"
+done
+
+rm -rf "$build_dir/pristine"
+
 docker run --rm \
   -v "$(pwd)":/output \
-  -v $(realpath $spec):/spec.yml \
-  "openapitools/openapi-generator-cli:v${openapi_generator_version}" generate \
+  -v "$(realpath "$spec")":/spec.yml \
+  "$image" generate \
   -i /spec.yml \
   -g python \
   -o /output \
   -p packageName=tremendous,projectName=tremendous-python \
-  -t /output/templates/python \
-
-
-
-# Adds missing escaping to `Diner's Club` enum value
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  grep -rl "'Diner's Club'" ./tremendous/**/*.py | xargs sed -i "" -e "s/Diner's Club/Diner\\\'s Club/g"
-else
-  grep -rl "'Diner's Club'" ./tremendous/**/*.py | xargs -r sed -i -e "s/Diner's Club/Diner\\\'s Club/g"
-fi
-
+  -t /output/tmp/templates/python
