@@ -1,0 +1,13 @@
+--- configuration.mustache (openapi-generator v7.12.0)
++++ configuration.mustache (tremendous)
+@@ -270,6 +270,10 @@
+ {{/hasHttpSignatureMethods}}
+ {{/hasAuthMethods}}
+     """
++
++    {{! Edited by Tremendous, line 276 !}}
++    # Tremendous Environment mapping
++    Environment = { "testflight": 0, "production": 1 }
+ 
+     _default: ClassVar[Optional[Self]] = None
+ 
