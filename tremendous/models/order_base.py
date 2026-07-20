@@ -57,23 +57,6 @@ class OrderBase(BaseModel):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['CANCELED', 'OPEN', 'EXECUTED', 'FAILED', 'PENDING APPROVAL', 'PENDING INTERNAL PAYMENT APPROVAL', 'PENDING SETTLEMENT']):
-            raise ValueError("must be one of enum values ('CANCELED', 'OPEN', 'EXECUTED', 'FAILED', 'PENDING APPROVAL', 'PENDING INTERNAL PAYMENT APPROVAL', 'PENDING SETTLEMENT')")
-        return value
-
-    @field_validator('channel')
-    def channel_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['UI', 'API', 'EMBED', 'DECIPHER', 'QUALTRICS', 'TYPEFORM', 'SURVEY MONKEY', 'YOTPO']):
-            raise ValueError("must be one of enum values ('UI', 'API', 'EMBED', 'DECIPHER', 'QUALTRICS', 'TYPEFORM', 'SURVEY MONKEY', 'YOTPO')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

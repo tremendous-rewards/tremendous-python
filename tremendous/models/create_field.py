@@ -35,13 +35,6 @@ class CreateField(BaseModel):
     description: Optional[StrictStr] = Field(default=None, description="A description of the field's purpose")
     __properties: ClassVar[List[str]] = ["display_name", "data_type", "data", "required", "description"]
 
-    @field_validator('data_type')
-    def data_type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['Checkbox', 'Currency', 'Date', 'Dropdown', 'Email', 'List', 'Number', 'Phone', 'Text', 'TextArea']):
-            raise ValueError("must be one of enum values ('Checkbox', 'Currency', 'Date', 'Dropdown', 'Email', 'List', 'Number', 'Phone', 'Text', 'TextArea')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

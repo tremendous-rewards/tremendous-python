@@ -34,26 +34,6 @@ class CreateInvoiceRequest(BaseModel):
     memo: Optional[StrictStr] = Field(default=None, description="A note to be included in the invoice. This is for your internal use and will not be visible to the recipient. ")
     __properties: ClassVar[List[str]] = ["po_number", "amount", "currency_code", "currency", "memo"]
 
-    @field_validator('currency_code')
-    def currency_code_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['USD', 'EUR', 'GBP']):
-            raise ValueError("must be one of enum values ('USD', 'EUR', 'GBP')")
-        return value
-
-    @field_validator('currency')
-    def currency_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['USD', 'EUR', 'GBP']):
-            raise ValueError("must be one of enum values ('USD', 'EUR', 'GBP')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

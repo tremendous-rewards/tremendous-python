@@ -31,26 +31,6 @@ class DeliveryDetails(BaseModel):
     status: Optional[StrictStr] = Field(default=None, description="Current status of the delivery of the reward:  * `SCHEDULED` - Reward is scheduled for delivery and will be delivered soon. * `FAILED` - Delivery of reward failed (e.g. email bounced). * `SUCCEEDED` - Reward was successfully delivered (email or text message delivered or reward link active). * `PENDING` - Delivery is pending but not yet scheduled. ")
     __properties: ClassVar[List[str]] = ["method", "status"]
 
-    @field_validator('method')
-    def method_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['EMAIL', 'LINK', 'PHONE']):
-            raise ValueError("must be one of enum values ('EMAIL', 'LINK', 'PHONE')")
-        return value
-
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['SCHEDULED', 'FAILED', 'SUCCEEDED', 'PENDING']):
-            raise ValueError("must be one of enum values ('SCHEDULED', 'FAILED', 'SUCCEEDED', 'PENDING')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

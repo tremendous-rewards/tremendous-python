@@ -47,16 +47,6 @@ class ModelField(BaseModel):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('data_type')
-    def data_type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['Checkbox', 'Currency', 'Date', 'Dropdown', 'Email', 'List', 'Number', 'Phone', 'Text', 'TextArea']):
-            raise ValueError("must be one of enum values ('Checkbox', 'Currency', 'Date', 'Dropdown', 'Email', 'List', 'Number', 'Phone', 'Text', 'TextArea')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

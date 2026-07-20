@@ -32,16 +32,6 @@ class GetMember200ResponseMemberEventsInner(BaseModel):
     date_utc: Optional[datetime] = Field(default=None, description="Timestamp when the event happened")
     __properties: ClassVar[List[str]] = ["type", "date_utc"]
 
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['created', 'last_login']):
-            raise ValueError("must be one of enum values ('created', 'last_login')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

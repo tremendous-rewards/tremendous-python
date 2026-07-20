@@ -32,13 +32,6 @@ class FraudConfigRedeemedRewardsCount(BaseModel):
     period: StrictStr = Field(description="The period, in days, to consider for the count. Use `all_time` to consider any redeemed rewards.")
     __properties: ClassVar[List[str]] = ["amount", "period"]
 
-    @field_validator('period')
-    def period_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['7', '30', '90', '120', '365', 'all_time']):
-            raise ValueError("must be one of enum values ('7', '30', '90', '120', '365', 'all_time')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

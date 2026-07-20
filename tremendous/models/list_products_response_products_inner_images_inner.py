@@ -32,13 +32,6 @@ class ListProductsResponseProductsInnerImagesInner(BaseModel):
     content_type: Optional[StrictStr] = Field(default=None, description="The MIME content type of this image")
     __properties: ClassVar[List[str]] = ["src", "type", "content_type"]
 
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['card', 'logo']):
-            raise ValueError("must be one of enum values ('card', 'logo')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

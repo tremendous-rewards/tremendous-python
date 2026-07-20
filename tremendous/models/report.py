@@ -35,16 +35,6 @@ class Report(BaseModel):
     url: Optional[StrictStr] = Field(default=None, description="URL to download the report. Only returned when the report generation is complete and report is ready for download. URL is valid for 7 days from generation completion ")
     __properties: ClassVar[List[str]] = ["id", "status", "created_at", "expected_completion_at", "url"]
 
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['CREATED', 'PROCESSING', 'READY_FOR_DOWNLOAD', 'FAILED']):
-            raise ValueError("must be one of enum values ('CREATED', 'PROCESSING', 'READY_FOR_DOWNLOAD', 'FAILED')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

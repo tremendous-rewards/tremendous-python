@@ -44,44 +44,6 @@ class ListFundingSources200ResponseFundingSourcesInner(BaseModel):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('method')
-    def method_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['balance', 'bank_account', 'credit_card', 'invoice']):
-            raise ValueError("must be one of enum values ('balance', 'bank_account', 'credit_card', 'invoice')")
-        return value
-
-    @field_validator('usage_permissions')
-    def usage_permissions_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        for i in value:
-            if i not in set(['api_orders', 'dashboard_orders', 'balance_funding']):
-                raise ValueError("each list item must be one of ('api_orders', 'dashboard_orders', 'balance_funding')")
-        return value
-
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['active', 'deleted', 'failed']):
-            raise ValueError("must be one of enum values ('active', 'deleted', 'failed')")
-        return value
-
-    @field_validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['COMMERCIAL', 'PRO_FORMA', 'PREFUNDING_ONLY']):
-            raise ValueError("must be one of enum values ('COMMERCIAL', 'PRO_FORMA', 'PREFUNDING_ONLY')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,

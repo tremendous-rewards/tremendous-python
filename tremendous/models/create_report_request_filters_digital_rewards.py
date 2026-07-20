@@ -40,37 +40,6 @@ class CreateReportRequestFiltersDigitalRewards(BaseModel):
     status: Optional[List[StrictStr]] = Field(default=None, description="Status for rewards returned in the report ")
     __properties: ClassVar[List[str]] = ["amount", "campaign_id", "created_at", "delivered_at", "delivery_method", "order_id", "order_status", "status"]
 
-    @field_validator('delivery_method')
-    def delivery_method_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['phone', 'email', 'link', 'mail', 'direct']):
-            raise ValueError("must be one of enum values ('phone', 'email', 'link', 'mail', 'direct')")
-        return value
-
-    @field_validator('order_status')
-    def order_status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['executed', 'canceled', 'failed', 'pending_approval']):
-            raise ValueError("must be one of enum values ('executed', 'canceled', 'failed', 'pending_approval')")
-        return value
-
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        for i in value:
-            if i not in set(['delivered', 'canceled', 'delivery_failed', 'pending_review']):
-                raise ValueError("each list item must be one of ('delivered', 'canceled', 'delivery_failed', 'pending_review')")
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
