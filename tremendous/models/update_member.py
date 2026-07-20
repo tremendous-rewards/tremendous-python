@@ -19,18 +19,16 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateConnectedOrganizationMemberSessionRequest(BaseModel):
+class UpdateMember(BaseModel):
     """
-    CreateConnectedOrganizationMemberSessionRequest
+    UpdateMember
     """ # noqa: E501
-    return_url: StrictStr = Field(description="The URL used for links that redirect the user back to your site when they've completed their actions on Tremendous.")
-    state: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Opaque value forwarded unchanged as the OAuth2 `state` parameter on the initial OAuth grant redirect, letting you round-trip per-user context to your registered OAuth `redirect_uri`. Treat it as untrusted since it travels through the end user's browser: sign it or use it as a lookup key rather than trusting a raw value, and keep it short. Does not change `return_url` behavior. ")
-    __properties: ClassVar[List[str]] = ["return_url", "state"]
+    role: StrictStr = Field(description="The role ID to assign to the member within the organization. ")
+    __properties: ClassVar[List[str]] = ["role"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +48,7 @@ class CreateConnectedOrganizationMemberSessionRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateConnectedOrganizationMemberSessionRequest from a JSON string"""
+        """Create an instance of UpdateMember from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,7 +73,7 @@ class CreateConnectedOrganizationMemberSessionRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateConnectedOrganizationMemberSessionRequest from a dict"""
+        """Create an instance of UpdateMember from a dict"""
         if obj is None:
             return None
 
@@ -83,8 +81,7 @@ class CreateConnectedOrganizationMemberSessionRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "return_url": obj.get("return_url"),
-            "state": obj.get("state")
+            "role": obj.get("role")
         })
         return _obj
 

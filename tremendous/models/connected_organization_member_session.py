@@ -20,7 +20,7 @@ import json
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,9 +32,10 @@ class ConnectedOrganizationMemberSession(BaseModel):
     connected_organization_member_id: Annotated[str, Field(strict=True)] = Field(description="Tremendous' identifier for the connected organization member.")
     url: StrictStr = Field(description="The URL to start the \"Tremendous for Platforms\" flow.")
     return_url: StrictStr = Field(description="The URL used for links that redirect the user back to your site when they've completed their actions on Tremendous.")
+    state: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="The opaque `state` value provided when the session was created, forwarded on the initial OAuth grant redirect. `null` when no value was set.")
     expires_at: datetime = Field(description="Timestamp of when the session will expire.")
     created_at: datetime = Field(description="Timestamp of when the session was created.")
-    __properties: ClassVar[List[str]] = ["connected_organization_member_id", "url", "return_url", "expires_at", "created_at"]
+    __properties: ClassVar[List[str]] = ["connected_organization_member_id", "url", "return_url", "state", "expires_at", "created_at"]
 
     @field_validator('connected_organization_member_id')
     def connected_organization_member_id_validate_regular_expression(cls, value):
@@ -86,6 +87,11 @@ class ConnectedOrganizationMemberSession(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if state (nullable) is None
+        # and model_fields_set contains the field
+        if self.state is None and "state" in self.model_fields_set:
+            _dict['state'] = None
+
         return _dict
 
     @classmethod
@@ -101,6 +107,7 @@ class ConnectedOrganizationMemberSession(BaseModel):
             "connected_organization_member_id": obj.get("connected_organization_member_id"),
             "url": obj.get("url"),
             "return_url": obj.get("return_url"),
+            "state": obj.get("state"),
             "expires_at": obj.get("expires_at"),
             "created_at": obj.get("created_at")
         })
