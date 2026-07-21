@@ -241,6 +241,8 @@ tremendous/models/update_campaign_request.py
 tremendous/models/update_fraud_rule_list200_response.py
 tremendous/models/update_fraud_rule_list_request.py
 tremendous/models/update_fraud_rule_list_request_config.py
+tremendous/models/update_member.py
+tremendous/models/update_member_request.py
 tremendous/models/webhook.py
 tremendous/models/webhook_post.py
 tremendous/py.typed

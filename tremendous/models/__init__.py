@@ -250,5 +250,7 @@ from tremendous.models.update_campaign_request import UpdateCampaignRequest
 from tremendous.models.update_fraud_rule_list200_response import UpdateFraudRuleList200Response
 from tremendous.models.update_fraud_rule_list_request import UpdateFraudRuleListRequest
 from tremendous.models.update_fraud_rule_list_request_config import UpdateFraudRuleListRequestConfig
+from tremendous.models.update_member import UpdateMember
+from tremendous.models.update_member_request import UpdateMemberRequest
 from tremendous.models.webhook import Webhook
 from tremendous.models.webhook_post import WebhookPost
