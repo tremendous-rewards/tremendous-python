@@ -21,6 +21,7 @@ from pydantic import Field, StrictBytes, StrictInt, StrictStr, field_validator
 from typing import Any, Dict, Optional, Tuple, Union
 from typing_extensions import Annotated
 from tremendous.models.create_api_key200_response import CreateApiKey200Response
+from tremendous.models.create_api_key_request import CreateApiKeyRequest
 from tremendous.models.create_campaign200_response import CreateCampaign200Response
 from tremendous.models.create_campaign_request import CreateCampaignRequest
 from tremendous.models.create_connected_organization200_response import CreateConnectedOrganization200Response
@@ -934,6 +935,7 @@ class TremendousApi:
     @validate_call
     def create_api_key(
         self,
+        create_api_key_request: Annotated[Optional[CreateApiKeyRequest], Field(description="Optional settings for the new API key")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -951,6 +953,8 @@ class TremendousApi:
 
         Creates a new API key. The API key used to make the request will remain active.  Created API keys are generated randomly and returned in the response. **You cannot retrieve them again.** 
 
+        :param create_api_key_request: Optional settings for the new API key
+        :type create_api_key_request: CreateApiKeyRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -974,6 +978,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_api_key_serialize(
+            create_api_key_request=create_api_key_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1001,6 +1006,7 @@ class TremendousApi:
     @validate_call
     def create_api_key_with_http_info(
         self,
+        create_api_key_request: Annotated[Optional[CreateApiKeyRequest], Field(description="Optional settings for the new API key")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1018,6 +1024,8 @@ class TremendousApi:
 
         Creates a new API key. The API key used to make the request will remain active.  Created API keys are generated randomly and returned in the response. **You cannot retrieve them again.** 
 
+        :param create_api_key_request: Optional settings for the new API key
+        :type create_api_key_request: CreateApiKeyRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1041,6 +1049,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_api_key_serialize(
+            create_api_key_request=create_api_key_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1068,6 +1077,7 @@ class TremendousApi:
     @validate_call
     def create_api_key_without_preload_content(
         self,
+        create_api_key_request: Annotated[Optional[CreateApiKeyRequest], Field(description="Optional settings for the new API key")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1085,6 +1095,8 @@ class TremendousApi:
 
         Creates a new API key. The API key used to make the request will remain active.  Created API keys are generated randomly and returned in the response. **You cannot retrieve them again.** 
 
+        :param create_api_key_request: Optional settings for the new API key
+        :type create_api_key_request: CreateApiKeyRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1108,6 +1120,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._create_api_key_serialize(
+            create_api_key_request=create_api_key_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1130,6 +1143,7 @@ class TremendousApi:
 
     def _create_api_key_serialize(
         self,
+        create_api_key_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1155,6 +1169,8 @@ class TremendousApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if create_api_key_request is not None:
+            _body_params = create_api_key_request
 
 
         # set the HTTP header `Accept`
@@ -1165,6 +1181,19 @@ class TremendousApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
