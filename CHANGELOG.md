@@ -1,5 +1,25 @@
 # Changelog
 
+## [5.20.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.19.0...tremendous-python-v5.20.0) (2026-07-23)
+
+
+### Features
+
+* add `permission` field to create API key endpoint ([eb1ca06](https://github.com/tremendous-rewards/tremendous-python/commit/eb1ca068d904751bcfbf3338267b4f554e876028))
+* add delete member endpoint (DELETE /members) ([2bea0ca](https://github.com/tremendous-rewards/tremendous-python/commit/2bea0caaa2b8aaed60ef5e017c49d9b8a6cff1b8))
+* add update member endpoint (PATCH /members) ([2bea0ca](https://github.com/tremendous-rewards/tremendous-python/commit/2bea0caaa2b8aaed60ef5e017c49d9b8a6cff1b8))
+
+
+### Bug Fixes
+
+* tolerate unknown enum values in API responses ([#132](https://github.com/tremendous-rewards/tremendous-python/issues/132)) ([2ab206c](https://github.com/tremendous-rewards/tremendous-python/commit/2ab206c47975cd0c71aa71e0a3652b20fb7f032f))
+
+
+### Documentation
+
+* clarify cancel reward fails with `422` if redeemed ([2bea0ca](https://github.com/tremendous-rewards/tremendous-python/commit/2bea0caaa2b8aaed60ef5e017c49d9b8a6cff1b8))
+* update sandbox balance limit to $100,000 ([2bea0ca](https://github.com/tremendous-rewards/tremendous-python/commit/2bea0caaa2b8aaed60ef5e017c49d9b8a6cff1b8))
+
 ## [5.19.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.18.0...tremendous-python-v5.19.0) (2026-07-03)
 
 
