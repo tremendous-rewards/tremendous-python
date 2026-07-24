@@ -29,8 +29,9 @@ class CreateConnectedOrganizationRequest(BaseModel):
     CreateConnectedOrganizationRequest
     """ # noqa: E501
     client_id: StrictStr = Field(description="The client ID of the OAuth application.")
+    currency_code: Optional[StrictStr] = Field(default='USD', description="The currency used for the connected organization's balance. Supported values are `USD`, `EUR`, and `GBP`. Defaults to `USD` if omitted, `null`, or blank. ")
     kyb_prefill: Optional[CreateConnectedOrganizationRequestKybPrefill] = None
-    __properties: ClassVar[List[str]] = ["client_id", "kyb_prefill"]
+    __properties: ClassVar[List[str]] = ["client_id", "currency_code", "kyb_prefill"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -74,6 +75,11 @@ class CreateConnectedOrganizationRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of kyb_prefill
         if self.kyb_prefill:
             _dict['kyb_prefill'] = self.kyb_prefill.to_dict()
+        # set to None if currency_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.currency_code is None and "currency_code" in self.model_fields_set:
+            _dict['currency_code'] = None
+
         return _dict
 
     @classmethod
@@ -87,6 +93,7 @@ class CreateConnectedOrganizationRequest(BaseModel):
 
         _obj = cls.model_validate({
             "client_id": obj.get("client_id"),
+            "currency_code": obj.get("currency_code") if obj.get("currency_code") is not None else 'USD',
             "kyb_prefill": CreateConnectedOrganizationRequestKybPrefill.from_dict(obj["kyb_prefill"]) if obj.get("kyb_prefill") is not None else None
         })
         return _obj

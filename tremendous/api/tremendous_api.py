@@ -1520,7 +1520,7 @@ class TremendousApi:
     ) -> CreateConnectedOrganization200Response:
         """Create connected organization
 
-        Create a connected organization.  Optionally pass a `kyb_prefill` object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb_prefill` field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`. 
+        Create a connected organization.  Optionally pass `currency_code` to set the connected organization's balance currency. Supported values are `USD`, `EUR`, and `GBP`. If omitted, the balance currency defaults to `USD`.  Optionally pass a `kyb_prefill` object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb_prefill` field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`. 
 
         :param create_connected_organization_request: Connected organization to create (required)
         :type create_connected_organization_request: CreateConnectedOrganizationRequest
@@ -1591,7 +1591,7 @@ class TremendousApi:
     ) -> ApiResponse[CreateConnectedOrganization200Response]:
         """Create connected organization
 
-        Create a connected organization.  Optionally pass a `kyb_prefill` object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb_prefill` field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`. 
+        Create a connected organization.  Optionally pass `currency_code` to set the connected organization's balance currency. Supported values are `USD`, `EUR`, and `GBP`. If omitted, the balance currency defaults to `USD`.  Optionally pass a `kyb_prefill` object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb_prefill` field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`. 
 
         :param create_connected_organization_request: Connected organization to create (required)
         :type create_connected_organization_request: CreateConnectedOrganizationRequest
@@ -1662,7 +1662,7 @@ class TremendousApi:
     ) -> RESTResponseType:
         """Create connected organization
 
-        Create a connected organization.  Optionally pass a `kyb_prefill` object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb_prefill` field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`. 
+        Create a connected organization.  Optionally pass `currency_code` to set the connected organization's balance currency. Supported values are `USD`, `EUR`, and `GBP`. If omitted, the balance currency defaults to `USD`.  Optionally pass a `kyb_prefill` object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb_prefill` field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`. 
 
         :param create_connected_organization_request: Connected organization to create (required)
         :type create_connected_organization_request: CreateConnectedOrganizationRequest
