@@ -25,11 +25,11 @@ from typing_extensions import Self
 
 class CreateConnectedOrganizationRequestKybPrefill(BaseModel):
     """
-    Optional KYB details to forward for the end client. When provided, these values prefill the end client's onboarding form. Every field is optional. 
+    Optional KYB details to forward for the end client. When provided, these values prefill the end client's onboarding form. Every field is optional.
     """ # noqa: E501
     company_name: Optional[StrictStr] = Field(default=None, description="The registered legal name of the company.")
     doing_business_as: Optional[StrictStr] = Field(default=None, description="The trade name (DBA) the company operates under, if different from its legal name.")
-    company_structure: Optional[StrictStr] = Field(default=None, description="The company's legal entity type. Free-form text; any value is accepted. Common values include `Sole proprietorship`, `Corporation (Inc)`, `Limited liability company (LLC)`, `Limited liability partnership (LLP)`, `Public limited company (PLC)`, and `Private limited company (LTD)`. ")
+    company_structure: Optional[StrictStr] = Field(default=None, description="The company's legal entity type. Free-form text; any value is accepted. Common values include `Sole proprietorship`, `Corporation (Inc)`, `Limited liability company (LLC)`, `Limited liability partnership (LLP)`, `Public limited company (PLC)`, and `Private limited company (LTD)`.")
     company_registration_number: Optional[StrictStr] = Field(default=None, description="The company's tax ID or registration number.")
     country_code: Optional[StrictStr] = Field(default=None, description="The ISO 3166-1 alpha-2 country code of the company. Must be a supported country.")
     website_url: Optional[StrictStr] = Field(default=None, description="The company's website URL. Must be a well-formed URL.")
