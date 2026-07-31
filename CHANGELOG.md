@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.21.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.20.0...tremendous-python-v5.21.0) (2026-07-31)
+
+
+### Features
+
+* add `currency_code` to connected org creation (USD, EUR, GBP) ([64dd88c](https://github.com/tremendous-rewards/tremendous-python/commit/64dd88c118e5c9a829b1fbd69d2178db5b1b3a95))
+* add `INVOICE` and `INVOICE_THEN_BALANCE` as ([98a1a1f](https://github.com/tremendous-rewards/tremendous-python/commit/98a1a1f148f667eaa5511b51d13c2e92bce3d5a3))
+
+
+### Documentation
+
+* trim trailing whitespace in docstrings ([98a1a1f](https://github.com/tremendous-rewards/tremendous-python/commit/98a1a1f148f667eaa5511b51d13c2e92bce3d5a3))
+
 ## [5.20.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.19.0...tremendous-python-v5.20.0) (2026-07-23)
 
 
