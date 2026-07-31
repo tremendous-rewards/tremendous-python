@@ -29,7 +29,7 @@ class CreateConnectedOrganizationRequest(BaseModel):
     CreateConnectedOrganizationRequest
     """ # noqa: E501
     client_id: StrictStr = Field(description="The client ID of the OAuth application.")
-    currency_code: Optional[StrictStr] = Field(default='USD', description="The currency used for the connected organization's balance. Supported values are `USD`, `EUR`, and `GBP`. Defaults to `USD` if omitted, `null`, or blank. ")
+    currency_code: Optional[StrictStr] = Field(default='USD', description="The currency used for the connected organization's balance. Supported values are `USD`, `EUR`, and `GBP`. Defaults to `USD` if omitted, `null`, or blank.")
     kyb_prefill: Optional[CreateConnectedOrganizationRequestKybPrefill] = None
     __properties: ClassVar[List[str]] = ["client_id", "currency_code", "kyb_prefill"]
 

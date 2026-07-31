@@ -27,7 +27,7 @@ class SingleRewardOrderPayment(BaseModel):
     """
     SingleRewardOrderPayment
     """ # noqa: E501
-    funding_source_id: StrictStr = Field(description="Tremendous ID of the funding source that will be used to pay for the order. Use `balance` to use your Tremendous's balance.")
+    funding_source_id: StrictStr = Field(description="Tremendous ID of the funding source that will be used to pay for the order.  You can also pass one of the following magic values (case-insensitive):  - `BALANCE` — pay from your Tremendous balance. - `INVOICE` — pay from your commercial invoice account. - `INVOICE_THEN_BALANCE` — pay from your commercial invoice account if doing so wouldn't exceed your credit limit, otherwise fall back to your Tremendous balance. The balance must have sufficient funds to pay for the order.  **Note:** `INVOICE` and `INVOICE_THEN_BALANCE` are only available to select Enterprise clients with an existing commercial invoicing setup. If your organization already uses commercial invoicing and you have questions, contact your Customer Success Manager.")
     __properties: ClassVar[List[str]] = ["funding_source_id"]
 
     model_config = ConfigDict(
