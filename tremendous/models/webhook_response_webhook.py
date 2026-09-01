@@ -18,19 +18,30 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from tremendous.models.list_rewards401_response_errors import ListRewards401ResponseErrors
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FraudRule422Response(BaseModel):
+class WebhookResponseWebhook(BaseModel):
     """
-    FraudRule422Response
+    WebhookResponseWebhook
     """ # noqa: E501
-    status: Optional[StrictInt] = Field(default=None, description="HTTP status code of the response")
-    errors: ListRewards401ResponseErrors
-    __properties: ClassVar[List[str]] = ["status", "errors"]
+    id: Optional[Annotated[str, Field(strict=True)]] = None
+    url: Optional[StrictStr] = Field(description="URL the webhook will make requests to")
+    private_key: Optional[StrictStr] = Field(default=None, description="Private key for the webhook")
+    __properties: ClassVar[List[str]] = ["id", "url", "private_key"]
+
+    @field_validator('id')
+    def id_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"[A-Z0-9]{4,20}", value):
+            raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +61,7 @@ class FraudRule422Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FraudRule422Response from a JSON string"""
+        """Create an instance of WebhookResponseWebhook from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -62,8 +73,12 @@ class FraudRule422Response(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
+            "private_key",
         ])
 
         _dict = self.model_dump(
@@ -71,14 +86,16 @@ class FraudRule422Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of errors
-        if self.errors:
-            _dict['errors'] = self.errors.to_dict()
+        # set to None if url (nullable) is None
+        # and model_fields_set contains the field
+        if self.url is None and "url" in self.model_fields_set:
+            _dict['url'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FraudRule422Response from a dict"""
+        """Create an instance of WebhookResponseWebhook from a dict"""
         if obj is None:
             return None
 
@@ -86,8 +103,9 @@ class FraudRule422Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "status": obj.get("status"),
-            "errors": ListRewards401ResponseErrors.from_dict(obj["errors"]) if obj.get("errors") is not None else None
+            "id": obj.get("id"),
+            "url": obj.get("url"),
+            "private_key": obj.get("private_key")
         })
         return _obj
 

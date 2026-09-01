@@ -22,24 +22,23 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
+from tremendous.models.connected_organization_organization import ConnectedOrganizationOrganization
 from typing import Optional, Set
 from typing_extensions import Self
 
-class InlineObject1Reward(BaseModel):
+class ConnectedOrganizationResponseConnectedOrganization(BaseModel):
     """
-    The redemption token for a reward.
+    ConnectedOrganizationResponseConnectedOrganization
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward")
-    token: Optional[StrictStr] = Field(default=None, description="The token to redeem the reward. ")
-    expires_at: Optional[datetime] = Field(default=None, description="Date the token expires")
-    __properties: ClassVar[List[str]] = ["id", "token", "expires_at"]
+    id: Annotated[str, Field(strict=True)] = Field(description="Tremendous' identifier for the connected organization.")
+    client_id: StrictStr = Field(description="Client ID of the OAuth app that is to be used by the platform once the integration is complete.")
+    created_at: datetime = Field(description="Timestamp of when the connected organization was created.")
+    organization: Optional[ConnectedOrganizationOrganization] = None
+    __properties: ClassVar[List[str]] = ["id", "client_id", "created_at", "organization"]
 
     @field_validator('id')
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if value is None:
-            return value
-
         if not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
@@ -62,7 +61,7 @@ class InlineObject1Reward(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of InlineObject1Reward from a JSON string"""
+        """Create an instance of ConnectedOrganizationResponseConnectedOrganization from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,8 +73,10 @@ class InlineObject1Reward(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
         excluded_fields: Set[str] = set([
+            "id",
         ])
 
         _dict = self.model_dump(
@@ -83,11 +84,19 @@ class InlineObject1Reward(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of organization
+        if self.organization:
+            _dict['organization'] = self.organization.to_dict()
+        # set to None if organization (nullable) is None
+        # and model_fields_set contains the field
+        if self.organization is None and "organization" in self.model_fields_set:
+            _dict['organization'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of InlineObject1Reward from a dict"""
+        """Create an instance of ConnectedOrganizationResponseConnectedOrganization from a dict"""
         if obj is None:
             return None
 
@@ -96,8 +105,9 @@ class InlineObject1Reward(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "token": obj.get("token"),
-            "expires_at": obj.get("expires_at")
+            "client_id": obj.get("client_id"),
+            "created_at": obj.get("created_at"),
+            "organization": ConnectedOrganizationOrganization.from_dict(obj["organization"]) if obj.get("organization") is not None else None
         })
         return _obj
 
