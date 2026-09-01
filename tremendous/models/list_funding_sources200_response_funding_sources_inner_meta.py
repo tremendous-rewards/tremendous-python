@@ -51,7 +51,8 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
     last_payment_failed_at: Optional[datetime] = Field(default=None, description="**Only available when `method` is set to `bank_account` or `credit_card`.**  Point in time when the last order failed using this bank account or credit card as a funding source. ")
     invoice_type: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Type of invoice account (e.g., commercial, pro_forma, prefunding_only) ")
     interval: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Billing interval for commercial invoice generation (e.g., daily, weekly, monthly, twice_monthly). Returns `null` for pro forma invoices. ")
-    day_of_week: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Day of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Returns `null` for pro forma invoices. ")
+    day_of_week: Optional[StrictStr] = Field(default=None, description="**Deprecated: Use `days_of_week` instead.**  **Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Day of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Accounts with weekly commercial invoicing can have invoices generated on one or two days of the week. Returns the scheduled day when there is one day, and an empty string when there are two days and for non-weekly / pro forma invoices. ")
+    days_of_week: Optional[List[StrictStr]] = Field(default=None, description="**Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Days of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Accounts with weekly commercial invoicing can have invoices generated on one or two days of the week. Returns an empty array for non-weekly and for pro forma invoices. ")
     net: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Net payment terms in days (e.g., \"30\" for Net 30) ")
     company_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Company name for invoice billing ")
     address_1: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Primary billing address line ")
@@ -62,7 +63,7 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
     phone: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Contact phone number for billing ")
     emails: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Email addresses for invoice delivery (comma-separated) ")
     failure_details: Optional[ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails] = None
-    __properties: ClassVar[List[str]] = ["available_amount", "available_cents", "currency_code", "pending_amount", "pending_cents", "credit_limit_amount", "credit_limit_cents", "accountholder_name", "account_type", "bank_name", "account_number_mask", "account_routing_mask", "refundable", "network", "last4", "expired", "year", "month", "last_payment_failed_at", "invoice_type", "interval", "day_of_week", "net", "company_name", "address_1", "address_2", "city", "state", "zip", "phone", "emails", "failure_details"]
+    __properties: ClassVar[List[str]] = ["available_amount", "available_cents", "currency_code", "pending_amount", "pending_cents", "credit_limit_amount", "credit_limit_cents", "accountholder_name", "account_type", "bank_name", "account_number_mask", "account_routing_mask", "refundable", "network", "last4", "expired", "year", "month", "last_payment_failed_at", "invoice_type", "interval", "day_of_week", "days_of_week", "net", "company_name", "address_1", "address_2", "city", "state", "zip", "phone", "emails", "failure_details"]
 
     @field_validator('account_number_mask')
     def account_number_mask_validate_regular_expression(cls, value):
@@ -230,6 +231,7 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
             "invoice_type": obj.get("invoice_type"),
             "interval": obj.get("interval"),
             "day_of_week": obj.get("day_of_week"),
+            "days_of_week": obj.get("days_of_week"),
             "net": obj.get("net"),
             "company_name": obj.get("company_name"),
             "address_1": obj.get("address_1"),

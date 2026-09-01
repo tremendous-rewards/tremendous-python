@@ -23,7 +23,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from tremendous.models.order_base_payment import OrderBasePayment
-from tremendous.models.order_without_link_rewards_inner import OrderWithoutLinkRewardsInner
+from tremendous.models.reward_response_reward import RewardResponseReward
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,11 +35,11 @@ class OrderWithoutLink(BaseModel):
     external_id: Optional[StrictStr] = Field(default=None, description="Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. ")
     campaign_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. ")
     created_at: datetime = Field(description="Date the order was created")
-    status: StrictStr = Field(description="Execution status of a given order  <table>   <thead>     <tr>       <th>         Status       </th>       <th>         Description       </th>     </tr>   </thead>   <tbody>     <tr>       <td>         <code>           CANCELED         </code>       </td>       <td>         The order and all of its rewards were canceled.       </td>     </tr>     <tr>       <td>         <code>           OPEN         </code>       </td>       <td>         The order has been created, but hasn't yet been processed.       </td>     </tr>     <tr>       <td>         <code>           EXECUTED         </code>       </td>       <td>         The order has been executed. Payment has been handled and rewards are being delivered (if applicable).       </td>     </tr>     <tr>       <td>         <code>           FAILED         </code>       </td>       <td>         The order could not be processed due to an error. E.g. due to insufficient funds in the account.       </td>     </tr>     <tr>       <td>         <code>           PENDING APPROVAL         </code>       </td>       <td>         The order has been created but needs approval to be executed.       </td>     </tr>     <tr>       <td>         <code>           PENDING INTERNAL PAYMENT APPROVAL         </code>       </td>       <td>         The order has been created but it is under review and requires approval from our team.       </td>     </tr>     <tr>       <td>         <code>           PENDING SETTLEMENT         </code>       </td>       <td>         The order has been created but the funds are being held until the settlement window clears.       </td>     </tr>    </tbody> </table> ")
+    status: StrictStr = Field(description="Execution status of a given order  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>CANCELED</code></td>       <td>The order and all of its rewards were canceled.</td>     </tr>     <tr>       <td><code>OPEN</code></td>       <td>The order has been created, but hasn't yet been processed.</td>     </tr>     <tr>       <td><code>EXECUTED</code></td>       <td>The order has been executed. Payment has been handled and rewards are being delivered (if applicable).</td>     </tr>     <tr>       <td><code>FAILED</code></td>       <td>The order could not be processed due to an error. E.g. due to insufficient funds in the account.</td>     </tr>     <tr>       <td><code>PENDING APPROVAL</code></td>       <td>The order has been created but needs approval to be executed.</td>     </tr>     <tr>       <td><code>PENDING INTERNAL PAYMENT APPROVAL</code></td>       <td>The order has been created but it is under review and requires approval from our team.</td>     </tr>     <tr>       <td><code>PENDING SETTLEMENT</code></td>       <td>The order has been created but the funds are being held until the settlement window clears.</td>     </tr>   </tbody> </table> ")
     channel: Optional[StrictStr] = Field(default=None, description="Name of the channel in which the order was created")
     payment: Optional[OrderBasePayment] = None
     invoice_id: Optional[StrictStr] = Field(default=None, description="The ID for the invoice associated with this order")
-    rewards: Optional[List[OrderWithoutLinkRewardsInner]] = None
+    rewards: Optional[List[RewardResponseReward]] = None
     __properties: ClassVar[List[str]] = ["id", "external_id", "campaign_id", "created_at", "status", "channel", "payment", "invoice_id", "rewards"]
 
     @field_validator('id')
@@ -150,7 +150,7 @@ class OrderWithoutLink(BaseModel):
             "channel": obj.get("channel"),
             "payment": OrderBasePayment.from_dict(obj["payment"]) if obj.get("payment") is not None else None,
             "invoice_id": obj.get("invoice_id"),
-            "rewards": [OrderWithoutLinkRewardsInner.from_dict(_item) for _item in obj["rewards"]] if obj.get("rewards") is not None else None
+            "rewards": [RewardResponseReward.from_dict(_item) for _item in obj["rewards"]] if obj.get("rewards") is not None else None
         })
         return _obj
 

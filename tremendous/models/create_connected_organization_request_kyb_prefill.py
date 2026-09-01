@@ -34,10 +34,11 @@ class CreateConnectedOrganizationRequestKybPrefill(BaseModel):
     country_code: Optional[StrictStr] = Field(default=None, description="The ISO 3166-1 alpha-2 country code of the company. Must be a supported country.")
     website_url: Optional[StrictStr] = Field(default=None, description="The company's website URL. Must be a well-formed URL.")
     address_1: Optional[StrictStr] = Field(default=None, description="The company's street address.")
+    address_2: Optional[StrictStr] = Field(default=None, description="The second line of the company's street address (suite, unit, floor, etc.).")
     city: Optional[StrictStr] = Field(default=None, description="The company's city.")
     state: Optional[StrictStr] = Field(default=None, description="The company's state or province.")
     postal_code: Optional[StrictStr] = Field(default=None, description="The company's ZIP or postal code.")
-    __properties: ClassVar[List[str]] = ["company_name", "doing_business_as", "company_structure", "company_registration_number", "country_code", "website_url", "address_1", "city", "state", "postal_code"]
+    __properties: ClassVar[List[str]] = ["company_name", "doing_business_as", "company_structure", "company_registration_number", "country_code", "website_url", "address_1", "address_2", "city", "state", "postal_code"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,6 +98,7 @@ class CreateConnectedOrganizationRequestKybPrefill(BaseModel):
             "country_code": obj.get("country_code"),
             "website_url": obj.get("website_url"),
             "address_1": obj.get("address_1"),
+            "address_2": obj.get("address_2"),
             "city": obj.get("city"),
             "state": obj.get("state"),
             "postal_code": obj.get("postal_code")
