@@ -46,7 +46,6 @@ from tremendous.models.create_topup200_response import CreateTopup200Response
 from tremendous.models.create_topup_request import CreateTopupRequest
 from tremendous.models.create_webhook200_response import CreateWebhook200Response
 from tremendous.models.create_webhook_request import CreateWebhookRequest
-from tremendous.models.delete_fraud_rule200_response import DeleteFraudRule200Response
 from tremendous.models.fraud_rule200_response import FraudRule200Response
 from tremendous.models.fraud_rule_request import FraudRuleRequest
 from tremendous.models.generate_reward_link200_response import GenerateRewardLink200Response
@@ -79,7 +78,6 @@ from tremendous.models.list_webhooks200_response import ListWebhooks200Response
 from tremendous.models.resend_reward_request import ResendRewardRequest
 from tremendous.models.simulate_webhook_request import SimulateWebhookRequest
 from tremendous.models.update_campaign_request import UpdateCampaignRequest
-from tremendous.models.update_fraud_rule_list200_response import UpdateFraudRuleList200Response
 from tremendous.models.update_fraud_rule_list_request import UpdateFraudRuleListRequest
 from tremendous.models.update_member_request import UpdateMemberRequest
 
@@ -158,10 +156,10 @@ class TremendousApi:
             '200': "GetOrder200Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
+            '403': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -232,10 +230,10 @@ class TremendousApi:
             '200': "GetOrder200Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
+            '403': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -306,10 +304,10 @@ class TremendousApi:
             '200': "GetOrder200Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
+            '403': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -440,7 +438,8 @@ class TremendousApi:
             '200': "GetFraudReview200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -511,7 +510,8 @@ class TremendousApi:
             '200': "GetFraudReview200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -582,7 +582,8 @@ class TremendousApi:
             '200': "GetFraudReview200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -713,8 +714,8 @@ class TremendousApi:
             '200': "object",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -785,8 +786,8 @@ class TremendousApi:
             '200': "object",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -857,8 +858,8 @@ class TremendousApi:
             '200': "object",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -989,7 +990,7 @@ class TremendousApi:
             '200': "CreateApiKey200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1060,7 +1061,7 @@ class TremendousApi:
             '200': "CreateApiKey200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1131,7 +1132,7 @@ class TremendousApi:
             '200': "CreateApiKey200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1273,8 +1274,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1343,8 +1344,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1413,8 +1414,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1556,9 +1557,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganization200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1627,9 +1628,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganization200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1698,9 +1699,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganization200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1842,9 +1843,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganizationMember200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1913,9 +1914,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganizationMember200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -1984,9 +1985,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganizationMember200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -2132,9 +2133,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganizationMemberSession200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -2207,9 +2208,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganizationMemberSession200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -2282,9 +2283,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateConnectedOrganizationMemberSession200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -2430,8 +2431,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateField200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -2501,8 +2502,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateField200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -2572,8 +2573,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateField200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -2717,7 +2718,7 @@ class TremendousApi:
             '200': "CreateInvoice200Response",
             '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -2788,7 +2789,7 @@ class TremendousApi:
             '200': "CreateInvoice200Response",
             '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -2859,7 +2860,7 @@ class TremendousApi:
             '200': "CreateInvoice200Response",
             '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3001,9 +3002,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateMember200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3072,9 +3073,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateMember200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3143,9 +3144,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateMember200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3288,12 +3289,12 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrder200Response",
             '201': "CreateOrder200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
             '409': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3363,12 +3364,12 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrder200Response",
             '201': "CreateOrder200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
             '409': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3438,12 +3439,12 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrder200Response",
             '201': "CreateOrder200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '402': "ListRewards401Response",
             '409': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3585,9 +3586,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrganization200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3656,9 +3657,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrganization200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3727,9 +3728,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateOrganization200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3871,10 +3872,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateReport200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -3943,10 +3944,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateReport200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -4015,10 +4016,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateReport200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -4159,11 +4160,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateTopup200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '409': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -4231,11 +4232,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateTopup200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '409': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -4303,11 +4304,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateTopup200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '409': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -4449,9 +4450,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateWebhook200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -4520,9 +4521,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateWebhook200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -4591,9 +4592,9 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateWebhook200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -4737,7 +4738,7 @@ class TremendousApi:
             '200': "CreateConnectedOrganization200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -4808,7 +4809,7 @@ class TremendousApi:
             '200': "CreateConnectedOrganization200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -4879,7 +4880,7 @@ class TremendousApi:
             '200': "CreateConnectedOrganization200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5011,7 +5012,7 @@ class TremendousApi:
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '422': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5083,7 +5084,7 @@ class TremendousApi:
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '422': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5155,7 +5156,7 @@ class TremendousApi:
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '422': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5245,7 +5246,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> DeleteFraudRule200Response:
+    ) -> FraudRule200Response:
         """Delete fraud rule
 
         Deletes the rule of the type passed in the URL. 
@@ -5283,10 +5284,10 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DeleteFraudRule200Response",
+            '200': "FraudRule200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5316,7 +5317,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[DeleteFraudRule200Response]:
+    ) -> ApiResponse[FraudRule200Response]:
         """Delete fraud rule
 
         Deletes the rule of the type passed in the URL. 
@@ -5354,10 +5355,10 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DeleteFraudRule200Response",
+            '200': "FraudRule200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5425,10 +5426,10 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DeleteFraudRule200Response",
+            '200': "FraudRule200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5559,7 +5560,7 @@ class TremendousApi:
             '200': "CreateInvoice200Response",
             '404': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5630,7 +5631,7 @@ class TremendousApi:
             '200': "CreateInvoice200Response",
             '404': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5701,7 +5702,7 @@ class TremendousApi:
             '200': "CreateInvoice200Response",
             '404': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5833,7 +5834,7 @@ class TremendousApi:
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '422': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5905,7 +5906,7 @@ class TremendousApi:
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '422': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -5977,7 +5978,7 @@ class TremendousApi:
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '422': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -6108,7 +6109,7 @@ class TremendousApi:
             '204': None,
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -6179,7 +6180,7 @@ class TremendousApi:
             '204': None,
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -6250,7 +6251,7 @@ class TremendousApi:
             '204': None,
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -6382,7 +6383,7 @@ class TremendousApi:
             '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -6454,7 +6455,7 @@ class TremendousApi:
             '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -6526,7 +6527,7 @@ class TremendousApi:
             '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -6658,7 +6659,7 @@ class TremendousApi:
             '200': "bytearray",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -6729,7 +6730,7 @@ class TremendousApi:
             '200': "bytearray",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -6800,7 +6801,7 @@ class TremendousApi:
             '200': "bytearray",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -6934,11 +6935,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FraudRule200Response",
-            '400': "FraudRule400Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "FraudRule422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7011,11 +7012,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FraudRule200Response",
-            '400': "FraudRule400Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "FraudRule422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7088,11 +7089,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FraudRule200Response",
-            '400': "FraudRule400Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "FraudRule422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7237,10 +7238,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GenerateRewardLink200Response",
-            '403': "GenerateRewardLink403Response",
+            '403': "ListRewards401Response",
             '404': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7309,10 +7310,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GenerateRewardLink200Response",
-            '403': "GenerateRewardLink403Response",
+            '403': "ListRewards401Response",
             '404': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7381,10 +7382,10 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GenerateRewardLink200Response",
-            '403': "GenerateRewardLink403Response",
+            '403': "ListRewards401Response",
             '404': "ListRewards401Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7515,7 +7516,7 @@ class TremendousApi:
             '200': "CreateCampaign200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7586,7 +7587,7 @@ class TremendousApi:
             '200': "CreateCampaign200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7657,7 +7658,7 @@ class TremendousApi:
             '200': "CreateCampaign200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7788,7 +7789,7 @@ class TremendousApi:
             '200': "CreateConnectedOrganization200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7859,7 +7860,7 @@ class TremendousApi:
             '200': "CreateConnectedOrganization200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -7930,7 +7931,7 @@ class TremendousApi:
             '200': "CreateConnectedOrganization200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8061,7 +8062,7 @@ class TremendousApi:
             '200': "CreateConnectedOrganizationMember200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8132,7 +8133,7 @@ class TremendousApi:
             '200': "CreateConnectedOrganizationMember200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8203,7 +8204,7 @@ class TremendousApi:
             '200': "CreateConnectedOrganizationMember200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8334,7 +8335,7 @@ class TremendousApi:
             '200': "GetFraudReview200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8405,7 +8406,7 @@ class TremendousApi:
             '200': "GetFraudReview200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8476,7 +8477,7 @@ class TremendousApi:
             '200': "GetFraudReview200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8607,7 +8608,7 @@ class TremendousApi:
             '200': "GetFundingSource200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8678,7 +8679,7 @@ class TremendousApi:
             '200': "GetFundingSource200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8749,7 +8750,7 @@ class TremendousApi:
             '200': "GetFundingSource200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8880,7 +8881,7 @@ class TremendousApi:
             '200': "CreateInvoice200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -8951,7 +8952,7 @@ class TremendousApi:
             '200': "CreateInvoice200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9022,7 +9023,7 @@ class TremendousApi:
             '200': "CreateInvoice200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9152,7 +9153,7 @@ class TremendousApi:
             '200': "GetMember200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9222,7 +9223,7 @@ class TremendousApi:
             '200': "GetMember200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9292,7 +9293,7 @@ class TremendousApi:
             '200': "GetMember200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9423,7 +9424,7 @@ class TremendousApi:
             '200': "GetOrder200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9494,7 +9495,7 @@ class TremendousApi:
             '200': "GetOrder200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9565,7 +9566,7 @@ class TremendousApi:
             '200': "GetOrder200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9695,7 +9696,7 @@ class TremendousApi:
             '200': "GetOrganization200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9765,7 +9766,7 @@ class TremendousApi:
             '200': "GetOrganization200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9835,7 +9836,7 @@ class TremendousApi:
             '200': "GetOrganization200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -9966,7 +9967,7 @@ class TremendousApi:
             '200': "GetProductResponse",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10037,7 +10038,7 @@ class TremendousApi:
             '200': "GetProductResponse",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10108,7 +10109,7 @@ class TremendousApi:
             '200': "GetProductResponse",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10240,7 +10241,7 @@ class TremendousApi:
             '202': "CreateReport200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10312,7 +10313,7 @@ class TremendousApi:
             '202': "CreateReport200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10384,7 +10385,7 @@ class TremendousApi:
             '202': "CreateReport200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10515,7 +10516,7 @@ class TremendousApi:
             '200': "GetReward200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10586,7 +10587,7 @@ class TremendousApi:
             '200': "GetReward200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10657,7 +10658,7 @@ class TremendousApi:
             '200': "GetReward200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10788,7 +10789,7 @@ class TremendousApi:
             '200': "CreateTopup200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10859,7 +10860,7 @@ class TremendousApi:
             '200': "CreateTopup200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -10930,7 +10931,7 @@ class TremendousApi:
             '200': "CreateTopup200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -11061,7 +11062,7 @@ class TremendousApi:
             '200': "CreateWebhook200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -11132,7 +11133,7 @@ class TremendousApi:
             '200': "CreateWebhook200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -11203,7 +11204,7 @@ class TremendousApi:
             '200': "CreateWebhook200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -11345,8 +11346,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListBalanceTransactions200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -11428,8 +11429,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListBalanceTransactions200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -11511,8 +11512,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListBalanceTransactions200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -11655,7 +11656,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListCampaigns200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -11721,7 +11722,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListCampaigns200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -11787,7 +11788,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListCampaigns200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -11922,7 +11923,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizationMembers200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12000,7 +12001,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizationMembers200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12078,7 +12079,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizationMembers200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12224,7 +12225,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizations200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12298,7 +12299,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizations200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12372,7 +12373,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListConnectedOrganizations200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12505,7 +12506,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFields200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12571,7 +12572,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFields200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12637,7 +12638,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFields200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12764,7 +12765,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListForexResponse",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12834,7 +12835,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListForexResponse",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -12904,7 +12905,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListForexResponse",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13060,7 +13061,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudReviews200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13154,7 +13155,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudReviews200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13248,7 +13249,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudReviews200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13406,7 +13407,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudRules200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13472,7 +13473,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudRules200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13538,7 +13539,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFraudRules200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13661,7 +13662,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFundingSources200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13727,7 +13728,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFundingSources200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13793,7 +13794,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListFundingSources200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13924,7 +13925,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListInvoices200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -13998,7 +13999,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListInvoices200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -14072,7 +14073,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListInvoices200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -14205,7 +14206,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListMembers200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -14271,7 +14272,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListMembers200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -14337,7 +14338,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListMembers200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -14484,7 +14485,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrders200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -14574,7 +14575,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrders200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -14664,7 +14665,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrders200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -14817,7 +14818,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrganizations200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -14883,7 +14884,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrganizations200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -14949,7 +14950,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListOrganizations200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15023,6 +15024,7 @@ class TremendousApi:
     @validate_call
     def list_products(
         self,
+        id: Annotated[Optional[StrictStr], Field(description="Comma-separated list of product IDs, used to only retrieve the provided products. Also accepts the special value `ALL_FEE_FREE`, which stands for every product in your catalog that carries no fee.")] = None,
         country: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries")] = None,
         currency: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies")] = None,
         subcategory: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories")] = None,
@@ -15043,6 +15045,8 @@ class TremendousApi:
 
         Retrieve a list of available products 
 
+        :param id: Comma-separated list of product IDs, used to only retrieve the provided products. Also accepts the special value `ALL_FEE_FREE`, which stands for every product in your catalog that carries no fee.
+        :type id: str
         :param country: Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries
         :type country: str
         :param currency: Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies
@@ -15072,6 +15076,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._list_products_serialize(
+            id=id,
             country=country,
             currency=currency,
             subcategory=subcategory,
@@ -15084,7 +15089,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListProductsResponse",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15101,6 +15106,7 @@ class TremendousApi:
     @validate_call
     def list_products_with_http_info(
         self,
+        id: Annotated[Optional[StrictStr], Field(description="Comma-separated list of product IDs, used to only retrieve the provided products. Also accepts the special value `ALL_FEE_FREE`, which stands for every product in your catalog that carries no fee.")] = None,
         country: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries")] = None,
         currency: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies")] = None,
         subcategory: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories")] = None,
@@ -15121,6 +15127,8 @@ class TremendousApi:
 
         Retrieve a list of available products 
 
+        :param id: Comma-separated list of product IDs, used to only retrieve the provided products. Also accepts the special value `ALL_FEE_FREE`, which stands for every product in your catalog that carries no fee.
+        :type id: str
         :param country: Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries
         :type country: str
         :param currency: Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies
@@ -15150,6 +15158,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._list_products_serialize(
+            id=id,
             country=country,
             currency=currency,
             subcategory=subcategory,
@@ -15162,7 +15171,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListProductsResponse",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15179,6 +15188,7 @@ class TremendousApi:
     @validate_call
     def list_products_without_preload_content(
         self,
+        id: Annotated[Optional[StrictStr], Field(description="Comma-separated list of product IDs, used to only retrieve the provided products. Also accepts the special value `ALL_FEE_FREE`, which stands for every product in your catalog that carries no fee.")] = None,
         country: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries")] = None,
         currency: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies")] = None,
         subcategory: Annotated[Optional[StrictStr], Field(description="Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories")] = None,
@@ -15199,6 +15209,8 @@ class TremendousApi:
 
         Retrieve a list of available products 
 
+        :param id: Comma-separated list of product IDs, used to only retrieve the provided products. Also accepts the special value `ALL_FEE_FREE`, which stands for every product in your catalog that carries no fee.
+        :type id: str
         :param country: Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries
         :type country: str
         :param currency: Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies
@@ -15228,6 +15240,7 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._list_products_serialize(
+            id=id,
             country=country,
             currency=currency,
             subcategory=subcategory,
@@ -15240,7 +15253,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListProductsResponse",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15252,6 +15265,7 @@ class TremendousApi:
 
     def _list_products_serialize(
         self,
+        id,
         country,
         currency,
         subcategory,
@@ -15277,6 +15291,10 @@ class TremendousApi:
 
         # process the path parameters
         # process the query parameters
+        if id is not None:
+            
+            _query_params.append(('id', id))
+            
         if country is not None:
             
             _query_params.append(('country', country))
@@ -15386,7 +15404,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRewards200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15460,7 +15478,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRewards200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15534,7 +15552,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRewards200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15667,7 +15685,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRoles200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15733,7 +15751,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRoles200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15799,7 +15817,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListRoles200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15926,7 +15944,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListTopups200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -15996,7 +16014,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListTopups200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -16066,7 +16084,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListTopups200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -16199,7 +16217,7 @@ class TremendousApi:
             '200': "ListWebhookEvents200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -16270,7 +16288,7 @@ class TremendousApi:
             '200': "ListWebhookEvents200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -16341,7 +16359,7 @@ class TremendousApi:
             '200': "ListWebhookEvents200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -16467,7 +16485,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListWebhooks200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -16533,7 +16551,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListWebhooks200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -16599,7 +16617,7 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListWebhooks200Response",
             '401': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -16726,10 +16744,10 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetOrder200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
+            '403': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -16799,10 +16817,10 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetOrder200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
+            '403': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -16872,10 +16890,10 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "GetOrder200Response",
             '401': "ListRewards401Response",
-            '403': "GenerateRewardLink403Response",
+            '403': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17006,7 +17024,7 @@ class TremendousApi:
             '200': "GetFraudReview200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17077,7 +17095,7 @@ class TremendousApi:
             '200': "GetFraudReview200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17148,7 +17166,7 @@ class TremendousApi:
             '200': "GetFraudReview200Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17283,8 +17301,8 @@ class TremendousApi:
             '200': "object",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17359,8 +17377,8 @@ class TremendousApi:
             '200': "object",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17435,8 +17453,8 @@ class TremendousApi:
             '200': "object",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17587,8 +17605,8 @@ class TremendousApi:
             '200': "str",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17663,8 +17681,8 @@ class TremendousApi:
             '200': "str",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17739,8 +17757,8 @@ class TremendousApi:
             '200': "str",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17890,8 +17908,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -17964,8 +17982,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -18038,8 +18056,8 @@ class TremendousApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateCampaign200Response",
             '401': "ListRewards401Response",
-            '422': "ResendReward422Response",
-            '429': "ListRewards429Response",
+            '422': "ListRewards401Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -18146,7 +18164,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UpdateFraudRuleList200Response:
+    ) -> FraudRule200Response:
         """Update fraud rule list
 
         Use this endpoint to modify a list associated with an already-configured rule. Add and remove operations supported.  For example, to append new IPs to the `review_ip` rule, a valid JSON body would be: ```json   {     \"operation\": \"add\",     \"config\": {       \"ips\": [\"123.123.123.123\"]     }   } ``` 
@@ -18187,11 +18205,11 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateFraudRuleList200Response",
-            '400': "FraudRule400Response",
+            '200': "FraudRule200Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -18222,7 +18240,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UpdateFraudRuleList200Response]:
+    ) -> ApiResponse[FraudRule200Response]:
         """Update fraud rule list
 
         Use this endpoint to modify a list associated with an already-configured rule. Add and remove operations supported.  For example, to append new IPs to the `review_ip` rule, a valid JSON body would be: ```json   {     \"operation\": \"add\",     \"config\": {       \"ips\": [\"123.123.123.123\"]     }   } ``` 
@@ -18263,11 +18281,11 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateFraudRuleList200Response",
-            '400': "FraudRule400Response",
+            '200': "FraudRule200Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -18339,11 +18357,11 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UpdateFraudRuleList200Response",
-            '400': "FraudRule400Response",
+            '200': "FraudRule200Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -18492,11 +18510,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateMember200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '422': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -18569,11 +18587,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateMember200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '422': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
@@ -18646,11 +18664,11 @@ class TremendousApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CreateMember200Response",
-            '400': "ResendReward422Response",
+            '400': "ListRewards401Response",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '422': "ListRewards401Response",
-            '429': "ListRewards429Response",
+            '429': "ListRewards401Response",
             '500': "ListRewards401Response",
         }
         response_data = self.api_client.call_api(
