@@ -23,17 +23,19 @@ from typing import Any, ClassVar, Dict, List, Union
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListOrders200ResponseOrdersInnerPaymentRefund(BaseModel):
     """
     Breakdown of the order refunds (total denominated in `currency_code`, independent of the ordered rewards' currency). Note that this property will only appear for canceled orders or orders with canceled rewards. 
     """ # noqa: E501
-    total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total amount of the order refunds, denominated in `currency_code`.")
-    currency_code: StrictStr = Field(description="Currency of the refund. Always matches the organization's currency.")
+    total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total amount of the order refunds, denominated in `currency_code`.", json_schema_extra={"examples": [52.5]})
+    currency_code: StrictStr = Field(description="Currency of the refund. Always matches the organization's currency.", json_schema_extra={"examples": ["USD"]})
     __properties: ClassVar[List[str]] = ["total", "currency_code"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -45,8 +47,7 @@ class ListOrders200ResponseOrdersInnerPaymentRefund(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

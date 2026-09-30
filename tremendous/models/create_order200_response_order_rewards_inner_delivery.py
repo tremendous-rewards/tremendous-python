@@ -22,6 +22,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateOrder200ResponseOrderRewardsInnerDelivery(BaseModel):
     """
@@ -29,11 +30,12 @@ class CreateOrder200ResponseOrderRewardsInnerDelivery(BaseModel):
     """ # noqa: E501
     method: StrictStr = Field(description="How to deliver the reward to the recipient.  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The initial <code>POST /orders</code> response for a link reward includes the link in <code>delivery.link</code>.</p>         <p>The link must then be delivered to the recipient out-of-band.</p>         <p>To obtain a new link for an existing reward, call <code>POST /rewards/{id}/generate_link</code>.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> ")
     status: StrictStr = Field(description="Current status of the delivery of the reward:  * `SCHEDULED` - Reward is scheduled for delivery and will be delivered soon. * `FAILED` - Delivery of reward failed (e.g. email bounced). * `SUCCEEDED` - Reward was successfully delivered (email or text message delivered or reward link active). * `PENDING` - Delivery is pending but not yet scheduled. ")
-    link: Optional[StrictStr] = Field(default=None, description="Link to redeem the reward at. You need to deliver this link to the recipient. ")
+    link: Optional[StrictStr] = Field(default=None, description="Link to redeem the reward at. You need to deliver this link to the recipient. ", json_schema_extra={"examples": ["https://testflight.tremendous.com/rewards/payout/ve0jrwn6q--ba1eoadem8ayukldsygyrlbikascdgsh"]})
     __properties: ClassVar[List[str]] = ["method", "status", "link"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -45,8 +47,7 @@ class CreateOrder200ResponseOrderRewardsInnerDelivery(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

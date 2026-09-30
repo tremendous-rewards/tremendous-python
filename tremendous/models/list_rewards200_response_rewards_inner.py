@@ -28,44 +28,46 @@ from tremendous.models.list_rewards200_response_rewards_inner_recipient import L
 from tremendous.models.list_rewards200_response_rewards_inner_value import ListRewards200ResponseRewardsInnerValue
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListRewards200ResponseRewardsInner(BaseModel):
     """
     A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward")
-    order_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the order this reward is part of.")
+    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    order_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the order this reward is part of.", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
     created_at: Optional[datetime] = Field(default=None, description="Date the reward was created")
     expires_at: Optional[datetime] = Field(default=None, description="Expiration date of the reward. If null, the reward does not expire.")
     value: Optional[ListRewards200ResponseRewardsInnerValue] = None
     recipient: Optional[ListRewards200ResponseRewardsInnerRecipient] = None
-    deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.")
+    deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.", json_schema_extra={"examples": ["2023-12-31"]})
     custom_fields: Optional[List[ListRewards200ResponseRewardsInnerCustomFieldsInner]] = None
     delivery: Optional[ListRewards200ResponseRewardsInnerDelivery] = None
     __properties: ClassVar[List[str]] = ["id", "order_id", "created_at", "expires_at", "value", "recipient", "deliver_at", "custom_fields", "delivery"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('order_id')
+    @field_validator('order_id', mode="before")
     def order_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -77,8 +79,7 @@ class ListRewards200ResponseRewardsInner(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -113,8 +114,7 @@ class ListRewards200ResponseRewardsInner(BaseModel):
         _items = []
         if self.custom_fields:
             for _item_custom_fields in self.custom_fields:
-                if _item_custom_fields:
-                    _items.append(_item_custom_fields.to_dict())
+                _items.append(_item_custom_fields.to_dict() if _item_custom_fields is not None else None)
             _dict['custom_fields'] = _items
         # override the default output from pydantic by calling `to_dict()` of delivery
         if self.delivery:

@@ -23,17 +23,19 @@ from typing import Any, ClassVar, Dict, List, Optional
 from tremendous.models.list_rewards200_response_rewards_inner import ListRewards200ResponseRewardsInner
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListRewards200Response(BaseModel):
     """
     ListRewards200Response
     """ # noqa: E501
     rewards: Optional[List[ListRewards200ResponseRewardsInner]] = None
-    total_count: Optional[StrictInt] = Field(default=None, description="The total number of rewards across all pages")
+    total_count: Optional[StrictInt] = Field(default=None, description="The total number of rewards across all pages", json_schema_extra={"examples": [1]})
     __properties: ClassVar[List[str]] = ["rewards", "total_count"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -45,8 +47,7 @@ class ListRewards200Response(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -75,8 +76,7 @@ class ListRewards200Response(BaseModel):
         _items = []
         if self.rewards:
             for _item_rewards in self.rewards:
-                if _item_rewards:
-                    _items.append(_item_rewards.to_dict())
+                _items.append(_item_rewards.to_dict() if _item_rewards is not None else None)
             _dict['rewards'] = _items
         return _dict
 

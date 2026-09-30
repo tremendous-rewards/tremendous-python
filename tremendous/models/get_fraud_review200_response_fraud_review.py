@@ -26,6 +26,7 @@ from tremendous.models.list_fraud_reviews200_response_fraud_reviews_inner_geo im
 from tremendous.models.list_rewards200_response_rewards_inner import ListRewards200ResponseRewardsInner
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class GetFraudReview200ResponseFraudReview(BaseModel):
     """
@@ -46,7 +47,8 @@ class GetFraudReview200ResponseFraudReview(BaseModel):
     __properties: ClassVar[List[str]] = ["status", "reasons", "device_id", "redemption_method", "redeemed_at", "geo", "reward", "reviewed_by", "reviewed_at", "redemption_method_account_hash", "risk", "related_rewards"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -58,8 +60,7 @@ class GetFraudReview200ResponseFraudReview(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

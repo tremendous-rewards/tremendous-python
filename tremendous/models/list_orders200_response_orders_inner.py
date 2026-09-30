@@ -26,41 +26,43 @@ from tremendous.models.list_orders200_response_orders_inner_payment import ListO
 from tremendous.models.list_rewards200_response_rewards_inner import ListRewards200ResponseRewardsInner
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListOrders200ResponseOrdersInner(BaseModel):
     """
     An order wraps around the fulfilment of one or more rewards.
     """ # noqa: E501
-    id: Annotated[str, Field(strict=True)] = Field(description="Tremendous ID of the order")
-    external_id: Optional[StrictStr] = Field(default=None, description="Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. ")
-    campaign_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. ")
+    id: Annotated[str, Field(strict=True)] = Field(description="Tremendous ID of the order", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    external_id: Optional[StrictStr] = Field(default=None, description="Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. ", json_schema_extra={"examples": ["Your-Individual-Identifier-for-This-Order"]})
+    campaign_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. ", json_schema_extra={"examples": ["IVM0I3WNJJL0"]})
     created_at: datetime = Field(description="Date the order was created")
     status: StrictStr = Field(description="Execution status of a given order  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>CANCELED</code></td>       <td>The order and all of its rewards were canceled.</td>     </tr>     <tr>       <td><code>OPEN</code></td>       <td>The order has been created, but hasn't yet been processed.</td>     </tr>     <tr>       <td><code>EXECUTED</code></td>       <td>The order has been executed. Payment has been handled and rewards are being delivered (if applicable).</td>     </tr>     <tr>       <td><code>FAILED</code></td>       <td>The order could not be processed due to an error. E.g. due to insufficient funds in the account.</td>     </tr>     <tr>       <td><code>PENDING APPROVAL</code></td>       <td>The order has been created but needs approval to be executed.</td>     </tr>     <tr>       <td><code>PENDING INTERNAL PAYMENT APPROVAL</code></td>       <td>The order has been created but it is under review and requires approval from our team.</td>     </tr>     <tr>       <td><code>PENDING SETTLEMENT</code></td>       <td>The order has been created but the funds are being held until the settlement window clears.</td>     </tr>   </tbody> </table> ")
     channel: Optional[StrictStr] = Field(default=None, description="Name of the channel in which the order was created")
     payment: Optional[ListOrders200ResponseOrdersInnerPayment] = None
-    invoice_id: Optional[StrictStr] = Field(default=None, description="The ID for the invoice associated with this order")
+    invoice_id: Optional[StrictStr] = Field(default=None, description="The ID for the invoice associated with this order", json_schema_extra={"examples": ["2E59A82B-0001"]})
     rewards: Optional[List[ListRewards200ResponseRewardsInner]] = None
     __properties: ClassVar[List[str]] = ["id", "external_id", "campaign_id", "created_at", "status", "channel", "payment", "invoice_id", "rewards"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('campaign_id')
+    @field_validator('campaign_id', mode="before")
     def campaign_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -72,8 +74,7 @@ class ListOrders200ResponseOrdersInner(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -105,8 +106,7 @@ class ListOrders200ResponseOrdersInner(BaseModel):
         _items = []
         if self.rewards:
             for _item_rewards in self.rewards:
-                if _item_rewards:
-                    _items.append(_item_rewards.to_dict())
+                _items.append(_item_rewards.to_dict() if _item_rewards is not None else None)
             _dict['rewards'] = _items
         # set to None if external_id (nullable) is None
         # and model_fields_set contains the field

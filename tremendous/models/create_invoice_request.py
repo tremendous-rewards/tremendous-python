@@ -22,20 +22,22 @@ from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, Stric
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateInvoiceRequest(BaseModel):
     """
     CreateInvoiceRequest
     """ # noqa: E501
-    po_number: Optional[StrictStr] = Field(default=None, description="Reference to the purchase order number within your organization")
-    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the invoice")
-    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the invoice. Defaults to the organization's currency if not provided.")
+    po_number: Optional[StrictStr] = Field(default=None, description="Reference to the purchase order number within your organization", json_schema_extra={"examples": ["123-PO-EE"]})
+    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the invoice", json_schema_extra={"examples": [50.35]})
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the invoice. Defaults to the organization's currency if not provided.", json_schema_extra={"examples": ["USD"]})
     currency: Optional[StrictStr] = Field(default=None, description="Deprecated: Use `currency_code` instead.")
     memo: Optional[StrictStr] = Field(default=None, description="A note to be included in the invoice. This is for your internal use and will not be visible to the recipient. ")
     __properties: ClassVar[List[str]] = ["po_number", "amount", "currency_code", "currency", "memo"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -47,8 +49,7 @@ class CreateInvoiceRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

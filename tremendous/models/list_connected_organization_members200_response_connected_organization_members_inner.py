@@ -25,35 +25,37 @@ from typing_extensions import Annotated
 from tremendous.models.list_connected_organization_members200_response_connected_organization_members_inner_member import ListConnectedOrganizationMembers200ResponseConnectedOrganizationMembersInnerMember
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListConnectedOrganizationMembers200ResponseConnectedOrganizationMembersInner(BaseModel):
     """
     ListConnectedOrganizationMembers200ResponseConnectedOrganizationMembersInner
     """ # noqa: E501
-    id: Annotated[str, Field(strict=True)] = Field(description="Tremendous' identifier for the connected organization member.")
-    external_name: Optional[StrictStr] = Field(default=None, description="The name associated with the user in your systems.")
-    external_email: Optional[StrictStr] = Field(default=None, description="The email associated with the user in your systems.")
+    id: Annotated[str, Field(strict=True)] = Field(description="Tremendous' identifier for the connected organization member.", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    external_name: Optional[StrictStr] = Field(default=None, description="The name associated with the user in your systems.", json_schema_extra={"examples": ["Jane Doe"]})
+    external_email: Optional[StrictStr] = Field(default=None, description="The email associated with the user in your systems.", json_schema_extra={"examples": ["jane@doe.com"]})
     created_at: datetime = Field(description="Timestamp of when the connected organization member was created.")
-    connected_organization_id: Annotated[str, Field(strict=True)] = Field(description="Tremendous' identifier for the connected organization.")
+    connected_organization_id: Annotated[str, Field(strict=True)] = Field(description="Tremendous' identifier for the connected organization.", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
     member: Optional[ListConnectedOrganizationMembers200ResponseConnectedOrganizationMembersInnerMember] = None
     __properties: ClassVar[List[str]] = ["id", "external_name", "external_email", "created_at", "connected_organization_id", "member"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('connected_organization_id')
+    @field_validator('connected_organization_id', mode="before")
     def connected_organization_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -65,8 +67,7 @@ class ListConnectedOrganizationMembers200ResponseConnectedOrganizationMembersInn
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

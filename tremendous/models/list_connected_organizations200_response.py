@@ -23,17 +23,19 @@ from typing import Any, ClassVar, Dict, List
 from tremendous.models.list_connected_organizations200_response_connected_organizations_inner import ListConnectedOrganizations200ResponseConnectedOrganizationsInner
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListConnectedOrganizations200Response(BaseModel):
     """
     ListConnectedOrganizations200Response
     """ # noqa: E501
     connected_organizations: List[ListConnectedOrganizations200ResponseConnectedOrganizationsInner]
-    total_count: StrictInt = Field(description="The total number of connected organizations across all pages")
+    total_count: StrictInt = Field(description="The total number of connected organizations across all pages", json_schema_extra={"examples": [1]})
     __properties: ClassVar[List[str]] = ["connected_organizations", "total_count"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -45,8 +47,7 @@ class ListConnectedOrganizations200Response(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -75,8 +76,7 @@ class ListConnectedOrganizations200Response(BaseModel):
         _items = []
         if self.connected_organizations:
             for _item_connected_organizations in self.connected_organizations:
-                if _item_connected_organizations:
-                    _items.append(_item_connected_organizations.to_dict())
+                _items.append(_item_connected_organizations.to_dict() if _item_connected_organizations is not None else None)
             _dict['connected_organizations'] = _items
         return _dict
 

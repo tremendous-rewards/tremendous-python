@@ -23,20 +23,22 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Report(BaseModel):
     """
     Reports represent a collection of your Tremendous data that can be filtered and downloaded.  The report object that is returned has a unique ID, a status, and an predicted time of report generation completion. When the report generation is complete, it will also contain an expiring url where you can retrieve your report. 
     """ # noqa: E501
-    id: Optional[StrictStr] = Field(default=None, description="Tremendous ID of the report, used to retrieve your report")
-    status: Optional[StrictStr] = Field(default=None, description="Status of this report  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>CREATED</code></td>       <td>Report has been created</td>     </tr>     <tr>       <td><code>PROCESSING</code></td>       <td>Report is currently being generated</td>     </tr>     <tr>       <td><code>READY_FOR_DOWNLOAD</code></td>       <td>Report generation is complete and ready for download</td>     </tr>     <tr>       <td><code>FAILED</code></td>       <td>Report failed to generate</td>     </tr>   </tbody> </table> ")
-    created_at: Optional[datetime] = Field(default=None, description="Timestamp of when the report was created ")
-    expected_completion_at: Optional[datetime] = Field(default=None, description="Timestamp of when the report is expected to finish generating. If the report is complete, this will return the time the report completed generating at. ")
-    url: Optional[StrictStr] = Field(default=None, description="URL to download the report. Only returned when the report generation is complete and report is ready for download. URL is valid for 7 days from generation completion ")
+    id: Optional[StrictStr] = Field(default=None, description="Tremendous ID of the report, used to retrieve your report", json_schema_extra={"examples": ["PPS-26873"]})
+    status: Optional[StrictStr] = Field(default=None, description="Status of this report  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>CREATED</code></td>       <td>Report has been created</td>     </tr>     <tr>       <td><code>PROCESSING</code></td>       <td>Report is currently being generated</td>     </tr>     <tr>       <td><code>READY_FOR_DOWNLOAD</code></td>       <td>Report generation is complete and ready for download</td>     </tr>     <tr>       <td><code>FAILED</code></td>       <td>Report failed to generate</td>     </tr>   </tbody> </table> ", json_schema_extra={"examples": ["PROCESSING"]})
+    created_at: Optional[datetime] = Field(default=None, description="Timestamp of when the report was created ", json_schema_extra={"examples": ["2021-08-02T11:05:59Z"]})
+    expected_completion_at: Optional[datetime] = Field(default=None, description="Timestamp of when the report is expected to finish generating. If the report is complete, this will return the time the report completed generating at. ", json_schema_extra={"examples": ["2021-08-02T11:05:59Z"]})
+    url: Optional[StrictStr] = Field(default=None, description="URL to download the report. Only returned when the report generation is complete and report is ready for download. URL is valid for 7 days from generation completion ", json_schema_extra={"examples": ["https://example.com/report.csv"]})
     __properties: ClassVar[List[str]] = ["id", "status", "created_at", "expected_completion_at", "url"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -48,8 +50,7 @@ class Report(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

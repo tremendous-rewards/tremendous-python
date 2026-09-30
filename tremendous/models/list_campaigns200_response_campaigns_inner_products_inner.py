@@ -33,7 +33,7 @@ class ListCampaigns200ResponseCampaignsInnerProductsInner(BaseModel):
     """
 
     # data type: str
-    anyof_schema_1_validator: Optional[Annotated[str, Field(strict=True)]] = None
+    anyof_schema_1_validator: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, json_schema_extra={"examples": ["SOMEIDSOMEID"]})
     # data type: str
     anyof_schema_2_validator: Optional[StrictStr] = None
     if TYPE_CHECKING:

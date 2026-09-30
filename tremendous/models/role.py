@@ -23,25 +23,27 @@ from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Role(BaseModel):
     """
     Each organization member is assigned a role that defines the permissions they have within the organization. 
     """ # noqa: E501
-    id: Annotated[str, Field(strict=True)]
-    title: StrictStr
-    description: StrictStr
+    id: Annotated[str, Field(strict=True)] = Field(json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    title: StrictStr = Field(json_schema_extra={"examples": ["Admin"]})
+    description: StrictStr = Field(json_schema_extra={"examples": ["Full access, including orders, team settings and billing."]})
     __properties: ClassVar[List[str]] = ["id", "title", "description"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -53,8 +55,7 @@ class Role(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

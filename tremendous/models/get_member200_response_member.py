@@ -24,29 +24,31 @@ from typing_extensions import Annotated
 from tremendous.models.get_member200_response_member_events_inner import GetMember200ResponseMemberEventsInner
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class GetMember200ResponseMember(BaseModel):
     """
     Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly.  These actions include adding funding sources to the organization, creating Campaigns, and more. 
     """ # noqa: E501
-    id: Annotated[str, Field(strict=True)]
-    email: StrictStr = Field(description="Email address of the member")
-    name: Optional[StrictStr] = Field(description="Full name of the member")
-    active: Optional[StrictBool] = Field(default=None, description="Is this member currently active in the organization. If `false`, the member will not be able to access the organization. ")
+    id: Annotated[str, Field(strict=True)] = Field(json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    email: StrictStr = Field(description="Email address of the member", json_schema_extra={"examples": ["jane@example.com"]})
+    name: Optional[StrictStr] = Field(description="Full name of the member", json_schema_extra={"examples": ["Jane Doe"]})
+    active: Optional[StrictBool] = Field(default=None, description="Is this member currently active in the organization. If `false`, the member will not be able to access the organization. ", json_schema_extra={"examples": [True]})
     role: Optional[StrictStr] = Field(default=None, description="The role ID associated with the member within the organization. ")
-    status: StrictStr = Field(description="Current status of the member's account.  When creating a member it starts out in the status `INVITED`. As soon as that member open the invitation link and registers an account, the status switches to `REGISTERED`. ")
+    status: StrictStr = Field(description="Current status of the member's account.  When creating a member it starts out in the status `INVITED`. As soon as that member open the invitation link and registers an account, the status switches to `REGISTERED`. ", json_schema_extra={"examples": ["INVITED"]})
     events: Optional[List[GetMember200ResponseMemberEventsInner]] = Field(default=None, description="List of events related to the member.")
     __properties: ClassVar[List[str]] = ["id", "email", "name", "active", "role", "status", "events"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -58,8 +60,7 @@ class GetMember200ResponseMember(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -88,8 +89,7 @@ class GetMember200ResponseMember(BaseModel):
         _items = []
         if self.events:
             for _item_events in self.events:
-                if _item_events:
-                    _items.append(_item_events.to_dict())
+                _items.append(_item_events.to_dict() if _item_events is not None else None)
             _dict['events'] = _items
         # set to None if name (nullable) is None
         # and model_fields_set contains the field

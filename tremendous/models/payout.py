@@ -24,42 +24,44 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Payout(BaseModel):
     """
     Payout
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the payout")
+    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the payout", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
     status: Optional[StrictStr] = None
-    product_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the paid out product")
-    product_name: Optional[StrictStr] = Field(default=None, description="Name of the paid out Product")
+    product_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the paid out product", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    product_name: Optional[StrictStr] = Field(default=None, description="Name of the paid out Product", json_schema_extra={"examples": ["ACH"]})
     created_at: Optional[datetime] = Field(default=None, description="Date the payout was created")
     executed_at: Optional[datetime] = Field(default=None, description="Date the payout was executed")
     defer_execution_until: Optional[datetime] = Field(default=None, description="Date when a delayed payout will be executed in the future")
     __properties: ClassVar[List[str]] = ["id", "status", "product_id", "product_name", "created_at", "executed_at", "defer_execution_until"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
-    @field_validator('product_id')
+    @field_validator('product_id', mode="before")
     def product_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -71,8 +73,7 @@ class Payout(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

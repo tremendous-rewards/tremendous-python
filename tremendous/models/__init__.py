@@ -13,12 +13,9 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 # import models into model package
 from tremendous.models.allow_email import AllowEmail
-from tremendous.models.allow_email1 import AllowEmail1
 from tremendous.models.allow_ip import AllowIp
-from tremendous.models.allow_ip1 import AllowIp1
 from tremendous.models.balance_transaction import BalanceTransaction
 from tremendous.models.balance_transaction_order import BalanceTransactionOrder
 from tremendous.models.balance_transaction_order_payment import BalanceTransactionOrderPayment
@@ -223,9 +220,7 @@ from tremendous.models.resend_reward_request import ResendRewardRequest
 from tremendous.models.review_country import ReviewCountry
 from tremendous.models.review_country1 import ReviewCountry1
 from tremendous.models.review_email import ReviewEmail
-from tremendous.models.review_email1 import ReviewEmail1
 from tremendous.models.review_ip import ReviewIp
-from tremendous.models.review_ip1 import ReviewIp1
 from tremendous.models.review_redeemed_rewards_amount import ReviewRedeemedRewardsAmount
 from tremendous.models.review_redeemed_rewards_count import ReviewRedeemedRewardsCount
 from tremendous.models.review_vpn import ReviewVpn
@@ -271,3 +266,4 @@ from tremendous.models.webhook import Webhook
 from tremendous.models.webhook_post import WebhookPost
 from tremendous.models.webhook_response import WebhookResponse
 from tremendous.models.webhook_response_webhook import WebhookResponseWebhook
+

@@ -25,78 +25,80 @@ from typing_extensions import Annotated
 from tremendous.models.list_funding_sources200_response_funding_sources_inner_meta_failure_details import ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
     """
     ListFundingSources200ResponseFundingSourcesInnerMeta
     """ # noqa: E501
-    available_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="**Only exists for balance and commercial invoicing.**  For balance: available amount denominated in `currency_code`. For commercial invoicing: available credit amount denominated in `currency_code`, calculated as (credit limit - outstanding balance).  *Caution: In the \"list funding sources\" endpoint this value is cached and may not be up to date. Use the \"get funding source\" endpoint to get the most up to date value.* ")
-    available_cents: Optional[StrictInt] = Field(default=None, description="Same as `available_amount`, but in cents.")
-    currency_code: Optional[StrictStr] = Field(default=None, description="**Only exists for balance and commercial invoicing.**  The currency of the balance or credit amounts (e.g. `available_amount`, `pending_amount`, `credit_limit_amount`).  Always matches the organization's currency. ")
-    pending_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="**Only available when `method` is set to `balance`.**  Funds registered on your Tremendous account but not yet deposited in your account (e.g. payments that need to be manually reviewed by our ops team). Denominated in `currency_code`. ")
-    pending_cents: Optional[StrictInt] = Field(default=None, description="Same as `pending_amount`, but in cents.")
-    credit_limit_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="**Only exists for commercial invoicing.**  Available credit limit denominated in `currency_code`. ")
-    credit_limit_cents: Optional[StrictInt] = Field(default=None, description="Same as `credit_limit_amount`, but in cents.")
-    accountholder_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account` or `credit_card`.**  Name of the holder of the bank account or credit_card ")
-    account_type: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Is this a checking or savings account ")
-    bank_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Name of the bank ")
-    account_number_mask: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Last 4 digits of the account number ")
-    account_routing_mask: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Last 4 digits of the routing number ")
-    refundable: Optional[StrictBool] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Can refunds be deposited to this bank account ")
-    network: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Network of the credit card ")
-    last4: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Last 4 digits of the credit card number ")
-    expired: Optional[StrictBool] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Is this credit card expired ")
-    year: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Year part of card's expiration date ")
-    month: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Month part of card's expiration date ")
+    available_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="**Only exists for balance and commercial invoicing.**  For balance: available amount denominated in `currency_code`. For commercial invoicing: available credit amount denominated in `currency_code`, calculated as (credit limit - outstanding balance).  *Caution: In the \"list funding sources\" endpoint this value is cached and may not be up to date. Use the \"get funding source\" endpoint to get the most up to date value.* ", json_schema_extra={"examples": [500]})
+    available_cents: Optional[StrictInt] = Field(default=None, description="Same as `available_amount`, but in cents.", json_schema_extra={"examples": [50000]})
+    currency_code: Optional[StrictStr] = Field(default=None, description="**Only exists for balance and commercial invoicing.**  The currency of the balance or credit amounts (e.g. `available_amount`, `pending_amount`, `credit_limit_amount`).  Always matches the organization's currency. ", json_schema_extra={"examples": ["USD"]})
+    pending_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="**Only available when `method` is set to `balance`.**  Funds registered on your Tremendous account but not yet deposited in your account (e.g. payments that need to be manually reviewed by our ops team). Denominated in `currency_code`. ", json_schema_extra={"examples": [250]})
+    pending_cents: Optional[StrictInt] = Field(default=None, description="Same as `pending_amount`, but in cents.", json_schema_extra={"examples": [25000]})
+    credit_limit_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="**Only exists for commercial invoicing.**  Available credit limit denominated in `currency_code`. ", json_schema_extra={"examples": [10000]})
+    credit_limit_cents: Optional[StrictInt] = Field(default=None, description="Same as `credit_limit_amount`, but in cents.", json_schema_extra={"examples": [1000000]})
+    accountholder_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account` or `credit_card`.**  Name of the holder of the bank account or credit_card ", json_schema_extra={"examples": ["Jane Doe"]})
+    account_type: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Is this a checking or savings account ", json_schema_extra={"examples": ["checking"]})
+    bank_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Name of the bank ", json_schema_extra={"examples": ["Bank of Fancyland"]})
+    account_number_mask: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Last 4 digits of the account number ", json_schema_extra={"examples": ["1234"]})
+    account_routing_mask: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Last 4 digits of the routing number ", json_schema_extra={"examples": ["5678"]})
+    refundable: Optional[StrictBool] = Field(default=None, description="**Only available when `method` is set to `bank_account`.**  Can refunds be deposited to this bank account ", json_schema_extra={"examples": [False]})
+    network: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Network of the credit card ", json_schema_extra={"examples": ["Amex"]})
+    last4: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Last 4 digits of the credit card number ", json_schema_extra={"examples": ["1234"]})
+    expired: Optional[StrictBool] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Is this credit card expired ", json_schema_extra={"examples": [False]})
+    year: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Year part of card's expiration date ", json_schema_extra={"examples": ["2025"]})
+    month: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `credit_card`.**  Month part of card's expiration date ", json_schema_extra={"examples": ["5"]})
     last_payment_failed_at: Optional[datetime] = Field(default=None, description="**Only available when `method` is set to `bank_account` or `credit_card`.**  Point in time when the last order failed using this bank account or credit card as a funding source. ")
-    invoice_type: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Type of invoice account (e.g., commercial, pro_forma, prefunding_only) ")
-    interval: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Billing interval for commercial invoice generation (daily, weekly, monthly, twice_monthly, or quarterly). Returns `null` for pro forma invoices. ")
-    day_of_week: Optional[StrictStr] = Field(default=None, description="**Deprecated: Use `days_of_week` instead.**  **Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Day of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Accounts with weekly commercial invoicing can have invoices generated on one or two days of the week. Returns the scheduled day when there is one day, and an empty string when there are two days and for non-weekly / pro forma invoices. ")
-    days_of_week: Optional[List[StrictStr]] = Field(default=None, description="**Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Days of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Accounts with weekly commercial invoicing can have invoices generated on one or two days of the week. Returns an empty array for non-weekly and for pro forma invoices. ")
-    net: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Net payment terms in days (e.g., \"30\" for Net 30) ")
-    company_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Company name for invoice billing ")
-    address_1: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Primary billing address line ")
-    address_2: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Secondary billing address line ")
-    city: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Billing address city ")
-    state: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Billing address state or province ")
-    zip: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Billing address postal code ")
-    phone: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Contact phone number for billing ")
-    emails: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Email addresses for invoice delivery (comma-separated) ")
+    invoice_type: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Type of invoice account (e.g., commercial, pro_forma, prefunding_only) ", json_schema_extra={"examples": ["commercial"]})
+    interval: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Billing interval for commercial invoice generation (daily, weekly, monthly, twice_monthly, or quarterly). Returns `null` for pro forma invoices. ", json_schema_extra={"examples": ["weekly"]})
+    day_of_week: Optional[StrictStr] = Field(default=None, description="**Deprecated: Use `days_of_week` instead.**  **Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Day of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Accounts with weekly commercial invoicing can have invoices generated on one or two days of the week. Returns the scheduled day when there is one day, and an empty string when there are two days and for non-weekly / pro forma invoices. ", json_schema_extra={"examples": ["0"]})
+    days_of_week: Optional[List[StrictStr]] = Field(default=None, description="**Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Days of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Accounts with weekly commercial invoicing can have invoices generated on one or two days of the week. Returns an empty array for non-weekly and for pro forma invoices. ", json_schema_extra={"examples": [["0", "3"]]})
+    net: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Net payment terms in days (e.g., \"30\" for Net 30) ", json_schema_extra={"examples": ["30"]})
+    company_name: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Company name for invoice billing ", json_schema_extra={"examples": ["Acme Corp"]})
+    address_1: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Primary billing address line ", json_schema_extra={"examples": ["123 Main Street"]})
+    address_2: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Secondary billing address line ", json_schema_extra={"examples": ["Suite 100"]})
+    city: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Billing address city ", json_schema_extra={"examples": ["San Francisco"]})
+    state: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Billing address state or province ", json_schema_extra={"examples": ["CA"]})
+    zip: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Billing address postal code ", json_schema_extra={"examples": ["94105"]})
+    phone: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Contact phone number for billing ", json_schema_extra={"examples": ["555-123-4567"]})
+    emails: Optional[StrictStr] = Field(default=None, description="**Only available when `method` is set to `invoice`.**  Email addresses for invoice delivery (comma-separated) ", json_schema_extra={"examples": ["billing@acme.com, finance@acme.com"]})
     failure_details: Optional[ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails] = None
     __properties: ClassVar[List[str]] = ["available_amount", "available_cents", "currency_code", "pending_amount", "pending_cents", "credit_limit_amount", "credit_limit_cents", "accountholder_name", "account_type", "bank_name", "account_number_mask", "account_routing_mask", "refundable", "network", "last4", "expired", "year", "month", "last_payment_failed_at", "invoice_type", "interval", "day_of_week", "days_of_week", "net", "company_name", "address_1", "address_2", "city", "state", "zip", "phone", "emails", "failure_details"]
 
-    @field_validator('account_number_mask')
+    @field_validator('account_number_mask', mode="before")
     def account_number_mask_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[0-9]{4}", value):
+        if isinstance(value, str) and not re.match(r"[0-9]{4}", value):
             raise ValueError(r"must validate the regular expression /[0-9]{4}/")
         return value
 
-    @field_validator('account_routing_mask')
+    @field_validator('account_routing_mask', mode="before")
     def account_routing_mask_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[0-9]{4}", value):
+        if isinstance(value, str) and not re.match(r"[0-9]{4}", value):
             raise ValueError(r"must validate the regular expression /[0-9]{4}/")
         return value
 
-    @field_validator('last4')
+    @field_validator('last4', mode="before")
     def last4_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[0-9]{4}", value):
+        if isinstance(value, str) and not re.match(r"[0-9]{4}", value):
             raise ValueError(r"must validate the regular expression /[0-9]{4}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -108,8 +110,7 @@ class ListFundingSources200ResponseFundingSourcesInnerMeta(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

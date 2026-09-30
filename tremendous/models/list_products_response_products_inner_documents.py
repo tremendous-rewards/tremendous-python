@@ -22,18 +22,20 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListProductsResponseProductsInnerDocuments(BaseModel):
     """
     URLs and files related to product documentation. 
     """ # noqa: E501
-    cardholder_agreement_pdf: Optional[StrictStr] = Field(default=None, description="URL to the cardholder agreement PDF file.")
-    cardholder_agreement_url: Optional[StrictStr] = Field(default=None, description="URL to the cardholder agreement web page.")
-    privacy_policy_url: Optional[StrictStr] = Field(default=None, description="URL to the privacy policy web page.")
+    cardholder_agreement_pdf: Optional[StrictStr] = Field(default=None, description="URL to the cardholder agreement PDF file.", json_schema_extra={"examples": ["https://example.com/cardholder_agreement.pdf"]})
+    cardholder_agreement_url: Optional[StrictStr] = Field(default=None, description="URL to the cardholder agreement web page.", json_schema_extra={"examples": ["https://example.com/cardholder_agreement"]})
+    privacy_policy_url: Optional[StrictStr] = Field(default=None, description="URL to the privacy policy web page.", json_schema_extra={"examples": ["https://example.com/privacy_policy"]})
     __properties: ClassVar[List[str]] = ["cardholder_agreement_pdf", "cardholder_agreement_url", "privacy_policy_url"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -45,8 +47,7 @@ class ListProductsResponseProductsInnerDocuments(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

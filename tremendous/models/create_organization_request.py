@@ -23,21 +23,23 @@ from typing import Any, ClassVar, Dict, List, Optional
 from tremendous.models.create_organization_request_copy_settings import CreateOrganizationRequestCopySettings
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateOrganizationRequest(BaseModel):
     """
     CreateOrganizationRequest
     """ # noqa: E501
-    name: StrictStr = Field(description="Name of the organization")
-    website: StrictStr = Field(description="URL of the website of that organization")
-    with_api_key: StrictBool = Field(description="Default value is `false`. Set to true to also generate an API key associated to the new organization.")
+    name: StrictStr = Field(description="Name of the organization", json_schema_extra={"examples": ["ACME Inc."]})
+    website: StrictStr = Field(description="URL of the website of that organization", json_schema_extra={"examples": ["https://www.example.com/some-org"]})
+    with_api_key: StrictBool = Field(description="Default value is `false`. Set to true to also generate an API key associated to the new organization.", json_schema_extra={"examples": [True]})
     copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
-    phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).")
-    currency_code: Optional[StrictStr] = Field(default=None, description="Currency code for the new organization. Defaults to the current organization's currency if not provided.")
+    phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).", json_schema_extra={"examples": ["123-456-7890"]})
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency code for the new organization. Defaults to the current organization's currency if not provided.", json_schema_extra={"examples": ["USD"]})
     __properties: ClassVar[List[str]] = ["name", "website", "with_api_key", "copy_settings", "phone", "currency_code"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -49,8 +51,7 @@ class CreateOrganizationRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

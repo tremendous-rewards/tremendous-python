@@ -1,4 +1,4 @@
---- configuration.mustache (openapi-generator v7.12.0)
+--- configuration.mustache (openapi-generator v7.25.0)
 +++ configuration.mustache (tremendous)
 @@ -270,6 +270,10 @@
  {{/hasHttpSignatureMethods}}

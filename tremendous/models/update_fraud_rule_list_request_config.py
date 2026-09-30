@@ -20,16 +20,16 @@ import pprint
 import re  # noqa: F401
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Optional
-from tremendous.models.allow_email1 import AllowEmail1
-from tremendous.models.allow_ip1 import AllowIp1
+from tremendous.models.allow_email import AllowEmail
+from tremendous.models.allow_ip import AllowIp
 from tremendous.models.review_country1 import ReviewCountry1
-from tremendous.models.review_email1 import ReviewEmail1
-from tremendous.models.review_ip1 import ReviewIp1
+from tremendous.models.review_email import ReviewEmail
+from tremendous.models.review_ip import ReviewIp
 from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
 from typing_extensions import Literal, Self
 from pydantic import Field
 
-UPDATEFRAUDRULELISTREQUESTCONFIG_ANY_OF_SCHEMAS = ["AllowEmail1", "AllowIp1", "ReviewCountry1", "ReviewEmail1", "ReviewIp1"]
+UPDATEFRAUDRULELISTREQUESTCONFIG_ANY_OF_SCHEMAS = ["AllowEmail", "AllowIp", "ReviewCountry1", "ReviewEmail", "ReviewIp"]
 
 class UpdateFraudRuleListRequestConfig(BaseModel):
     """
@@ -38,19 +38,19 @@ class UpdateFraudRuleListRequestConfig(BaseModel):
 
     # data type: ReviewCountry1
     anyof_schema_1_validator: Optional[ReviewCountry1] = None
-    # data type: ReviewIp1
-    anyof_schema_2_validator: Optional[ReviewIp1] = None
-    # data type: ReviewEmail1
-    anyof_schema_3_validator: Optional[ReviewEmail1] = None
-    # data type: AllowIp1
-    anyof_schema_4_validator: Optional[AllowIp1] = None
-    # data type: AllowEmail1
-    anyof_schema_5_validator: Optional[AllowEmail1] = None
+    # data type: ReviewIp
+    anyof_schema_2_validator: Optional[ReviewIp] = None
+    # data type: ReviewEmail
+    anyof_schema_3_validator: Optional[ReviewEmail] = None
+    # data type: AllowIp
+    anyof_schema_4_validator: Optional[AllowIp] = None
+    # data type: AllowEmail
+    anyof_schema_5_validator: Optional[AllowEmail] = None
     if TYPE_CHECKING:
-        actual_instance: Optional[Union[AllowEmail1, AllowIp1, ReviewCountry1, ReviewEmail1, ReviewIp1]] = None
+        actual_instance: Optional[Union[AllowEmail, AllowIp, ReviewCountry1, ReviewEmail, ReviewIp]] = None
     else:
         actual_instance: Any = None
-    any_of_schemas: Set[str] = { "AllowEmail1", "AllowIp1", "ReviewCountry1", "ReviewEmail1", "ReviewIp1" }
+    any_of_schemas: Set[str] = { "AllowEmail", "AllowIp", "ReviewCountry1", "ReviewEmail", "ReviewIp" }
 
     model_config = {
         "validate_assignment": True,
@@ -77,33 +77,33 @@ class UpdateFraudRuleListRequestConfig(BaseModel):
         else:
             return v
 
-        # validate data type: ReviewIp1
-        if not isinstance(v, ReviewIp1):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ReviewIp1`")
+        # validate data type: ReviewIp
+        if not isinstance(v, ReviewIp):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `ReviewIp`")
         else:
             return v
 
-        # validate data type: ReviewEmail1
-        if not isinstance(v, ReviewEmail1):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ReviewEmail1`")
+        # validate data type: ReviewEmail
+        if not isinstance(v, ReviewEmail):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `ReviewEmail`")
         else:
             return v
 
-        # validate data type: AllowIp1
-        if not isinstance(v, AllowIp1):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `AllowIp1`")
+        # validate data type: AllowIp
+        if not isinstance(v, AllowIp):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `AllowIp`")
         else:
             return v
 
-        # validate data type: AllowEmail1
-        if not isinstance(v, AllowEmail1):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `AllowEmail1`")
+        # validate data type: AllowEmail
+        if not isinstance(v, AllowEmail):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `AllowEmail`")
         else:
             return v
 
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in UpdateFraudRuleListRequestConfig with anyOf schemas: AllowEmail1, AllowIp1, ReviewCountry1, ReviewEmail1, ReviewIp1. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in UpdateFraudRuleListRequestConfig with anyOf schemas: AllowEmail, AllowIp, ReviewCountry1, ReviewEmail, ReviewIp. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -122,34 +122,34 @@ class UpdateFraudRuleListRequestConfig(BaseModel):
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
-        # anyof_schema_2_validator: Optional[ReviewIp1] = None
+        # anyof_schema_2_validator: Optional[ReviewIp] = None
         try:
-            instance.actual_instance = ReviewIp1.from_json(json_str)
+            instance.actual_instance = ReviewIp.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
-        # anyof_schema_3_validator: Optional[ReviewEmail1] = None
+        # anyof_schema_3_validator: Optional[ReviewEmail] = None
         try:
-            instance.actual_instance = ReviewEmail1.from_json(json_str)
+            instance.actual_instance = ReviewEmail.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
-        # anyof_schema_4_validator: Optional[AllowIp1] = None
+        # anyof_schema_4_validator: Optional[AllowIp] = None
         try:
-            instance.actual_instance = AllowIp1.from_json(json_str)
+            instance.actual_instance = AllowIp.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
-        # anyof_schema_5_validator: Optional[AllowEmail1] = None
+        # anyof_schema_5_validator: Optional[AllowEmail] = None
         try:
-            instance.actual_instance = AllowEmail1.from_json(json_str)
+            instance.actual_instance = AllowEmail.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
              error_messages.append(str(e))
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into UpdateFraudRuleListRequestConfig with anyOf schemas: AllowEmail1, AllowIp1, ReviewCountry1, ReviewEmail1, ReviewIp1. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into UpdateFraudRuleListRequestConfig with anyOf schemas: AllowEmail, AllowIp, ReviewCountry1, ReviewEmail, ReviewIp. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -163,7 +163,7 @@ class UpdateFraudRuleListRequestConfig(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], AllowEmail1, AllowIp1, ReviewCountry1, ReviewEmail1, ReviewIp1]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], AllowEmail, AllowIp, ReviewCountry1, ReviewEmail, ReviewIp]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

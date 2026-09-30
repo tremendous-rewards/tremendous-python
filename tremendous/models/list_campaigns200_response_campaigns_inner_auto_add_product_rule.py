@@ -23,18 +23,20 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListCampaigns200ResponseCampaignsInnerAutoAddProductRule(BaseModel):
     """
     When enabled, newly activated gift card products that match the optional country and currency filters are added to this campaign automatically. Applies to gift cards only — premium options, prepaid cards, and merchant cards with vendor fees are excluded. Affects future rewards only and does not retroactively add products to unredeemed rewards.  On read, `enabled` is `true` whenever a rule is configured; `countries` and `currencies` are only present when the rule actually filters on them — an absent filter matches all values.  On write:   * Omit the field on `PUT` to leave the existing rule unchanged.   * Send `null` or `{ \"enabled\": false }` to clear any existing rule.   * Send `{ \"enabled\": true, ... }` to upsert. `countries` and `currencies` are     optional; when present they must contain at least one entry. To match all     countries (or all currencies), simply omit the key.   * An empty object (`{}`) is rejected because `enabled` is required — use     `{ \"enabled\": false }` or `null` to clear the rule. 
     """ # noqa: E501
-    enabled: StrictBool = Field(description="Whether the auto-add rule is active.")
-    countries: Optional[Annotated[List[StrictStr], Field(min_length=1)]] = Field(default=None, description="ISO 3166-1 alpha-2 country codes (uppercase). When omitted, the rule matches all countries; when present, must contain at least one entry. Each code must be covered by at least one active Tremendous product — requests filtering on a country we don't currently sell into are rejected with a 422. ")
-    currencies: Optional[Annotated[List[StrictStr], Field(min_length=1)]] = Field(default=None, description="ISO 4217 currency codes (uppercase). When omitted, the rule matches all currencies; when present, must contain at least one entry. Each code must be covered by at least one active Tremendous product — requests filtering on a currency we don't currently sell are rejected with a 422. ")
+    enabled: StrictBool = Field(description="Whether the auto-add rule is active.", json_schema_extra={"examples": [True]})
+    countries: Optional[Annotated[List[StrictStr], Field(min_length=1)]] = Field(default=None, description="ISO 3166-1 alpha-2 country codes (uppercase). When omitted, the rule matches all countries; when present, must contain at least one entry. Each code must be covered by at least one active Tremendous product — requests filtering on a country we don't currently sell into are rejected with a 422. ", json_schema_extra={"examples": [["US", "CA"]]})
+    currencies: Optional[Annotated[List[StrictStr], Field(min_length=1)]] = Field(default=None, description="ISO 4217 currency codes (uppercase). When omitted, the rule matches all currencies; when present, must contain at least one entry. Each code must be covered by at least one active Tremendous product — requests filtering on a currency we don't currently sell are rejected with a 422. ", json_schema_extra={"examples": [["USD"]]})
     __properties: ClassVar[List[str]] = ["enabled", "countries", "currencies"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +48,7 @@ class ListCampaigns200ResponseCampaignsInnerAutoAddProductRule(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

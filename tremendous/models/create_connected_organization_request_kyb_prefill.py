@@ -22,26 +22,28 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateConnectedOrganizationRequestKybPrefill(BaseModel):
     """
     Optional KYB details to forward for the end client. When provided, these values prefill the end client's onboarding form. Every field is optional.
     """ # noqa: E501
-    company_name: Optional[StrictStr] = Field(default=None, description="The registered legal name of the company.")
-    doing_business_as: Optional[StrictStr] = Field(default=None, description="The trade name (DBA) the company operates under, if different from its legal name.")
-    company_structure: Optional[StrictStr] = Field(default=None, description="The company's legal entity type. Free-form text; any value is accepted. Common values include `Sole proprietorship`, `Corporation (Inc)`, `Limited liability company (LLC)`, `Limited liability partnership (LLP)`, `Public limited company (PLC)`, and `Private limited company (LTD)`.")
-    company_registration_number: Optional[StrictStr] = Field(default=None, description="The company's tax ID or registration number.")
-    country_code: Optional[StrictStr] = Field(default=None, description="The ISO 3166-1 alpha-2 country code of the company. Must be a supported country.")
-    website_url: Optional[StrictStr] = Field(default=None, description="The company's website URL. Must be a well-formed URL.")
-    address_1: Optional[StrictStr] = Field(default=None, description="The company's street address.")
-    address_2: Optional[StrictStr] = Field(default=None, description="The second line of the company's street address (suite, unit, floor, etc.).")
-    city: Optional[StrictStr] = Field(default=None, description="The company's city.")
-    state: Optional[StrictStr] = Field(default=None, description="The company's state or province.")
-    postal_code: Optional[StrictStr] = Field(default=None, description="The company's ZIP or postal code.")
+    company_name: Optional[StrictStr] = Field(default=None, description="The registered legal name of the company.", json_schema_extra={"examples": ["Acme Inc"]})
+    doing_business_as: Optional[StrictStr] = Field(default=None, description="The trade name (DBA) the company operates under, if different from its legal name.", json_schema_extra={"examples": ["Acme"]})
+    company_structure: Optional[StrictStr] = Field(default=None, description="The company's legal entity type. Free-form text; any value is accepted. Common values include `Sole proprietorship`, `Corporation (Inc)`, `Limited liability company (LLC)`, `Limited liability partnership (LLP)`, `Public limited company (PLC)`, and `Private limited company (LTD)`.", json_schema_extra={"examples": ["Corporation (Inc)"]})
+    company_registration_number: Optional[StrictStr] = Field(default=None, description="The company's tax ID or registration number.", json_schema_extra={"examples": ["12-3456789"]})
+    country_code: Optional[StrictStr] = Field(default=None, description="The ISO 3166-1 alpha-2 country code of the company. Must be a supported country.", json_schema_extra={"examples": ["US"]})
+    website_url: Optional[StrictStr] = Field(default=None, description="The company's website URL. Must be a well-formed URL.", json_schema_extra={"examples": ["https://acme.example.com"]})
+    address_1: Optional[StrictStr] = Field(default=None, description="The company's street address.", json_schema_extra={"examples": ["123 Main St"]})
+    address_2: Optional[StrictStr] = Field(default=None, description="The second line of the company's street address (suite, unit, floor, etc.).", json_schema_extra={"examples": ["Suite 100"]})
+    city: Optional[StrictStr] = Field(default=None, description="The company's city.", json_schema_extra={"examples": ["Brooklyn"]})
+    state: Optional[StrictStr] = Field(default=None, description="The company's state or province.", json_schema_extra={"examples": ["NY"]})
+    postal_code: Optional[StrictStr] = Field(default=None, description="The company's ZIP or postal code.", json_schema_extra={"examples": ["11201"]})
     __properties: ClassVar[List[str]] = ["company_name", "doing_business_as", "company_structure", "company_registration_number", "country_code", "website_url", "address_1", "address_2", "city", "state", "postal_code"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -53,8 +55,7 @@ class CreateConnectedOrganizationRequestKybPrefill(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

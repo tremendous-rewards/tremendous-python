@@ -7,9 +7,7 @@ tremendous/configuration.py
 tremendous/exceptions.py
 tremendous/models/__init__.py
 tremendous/models/allow_email.py
-tremendous/models/allow_email1.py
 tremendous/models/allow_ip.py
-tremendous/models/allow_ip1.py
 tremendous/models/balance_transaction.py
 tremendous/models/balance_transaction_order.py
 tremendous/models/balance_transaction_order_payment.py
@@ -214,9 +212,7 @@ tremendous/models/resend_reward_request.py
 tremendous/models/review_country.py
 tremendous/models/review_country1.py
 tremendous/models/review_email.py
-tremendous/models/review_email1.py
 tremendous/models/review_ip.py
-tremendous/models/review_ip1.py
 tremendous/models/review_redeemed_rewards_amount.py
 tremendous/models/review_redeemed_rewards_count.py
 tremendous/models/review_vpn.py

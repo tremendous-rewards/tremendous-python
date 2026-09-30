@@ -24,21 +24,23 @@ from typing_extensions import Annotated
 from tremendous.models.list_orders200_response_orders_inner_payment_refund import ListOrders200ResponseOrdersInnerPaymentRefund
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListOrders200ResponseOrdersInnerPayment(BaseModel):
     """
     Cost breakdown of the order (cost of rewards + fees). Cost and fees are denominated in the organization's currency (see payment `currency_code`), independent of the ordered rewards' currency. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
     """ # noqa: E501
-    subtotal: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order before fees, denominated in `currency_code`.")
-    total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order including fees, denominated in `currency_code`.")
-    fees: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Fees for the order, denominated in `currency_code`.")
-    discount: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Discount for the order, denominated in `currency_code`.")
-    currency_code: StrictStr = Field(description="Currency in which the payment amounts (subtotal, total, fees, discount, refund) are denominated.  This always matches the organization's currency. ")
+    subtotal: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order before fees, denominated in `currency_code`.", json_schema_extra={"examples": [50]})
+    total: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Total price of the order including fees, denominated in `currency_code`.", json_schema_extra={"examples": [52.5]})
+    fees: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Fees for the order, denominated in `currency_code`.", json_schema_extra={"examples": [2.5]})
+    discount: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Discount for the order, denominated in `currency_code`.", json_schema_extra={"examples": [2.5]})
+    currency_code: StrictStr = Field(description="Currency in which the payment amounts (subtotal, total, fees, discount, refund) are denominated.  This always matches the organization's currency. ", json_schema_extra={"examples": ["USD"]})
     refund: Optional[ListOrders200ResponseOrdersInnerPaymentRefund] = None
     __properties: ClassVar[List[str]] = ["subtotal", "total", "fees", "discount", "currency_code", "refund"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -50,8 +52,7 @@ class ListOrders200ResponseOrdersInnerPayment(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

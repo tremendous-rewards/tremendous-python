@@ -22,19 +22,21 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateConnectedOrganizationMemberRequest(BaseModel):
     """
     CreateConnectedOrganizationMemberRequest
     """ # noqa: E501
     connected_organization_id: StrictStr = Field(description="The ID of the connected organization.")
-    external_name: Optional[StrictStr] = Field(default=None, description="The name associated with the user in your systems.")
-    external_email: Optional[StrictStr] = Field(default=None, description="The email associated with the user in your systems.")
-    role: Optional[StrictStr] = Field(default=None, description="The role ID to assign to the member within the organization. Only applicable when the connected organization is already linked to an existing Tremendous organization. ")
+    external_name: Optional[StrictStr] = Field(default=None, description="The name associated with the user in your systems.", json_schema_extra={"examples": ["Jane Doe"]})
+    external_email: Optional[StrictStr] = Field(default=None, description="The email associated with the user in your systems.", json_schema_extra={"examples": ["jane@doe.com"]})
+    role: Optional[StrictStr] = Field(default=None, description="The role ID to assign to the member within the organization. Only applicable when the connected organization is already linked to an existing Tremendous organization. ", json_schema_extra={"examples": ["ADMIN"]})
     __properties: ClassVar[List[str]] = ["connected_organization_id", "external_name", "external_email", "role"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +48,7 @@ class CreateConnectedOrganizationMemberRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

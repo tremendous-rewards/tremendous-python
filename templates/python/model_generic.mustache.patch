@@ -1,6 +1,6 @@
---- model_generic.mustache (openapi-generator v7.12.0)
+--- model_generic.mustache (openapi-generator v7.25.0)
 +++ model_generic.mustache (tremendous)
-@@ -56,41 +56,7 @@
+@@ -98,41 +98,7 @@
              raise ValueError(r"must validate the regular expression {{{vendorExtensions.x-pattern}}}")
          return value
      {{/vendorExtensions.x-regex}}
@@ -42,4 +42,4 @@
 +    {{! Edited by Tremendous: enum membership is not validated, so enum values added to the API do not break deserialization on older versions of this package. Type and required checks still come from pydantic. !}}
  {{/vars}}
  
-     model_config = ConfigDict(
+ {{#vendorExtensions.x-py-preprocesses-input-names}}

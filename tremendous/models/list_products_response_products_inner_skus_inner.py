@@ -23,18 +23,20 @@ from typing import Any, ClassVar, Dict, List, Union
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListProductsResponseProductsInnerSkusInner(BaseModel):
     """
     ListProductsResponseProductsInnerSkusInner
     """ # noqa: E501
-    min: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Minimum amount this product supports, in `currency_code`.")
-    max: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Maximum amount this product supports, in `currency_code`.")
-    currency_code: StrictStr = Field(description="Currency of `min` and `max`.")
+    min: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Minimum amount this product supports, in `currency_code`.", json_schema_extra={"examples": [20]})
+    max: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Maximum amount this product supports, in `currency_code`.", json_schema_extra={"examples": [100]})
+    currency_code: StrictStr = Field(description="Currency of `min` and `max`.", json_schema_extra={"examples": ["USD"]})
     __properties: ClassVar[List[str]] = ["min", "max", "currency_code"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +48,7 @@ class ListProductsResponseProductsInnerSkusInner(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

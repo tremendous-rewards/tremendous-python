@@ -22,18 +22,20 @@ from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, Stric
 from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateTopupRequest(BaseModel):
     """
     CreateTopupRequest
     """ # noqa: E501
-    funding_source_id: StrictStr = Field(description="The ID of the funding source to top up.")
-    idempotency_key: StrictStr = Field(description="Unique key that ensures this request is only processed once. ")
-    amount: Union[StrictFloat, StrictInt] = Field(description="Amount to add to your organization's balance, denominated in `currency_code`.")
+    funding_source_id: StrictStr = Field(description="The ID of the funding source to top up.", json_schema_extra={"examples": ["GQ2UGWPX7BN2"]})
+    idempotency_key: StrictStr = Field(description="Unique key that ensures this request is only processed once. ", json_schema_extra={"examples": ["idempotency-key"]})
+    amount: Union[StrictFloat, StrictInt] = Field(description="Amount to add to your organization's balance, denominated in `currency_code`.", json_schema_extra={"examples": [200.35]})
     __properties: ClassVar[List[str]] = ["funding_source_id", "idempotency_key", "amount"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -45,8 +47,7 @@ class CreateTopupRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

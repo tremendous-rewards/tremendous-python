@@ -22,24 +22,26 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateOrganizationRequestCopySettings(BaseModel):
     """
     A list of the settings that you wish to copy over to the new organization.
     """ # noqa: E501
-    campaigns: Optional[StrictBool] = Field(default=False, description="Copy over the campaigns from the current organization to the new organization. Defaults to `false`.")
-    custom_fields: Optional[StrictBool] = Field(default=False, description="Copy over the custom fields from the current organization to the new organization. Defaults to `false`.")
-    order_approvals: Optional[StrictBool] = Field(default=False, description="Copy over the order approvals settings from the current organization to the new organization. Defaults to `false`.")
-    payment_methods: Optional[StrictBool] = Field(default=False, description="Copy over the payment methods from the current organization to the new organization. Defaults to `false`.")
-    security_settings: Optional[StrictBool] = Field(default=True, description="Copy over the security settings from the current organization to the new organization. Defaults to `true`.")
-    users: Optional[StrictBool] = Field(default=False, description="Copy over the users and custom roles from the current organization to the new organization. Defaults to `false`.")
-    custom_roles: Optional[StrictBool] = Field(default=False, description="Copy over the custom roles from the current organization to the new organization. Custom roles are always copied if `users` is `true`. Defaults to `false`.")
-    fraud_prevention: Optional[StrictBool] = Field(default=False, description="Copy over the fraud prevention settings and rules from the current organization to the new organization. Defaults to `false`.")
-    tax_management: Optional[StrictBool] = Field(default=False, description="Copy over the tax management settings, including the association with the parent tax entity, from the current organization to the new organization. Defaults to `false`.")
+    campaigns: Optional[StrictBool] = Field(default=False, description="Copy over the campaigns from the current organization to the new organization. Defaults to `false`.", json_schema_extra={"examples": [False]})
+    custom_fields: Optional[StrictBool] = Field(default=False, description="Copy over the custom fields from the current organization to the new organization. Defaults to `false`.", json_schema_extra={"examples": [False]})
+    order_approvals: Optional[StrictBool] = Field(default=False, description="Copy over the order approvals settings from the current organization to the new organization. Defaults to `false`.", json_schema_extra={"examples": [False]})
+    payment_methods: Optional[StrictBool] = Field(default=False, description="Copy over the payment methods from the current organization to the new organization. Defaults to `false`.", json_schema_extra={"examples": [False]})
+    security_settings: Optional[StrictBool] = Field(default=True, description="Copy over the security settings from the current organization to the new organization. Defaults to `true`.", json_schema_extra={"examples": [True]})
+    users: Optional[StrictBool] = Field(default=False, description="Copy over the users and custom roles from the current organization to the new organization. Defaults to `false`.", json_schema_extra={"examples": [False]})
+    custom_roles: Optional[StrictBool] = Field(default=False, description="Copy over the custom roles from the current organization to the new organization. Custom roles are always copied if `users` is `true`. Defaults to `false`.", json_schema_extra={"examples": [False]})
+    fraud_prevention: Optional[StrictBool] = Field(default=False, description="Copy over the fraud prevention settings and rules from the current organization to the new organization. Defaults to `false`.", json_schema_extra={"examples": [False]})
+    tax_management: Optional[StrictBool] = Field(default=False, description="Copy over the tax management settings, including the association with the parent tax entity, from the current organization to the new organization. Defaults to `false`.", json_schema_extra={"examples": [False]})
     __properties: ClassVar[List[str]] = ["campaigns", "custom_fields", "order_approvals", "payment_methods", "security_settings", "users", "custom_roles", "fraud_prevention", "tax_management"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -51,8 +53,7 @@ class CreateOrganizationRequestCopySettings(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
