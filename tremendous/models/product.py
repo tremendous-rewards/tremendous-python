@@ -27,34 +27,36 @@ from tremendous.models.list_products_response_products_inner_images_inner import
 from tremendous.models.list_products_response_products_inner_skus_inner import ListProductsResponseProductsInnerSkusInner
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Product(BaseModel):
     """
     A product represents one way to payout a reward to its recipient. Think:  * Amazon.com gift card (ID: `OKMHM2X2OHYV`) * Donations to Save the Children (ID: `ESRNAD533W5A`) * Virtual Visa debit card (ID: `Q24BD9EZ332JT`)  each of which is one specific product on Tremendous.  > 📘 All available products > > See this [list](https://www.tremendous.com/catalog)  Products can be limited in their availability to recipients by  * geography (field `countries`) * currency (field `currency_codes`) * amount of the reward (field `skus`)   * e.g. adidas gift cards accept any amount between 5 and 200 USD.  See the description of each respective parameter for further details. 
     """ # noqa: E501
-    id: Annotated[str, Field(strict=True)]
+    id: Annotated[str, Field(strict=True)] = Field(json_schema_extra={"examples": ["SOMEIDSOMEID"]})
     name: StrictStr = Field(description="Name of the product")
     description: StrictStr = Field(description="Detailed description of the product.")
-    category: StrictStr = Field(description="The category of the product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>     <tr>       <td><code>cash_app</code></td>       <td>Payout via Cash App</td>     </tr>     <tr>       <td><code>international_bank</code></td>       <td>Bank transfer to recipients outside of the US</td>     </tr>     <tr>       <td><code>wallet</code></td>       <td>Payout to a digital wallet (e.g. GCash, MoMo)</td>     </tr>   </tbody> </table> ")
-    subcategory: Optional[StrictStr] = Field(default=None, description="Additional classification for the product. Only applicable to products with a `category` of `merchant_card`. Possible subcategories:  * `beauty_and_health` * `digital_financial_services` * `electronics` * `entertainment` * `fashion` * `food_and_drink` * `general_merchandise` * `grocery_and_supermarkets` * `home_and_living` * `mobility_and_fuel` * `sports_and_outdoor_gear` * `travel_and_hospitality` ")
-    disclosure: StrictStr = Field(description="Legal disclosures for this product. Can be in HTML format.")
+    category: StrictStr = Field(description="The category of the product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>     <tr>       <td><code>cash_app</code></td>       <td>Payout via Cash App</td>     </tr>     <tr>       <td><code>international_bank</code></td>       <td>Bank transfer to recipients outside of the US</td>     </tr>     <tr>       <td><code>wallet</code></td>       <td>Payout to a digital wallet (e.g. GCash, MoMo)</td>     </tr>   </tbody> </table> ", json_schema_extra={"examples": ["merchant_card"]})
+    subcategory: Optional[StrictStr] = Field(default=None, description="Additional classification for the product. Only applicable to products with a `category` of `merchant_card`. Possible subcategories:  * `beauty_and_health` * `digital_financial_services` * `electronics` * `entertainment` * `fashion` * `food_and_drink` * `general_merchandise` * `grocery_and_supermarkets` * `home_and_living` * `mobility_and_fuel` * `sports_and_outdoor_gear` * `travel_and_hospitality` ", json_schema_extra={"examples": ["general_merchandise"]})
+    disclosure: StrictStr = Field(description="Legal disclosures for this product. Can be in HTML format.", json_schema_extra={"examples": ["<ul><li><p>This card may not be exchanged for cash.</p></li><li><p>…</p></li></ul>"]})
     skus: Optional[List[ListProductsResponseProductsInnerSkusInner]] = Field(default=None, description="Products are restricted in their usage based on the amount of the reward. The `skus` array defines bands of denominations in which this product may be used for payouts.  The skus apply to orders in any of the product's `currency_codes`. ")
     currency_codes: Annotated[List[StrictStr], Field(min_length=1)] = Field(description="Available currencies for this product")
-    countries: Annotated[List[ListProductsResponseProductsInnerCountriesInner], Field(min_length=1)] = Field(description="List of countries in which this product is available to recipients.")
-    images: Annotated[List[ListProductsResponseProductsInnerImagesInner], Field(min_length=0)] = Field(description="List of product images associated with this product (e.g. logos or images of the gift cards)")
+    countries: Annotated[List[ListProductsResponseProductsInnerCountriesInner], Field(min_length=1)] = Field(description="List of countries in which this product is available to recipients.", json_schema_extra={"examples": [[{"abbr": "US"}]]})
+    images: Annotated[List[ListProductsResponseProductsInnerImagesInner], Field(min_length=0)] = Field(description="List of product images associated with this product (e.g. logos or images of the gift cards)", json_schema_extra={"examples": [[{"src": "https://example.com/some-logo.jpg", "type": "logo"}]]})
     usage_instructions: Optional[StrictStr] = Field(default=None, description="Instructions for how to use the product, if applicable. Mostly used for products with a `category` of `merchant_card`.")
     documents: Optional[ListProductsResponseProductsInnerDocuments] = None
     __properties: ClassVar[List[str]] = ["id", "name", "description", "category", "subcategory", "disclosure", "skus", "currency_codes", "countries", "images", "usage_instructions", "documents"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -66,8 +68,7 @@ class Product(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -98,22 +99,19 @@ class Product(BaseModel):
         _items = []
         if self.skus:
             for _item_skus in self.skus:
-                if _item_skus:
-                    _items.append(_item_skus.to_dict())
+                _items.append(_item_skus.to_dict() if _item_skus is not None else None)
             _dict['skus'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in countries (list)
         _items = []
         if self.countries:
             for _item_countries in self.countries:
-                if _item_countries:
-                    _items.append(_item_countries.to_dict())
+                _items.append(_item_countries.to_dict() if _item_countries is not None else None)
             _dict['countries'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in images (list)
         _items = []
         if self.images:
             for _item_images in self.images:
-                if _item_images:
-                    _items.append(_item_images.to_dict())
+                _items.append(_item_images.to_dict() if _item_images is not None else None)
             _dict['images'] = _items
         # override the default output from pydantic by calling `to_dict()` of documents
         if self.documents:

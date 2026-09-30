@@ -22,17 +22,19 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListFields200ResponseFieldsInnerData(BaseModel):
     """
     Additional configuration for the field. Only used for `Dropdown` and `List` data types. 
     """ # noqa: E501
-    options: Optional[List[StrictStr]] = Field(default=None, description="List of valid options for `Dropdown` and `List` field types. For `Dropdown`, the user selects one option. For `List`, the user can select multiple options. ")
-    labels: Optional[Dict[str, StrictStr]] = Field(default=None, description="Optional human-readable labels for each option. Keys are the option values, values are the display labels. If not provided, the option values are used as labels. ")
+    options: Optional[List[StrictStr]] = Field(default=None, description="List of valid options for `Dropdown` and `List` field types. For `Dropdown`, the user selects one option. For `List`, the user can select multiple options. ", json_schema_extra={"examples": [["Option A", "Option B", "Option C"]]})
+    labels: Optional[Dict[str, StrictStr]] = Field(default=None, description="Optional human-readable labels for each option. Keys are the option values, values are the display labels. If not provided, the option values are used as labels. ", json_schema_extra={"examples": [{"en": "English", "es": "Spanish", "fr": "French"}]})
     __properties: ClassVar[List[str]] = ["options", "labels"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -44,8 +46,7 @@ class ListFields200ResponseFieldsInnerData(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

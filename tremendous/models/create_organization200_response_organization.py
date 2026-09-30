@@ -25,33 +25,35 @@ from typing_extensions import Annotated
 from tremendous.models.create_organization_request_copy_settings import CreateOrganizationRequestCopySettings
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateOrganization200ResponseOrganization(BaseModel):
     """
     CreateOrganization200ResponseOrganization
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = None
-    name: StrictStr = Field(description="Name of the organization")
-    website: StrictStr = Field(description="URL of the website of that organization")
+    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    name: StrictStr = Field(description="Name of the organization", json_schema_extra={"examples": ["ACME Inc."]})
+    website: StrictStr = Field(description="URL of the website of that organization", json_schema_extra={"examples": ["https://www.example.com/some-org"]})
     copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
-    phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).")
-    currency_code: Optional[StrictStr] = Field(default=None, description="Currency code for the new organization. Defaults to the current organization's currency if not provided.")
+    phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).", json_schema_extra={"examples": ["123-456-7890"]})
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency code for the new organization. Defaults to the current organization's currency if not provided.", json_schema_extra={"examples": ["USD"]})
     created_at: Optional[date] = Field(default=None, description="Timestamp of when the organization has been created. ")
     api_key: Optional[StrictStr] = Field(default=None, description="The API key for the created organization. This property is only returned when `api_key` is set to `true`. ")
     __properties: ClassVar[List[str]] = ["id", "name", "website", "copy_settings", "phone", "currency_code", "created_at", "api_key"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -63,8 +65,7 @@ class CreateOrganization200ResponseOrganization(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

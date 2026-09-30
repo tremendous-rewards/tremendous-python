@@ -23,18 +23,20 @@ from typing import Any, ClassVar, Dict, List, Optional
 from tremendous.models.create_connected_organization_request_kyb_prefill import CreateConnectedOrganizationRequestKybPrefill
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateConnectedOrganizationRequest(BaseModel):
     """
     CreateConnectedOrganizationRequest
     """ # noqa: E501
     client_id: StrictStr = Field(description="The client ID of the OAuth application.")
-    currency_code: Optional[StrictStr] = Field(default='USD', description="The currency used for the connected organization's balance. Supported values are `USD`, `EUR`, `GBP`, and `CAD`. Defaults to `USD` if omitted, `null`, or blank.")
+    currency_code: Optional[StrictStr] = Field(default='USD', description="The currency used for the connected organization's balance. Supported values are `USD`, `EUR`, `GBP`, and `CAD`. Defaults to `USD` if omitted, `null`, or blank.", json_schema_extra={"examples": ["GBP"]})
     kyb_prefill: Optional[CreateConnectedOrganizationRequestKybPrefill] = None
     __properties: ClassVar[List[str]] = ["client_id", "currency_code", "kyb_prefill"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -46,8 +48,7 @@ class CreateConnectedOrganizationRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -93,7 +94,7 @@ class CreateConnectedOrganizationRequest(BaseModel):
 
         _obj = cls.model_validate({
             "client_id": obj.get("client_id"),
-            "currency_code": obj.get("currency_code") if obj.get("currency_code") is not None else 'USD',
+            "currency_code": obj.get("currency_code") if "currency_code" in obj else 'USD',
             "kyb_prefill": CreateConnectedOrganizationRequestKybPrefill.from_dict(obj["kyb_prefill"]) if obj.get("kyb_prefill") is not None else None
         })
         return _obj

@@ -23,27 +23,29 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class RewardLink(BaseModel):
     """
     The redemption link for a reward.
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward")
-    link: Optional[StrictStr] = Field(default=None, description="Link to redeem the reward at. You need to deliver this link to the recipient. ")
+    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the reward", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    link: Optional[StrictStr] = Field(default=None, description="Link to redeem the reward at. You need to deliver this link to the recipient. ", json_schema_extra={"examples": ["https://testflight.tremendous.com/rewards/payout/ve0jrwn6q--ba1eoadem8ayukldsygyrlbikascdgsh"]})
     __properties: ClassVar[List[str]] = ["id", "link"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -55,8 +57,7 @@ class RewardLink(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

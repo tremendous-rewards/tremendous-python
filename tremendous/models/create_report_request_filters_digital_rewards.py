@@ -25,23 +25,25 @@ from tremendous.models.create_report_request_filters_digital_rewards_amount impo
 from tremendous.models.create_report_request_filters_digital_rewards_created_at import CreateReportRequestFiltersDigitalRewardsCreatedAt
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateReportRequestFiltersDigitalRewards(BaseModel):
     """
     Filters object for a `report_type: digital_rewards` report 
     """ # noqa: E501
     amount: Optional[CreateReportRequestFiltersDigitalRewardsAmount] = None
-    campaign_id: Optional[StrictStr] = Field(default=None, description="ID of the Tremendous campaign that this report should be limited to ")
+    campaign_id: Optional[StrictStr] = Field(default=None, description="ID of the Tremendous campaign that this report should be limited to ", json_schema_extra={"examples": ["PPS26873"]})
     created_at: Optional[CreateReportRequestFiltersDigitalRewardsCreatedAt] = None
-    delivered_at: Optional[date] = Field(default=None, description="Delivery date for gifts that should be returned in the report ")
-    delivery_method: Optional[StrictStr] = Field(default=None, description="Delivery method for rewards returned in the report ")
-    order_id: Optional[StrictStr] = Field(default=None, description="ID of the Tremendous order that this report should be limited to ")
-    order_status: Optional[StrictStr] = Field(default=None, description="Order status for rewards returned in the report ")
-    status: Optional[List[StrictStr]] = Field(default=None, description="Status for rewards returned in the report ")
+    delivered_at: Optional[date] = Field(default=None, description="Delivery date for gifts that should be returned in the report ", json_schema_extra={"examples": ["2021-08-02"]})
+    delivery_method: Optional[StrictStr] = Field(default=None, description="Delivery method for rewards returned in the report ", json_schema_extra={"examples": ["email"]})
+    order_id: Optional[StrictStr] = Field(default=None, description="ID of the Tremendous order that this report should be limited to ", json_schema_extra={"examples": ["PPS26873"]})
+    order_status: Optional[StrictStr] = Field(default=None, description="Order status for rewards returned in the report ", json_schema_extra={"examples": ["executed"]})
+    status: Optional[List[StrictStr]] = Field(default=None, description="Status for rewards returned in the report ", json_schema_extra={"examples": [["delivered", "canceled"]]})
     __properties: ClassVar[List[str]] = ["amount", "campaign_id", "created_at", "delivered_at", "delivery_method", "order_id", "order_status", "status"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -53,8 +55,7 @@ class CreateReportRequestFiltersDigitalRewards(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

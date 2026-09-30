@@ -18,20 +18,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListForexResponse(BaseModel):
     """
     ListForexResponse
     """ # noqa: E501
-    forex: Dict[str, Union[StrictFloat, StrictInt]]
+    forex: Dict[str, Union[StrictFloat, StrictInt]] = Field(json_schema_extra={"examples": [{"ARS": 893.7542, "AUD": 1.51071, "BRL": 5.2074, "CAD": 1.370575, "CHF": 0.913545, "EUR": 0.92479, "GBP": 0.78655, "INR": 83.3565, "JPY": 157.637988, "USD": 1}]})
     __properties: ClassVar[List[str]] = ["forex"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -43,8 +45,7 @@ class ListForexResponse(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

@@ -24,31 +24,33 @@ from typing_extensions import Annotated
 from tremendous.models.list_fields200_response_fields_inner_data import ListFields200ResponseFieldsInnerData
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListFields200ResponseFieldsInner(BaseModel):
     """
     ListFields200ResponseFieldsInner
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = None
-    label: Optional[StrictStr] = Field(default=None, description="Label of the field")
-    data_type: Optional[StrictStr] = Field(default=None, description="Type of the values of the field  <table>   <thead>     <tr>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>Checkbox</code></td>       <td>A boolean value (true/false)</td>     </tr>     <tr>       <td><code>Currency</code></td>       <td>A monetary value</td>     </tr>     <tr>       <td><code>Date</code></td>       <td>A date value</td>     </tr>     <tr>       <td><code>Dropdown</code></td>       <td>A single selection from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Email</code></td>       <td>An email address</td>     </tr>     <tr>       <td><code>List</code></td>       <td>Multiple selections from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Number</code></td>       <td>A numeric value</td>     </tr>     <tr>       <td><code>Phone</code></td>       <td>A phone number</td>     </tr>     <tr>       <td><code>Text</code></td>       <td>A single-line text value</td>     </tr>     <tr>       <td><code>TextArea</code></td>       <td>A multi-line text value</td>     </tr>   </tbody> </table> ")
+    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    label: Optional[StrictStr] = Field(default=None, description="Label of the field", json_schema_extra={"examples": ["recipient_name"]})
+    data_type: Optional[StrictStr] = Field(default=None, description="Type of the values of the field  <table>   <thead>     <tr>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>Checkbox</code></td>       <td>A boolean value (true/false)</td>     </tr>     <tr>       <td><code>Currency</code></td>       <td>A monetary value</td>     </tr>     <tr>       <td><code>Date</code></td>       <td>A date value</td>     </tr>     <tr>       <td><code>Dropdown</code></td>       <td>A single selection from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Email</code></td>       <td>An email address</td>     </tr>     <tr>       <td><code>List</code></td>       <td>Multiple selections from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Number</code></td>       <td>A numeric value</td>     </tr>     <tr>       <td><code>Phone</code></td>       <td>A phone number</td>     </tr>     <tr>       <td><code>Text</code></td>       <td>A single-line text value</td>     </tr>     <tr>       <td><code>TextArea</code></td>       <td>A multi-line text value</td>     </tr>   </tbody> </table> ", json_schema_extra={"examples": ["Text"]})
     data: Optional[ListFields200ResponseFieldsInnerData] = None
-    required: Optional[StrictBool] = Field(default=None, description="Is this field required (true) or optional (false)")
-    scope: Optional[StrictStr] = Field(default=None, description="Type of objects this field gets associated with")
+    required: Optional[StrictBool] = Field(default=None, description="Is this field required (true) or optional (false)", json_schema_extra={"examples": [True]})
+    scope: Optional[StrictStr] = Field(default=None, description="Type of objects this field gets associated with", json_schema_extra={"examples": ["REWARD"]})
     __properties: ClassVar[List[str]] = ["id", "label", "data_type", "data", "required", "scope"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -60,8 +62,7 @@ class ListFields200ResponseFieldsInner(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

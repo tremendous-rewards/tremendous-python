@@ -28,33 +28,35 @@ from tremendous.models.single_reward_order_reward_custom_fields_inner import Sin
 from tremendous.models.single_reward_order_reward_delivery import SingleRewardOrderRewardDelivery
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SingleRewardOrderReward(BaseModel):
     """
     A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
     """ # noqa: E501
-    campaign_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. ")
+    campaign_id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. ", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
     products: Optional[Annotated[List[Annotated[str, Field(strict=True)]], Field(min_length=1)]] = Field(default=None, description="List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.  Providing a `products` array will override the products made available by the campaign specified using the `campaign_id` property unless the `products` array is empty. It will _not_ override other campaign attributes, like the message and customization of the look and feel. ")
     value: Optional[ListRewards200ResponseRewardsInnerValue] = None
     recipient: Optional[ListRewards200ResponseRewardsInnerRecipient] = None
-    deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.")
+    deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.", json_schema_extra={"examples": ["2023-12-31"]})
     custom_fields: Optional[List[SingleRewardOrderRewardCustomFieldsInner]] = None
-    language: Optional[StrictStr] = Field(default=None, description="Set this to translate the redemption experience for this reward. Pass a 2-letter [ISO-639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the desired language. Defaults to `en`. ")
+    language: Optional[StrictStr] = Field(default=None, description="Set this to translate the redemption experience for this reward. Pass a 2-letter [ISO-639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the desired language. Defaults to `en`. ", json_schema_extra={"examples": ["de"]})
     delivery: Optional[SingleRewardOrderRewardDelivery] = None
     __properties: ClassVar[List[str]] = ["campaign_id", "products", "value", "recipient", "deliver_at", "custom_fields", "language", "delivery"]
 
-    @field_validator('campaign_id')
+    @field_validator('campaign_id', mode="before")
     def campaign_id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -66,8 +68,7 @@ class SingleRewardOrderReward(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -102,8 +103,7 @@ class SingleRewardOrderReward(BaseModel):
         _items = []
         if self.custom_fields:
             for _item_custom_fields in self.custom_fields:
-                if _item_custom_fields:
-                    _items.append(_item_custom_fields.to_dict())
+                _items.append(_item_custom_fields.to_dict() if _item_custom_fields is not None else None)
             _dict['custom_fields'] = _items
         # override the default output from pydantic by calling `to_dict()` of delivery
         if self.delivery:

@@ -24,22 +24,24 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from tremendous.models.list_balance_transactions200_response_transactions_inner_order import ListBalanceTransactions200ResponseTransactionsInnerOrder
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListBalanceTransactions200ResponseTransactionsInner(BaseModel):
     """
     A balance transaction represents a specific movement or change in an account's balance. 
     """ # noqa: E501
     created_at: datetime = Field(description="Date that the transaction was created")
-    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the transaction, denominated in `currency_code`.")
-    currency_code: StrictStr = Field(description="Currency of the transaction amount and running balance. Always matches the organization's currency.")
-    balance: Union[StrictFloat, StrictInt] = Field(description="The updated total after the transaction, denominated in `currency_code`. Note that this running balance may be delayed and contain `null`.")
-    action: StrictStr = Field(description="The action that was performed")
+    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the transaction, denominated in `currency_code`.", json_schema_extra={"examples": [50.35]})
+    currency_code: StrictStr = Field(description="Currency of the transaction amount and running balance. Always matches the organization's currency.", json_schema_extra={"examples": ["USD"]})
+    balance: Union[StrictFloat, StrictInt] = Field(description="The updated total after the transaction, denominated in `currency_code`. Note that this running balance may be delayed and contain `null`.", json_schema_extra={"examples": [92.48]})
+    action: StrictStr = Field(description="The action that was performed", json_schema_extra={"examples": ["Deposit"]})
     description: StrictStr = Field(description="A brief description of the transaction")
     order: Optional[ListBalanceTransactions200ResponseTransactionsInnerOrder] = None
     __properties: ClassVar[List[str]] = ["created_at", "amount", "currency_code", "balance", "action", "description", "order"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -51,8 +53,7 @@ class ListBalanceTransactions200ResponseTransactionsInner(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

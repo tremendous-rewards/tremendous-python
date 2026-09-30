@@ -23,20 +23,22 @@ from typing import Any, ClassVar, Dict, List, Optional
 from tremendous.models.create_field_request_data import CreateFieldRequestData
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateFieldRequest(BaseModel):
     """
     CreateFieldRequest
     """ # noqa: E501
-    display_name: StrictStr = Field(description="A human-readable name for the field. Can contain letters, numbers, spaces, and underscores. The field's `label` (a reference name used in API requests) will be automatically derived from this value. ")
-    data_type: StrictStr = Field(description="Type of the values of the field  <table>   <thead>     <tr>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>Checkbox</code></td>       <td>A boolean value (true/false)</td>     </tr>     <tr>       <td><code>Currency</code></td>       <td>A monetary value</td>     </tr>     <tr>       <td><code>Date</code></td>       <td>A date value</td>     </tr>     <tr>       <td><code>Dropdown</code></td>       <td>A single selection from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Email</code></td>       <td>An email address</td>     </tr>     <tr>       <td><code>List</code></td>       <td>Multiple selections from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Number</code></td>       <td>A numeric value</td>     </tr>     <tr>       <td><code>Phone</code></td>       <td>A phone number</td>     </tr>     <tr>       <td><code>Text</code></td>       <td>A single-line text value</td>     </tr>     <tr>       <td><code>TextArea</code></td>       <td>A multi-line text value</td>     </tr>   </tbody> </table> ")
+    display_name: StrictStr = Field(description="A human-readable name for the field. Can contain letters, numbers, spaces, and underscores. The field's `label` (a reference name used in API requests) will be automatically derived from this value. ", json_schema_extra={"examples": ["My Custom Field"]})
+    data_type: StrictStr = Field(description="Type of the values of the field  <table>   <thead>     <tr>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>Checkbox</code></td>       <td>A boolean value (true/false)</td>     </tr>     <tr>       <td><code>Currency</code></td>       <td>A monetary value</td>     </tr>     <tr>       <td><code>Date</code></td>       <td>A date value</td>     </tr>     <tr>       <td><code>Dropdown</code></td>       <td>A single selection from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Email</code></td>       <td>An email address</td>     </tr>     <tr>       <td><code>List</code></td>       <td>Multiple selections from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Number</code></td>       <td>A numeric value</td>     </tr>     <tr>       <td><code>Phone</code></td>       <td>A phone number</td>     </tr>     <tr>       <td><code>Text</code></td>       <td>A single-line text value</td>     </tr>     <tr>       <td><code>TextArea</code></td>       <td>A multi-line text value</td>     </tr>   </tbody> </table> ", json_schema_extra={"examples": ["Text"]})
     data: Optional[CreateFieldRequestData] = None
-    required: Optional[StrictBool] = Field(default=False, description="Is this field required (true) or optional (false). Defaults to false.")
-    description: Optional[StrictStr] = Field(default=None, description="A description of the field's purpose")
+    required: Optional[StrictBool] = Field(default=False, description="Is this field required (true) or optional (false). Defaults to false.", json_schema_extra={"examples": [False]})
+    description: Optional[StrictStr] = Field(default=None, description="A description of the field's purpose", json_schema_extra={"examples": ["Used to track the recipient's department"]})
     __properties: ClassVar[List[str]] = ["display_name", "data_type", "data", "required", "description"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -48,8 +50,7 @@ class CreateFieldRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

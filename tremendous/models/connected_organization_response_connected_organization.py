@@ -25,26 +25,28 @@ from typing_extensions import Annotated
 from tremendous.models.connected_organization_organization import ConnectedOrganizationOrganization
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ConnectedOrganizationResponseConnectedOrganization(BaseModel):
     """
     ConnectedOrganizationResponseConnectedOrganization
     """ # noqa: E501
-    id: Annotated[str, Field(strict=True)] = Field(description="Tremendous' identifier for the connected organization.")
+    id: Annotated[str, Field(strict=True)] = Field(description="Tremendous' identifier for the connected organization.", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
     client_id: StrictStr = Field(description="Client ID of the OAuth app that is to be used by the platform once the integration is complete.")
     created_at: datetime = Field(description="Timestamp of when the connected organization was created.")
     organization: Optional[ConnectedOrganizationOrganization] = None
     __properties: ClassVar[List[str]] = ["id", "client_id", "created_at", "organization"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -56,8 +58,7 @@ class ConnectedOrganizationResponseConnectedOrganization(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

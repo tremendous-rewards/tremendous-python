@@ -23,27 +23,29 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SingleRewardOrderRewardCustomFieldsInner(BaseModel):
     """
     Reward custom data for searching, tracking or copy (see [Adding custom fields to orders](https://developers.tremendous.com/docs/using-custom-fields-to-add-custom-data-to-rewards).)
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the custom field")
-    value: Optional[StrictStr] = Field(default=None, description="Value of the custom field")
+    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Tremendous ID of the custom field", json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    value: Optional[StrictStr] = Field(default=None, description="Value of the custom field", json_schema_extra={"examples": ["Hufflepuff"]})
     __properties: ClassVar[List[str]] = ["id", "value"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -55,8 +57,7 @@ class SingleRewardOrderRewardCustomFieldsInner(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

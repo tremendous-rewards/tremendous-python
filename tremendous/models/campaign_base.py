@@ -27,33 +27,35 @@ from tremendous.models.list_campaigns200_response_campaigns_inner_email_style im
 from tremendous.models.list_campaigns200_response_campaigns_inner_webpage_style import ListCampaigns200ResponseCampaignsInnerWebpageStyle
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CampaignBase(BaseModel):
     """
     With a campaign you can define the look & feel of how rewards are sent out. It also lets you set the available products (different gift cards, charity, etc.) recipients can choose from. 
     """ # noqa: E501
-    id: Optional[Annotated[str, Field(strict=True)]] = None
-    name: Optional[StrictStr] = Field(default=None, description="Name of the campaign")
-    description: Optional[StrictStr] = Field(default=None, description="Description of the campaign")
-    products: Optional[List[CampaignBaseProductsInner]] = Field(default=None, description="List of IDs of products (different gift cards, charity, etc.) that are available in this campaign.  On write, the special value `ALL_FEE_FREE` stands for every product in your catalog that carries no fee at the time of the call. ")
+    id: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    name: Optional[StrictStr] = Field(default=None, description="Name of the campaign", json_schema_extra={"examples": ["My Default Campaign"]})
+    description: Optional[StrictStr] = Field(default=None, description="Description of the campaign", json_schema_extra={"examples": ["A campaign I use as the default in Tremendous\""]})
+    products: Optional[List[CampaignBaseProductsInner]] = Field(default=None, description="List of IDs of products (different gift cards, charity, etc.) that are available in this campaign.  On write, the special value `ALL_FEE_FREE` stands for every product in your catalog that carries no fee at the time of the call. ", json_schema_extra={"examples": [["P3MR06THYM8R", "EFMULTF26PMR"]]})
     fee_charged_to: Optional[StrictStr] = Field(default=None, description="Determines whether fees for premium products are added to the order total (`SENDER`) or deducted from the recipient's reward amount (`RECIPIENT`). Campaigns with `RECIPIENT` must include at least one fee-free product. ")
     auto_add_product_rule: Optional[ListCampaigns200ResponseCampaignsInnerAutoAddProductRule] = None
     webpage_style: Optional[ListCampaigns200ResponseCampaignsInnerWebpageStyle] = None
     email_style: Optional[ListCampaigns200ResponseCampaignsInnerEmailStyle] = None
     __properties: ClassVar[List[str]] = ["id", "name", "description", "products", "fee_charged_to", "auto_add_product_rule", "webpage_style", "email_style"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -65,8 +67,7 @@ class CampaignBase(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -97,8 +98,7 @@ class CampaignBase(BaseModel):
         _items = []
         if self.products:
             for _item_products in self.products:
-                if _item_products:
-                    _items.append(_item_products.to_dict())
+                _items.append(_item_products.to_dict() if _item_products is not None else None)
             _dict['products'] = _items
         # override the default output from pydantic by calling `to_dict()` of auto_add_product_rule
         if self.auto_add_product_rule:

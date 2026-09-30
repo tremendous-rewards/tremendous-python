@@ -23,30 +23,32 @@ from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, Stric
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Topup(BaseModel):
     """
     Topup
     """ # noqa: E501
-    id: Optional[StrictStr] = Field(default=None, description="Unique identifier for the topup request.")
-    amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount to add to your organization's balance, denominated in `currency_code`.")
-    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the topup amount. Always matches the organization's currency.")
-    processing_fee: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of the processing fee for the topup (typically reserved for credit card topups).")
-    funding_source_id: Optional[StrictStr] = Field(default=None, description="ID of the funding_source object used for this topup.")
-    status: Optional[StrictStr] = Field(default=None, description="Status of the topup  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>created</code></td>       <td>The topup is processing (and may be under review).</td>     </tr>     <tr>       <td><code>partially_credited</code></td>       <td>Some funds have been credited to the balance. The remainder will be credited by <code>expected_settlement_at</code>.</td>     </tr>     <tr>       <td><code>fully_credited</code></td>       <td>All funds have been added to the balance.</td>     </tr>     <tr>       <td><code>reversed</code></td>       <td>The topup was credited, but then reversed due to a chargeback or ACH return.</td>     </tr>     <tr>       <td><code>rejected</code></td>       <td>The topup was rejected by an admin.</td>     </tr>   </tbody> </table> ")
-    created_at: Optional[datetime] = Field(default=None, description="Timestamp indicating when the topup object was created (when the request was made).")
+    id: Optional[StrictStr] = Field(default=None, description="Unique identifier for the topup request.", json_schema_extra={"examples": ["C4OCKM68DTX6"]})
+    amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount to add to your organization's balance, denominated in `currency_code`.", json_schema_extra={"examples": [200.35]})
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the topup amount. Always matches the organization's currency.", json_schema_extra={"examples": ["USD"]})
+    processing_fee: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount of the processing fee for the topup (typically reserved for credit card topups).", json_schema_extra={"examples": [3.5]})
+    funding_source_id: Optional[StrictStr] = Field(default=None, description="ID of the funding_source object used for this topup.", json_schema_extra={"examples": ["GQ2UGWPX7BN1"]})
+    status: Optional[StrictStr] = Field(default=None, description="Status of the topup  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>created</code></td>       <td>The topup is processing (and may be under review).</td>     </tr>     <tr>       <td><code>partially_credited</code></td>       <td>Some funds have been credited to the balance. The remainder will be credited by <code>expected_settlement_at</code>.</td>     </tr>     <tr>       <td><code>fully_credited</code></td>       <td>All funds have been added to the balance.</td>     </tr>     <tr>       <td><code>reversed</code></td>       <td>The topup was credited, but then reversed due to a chargeback or ACH return.</td>     </tr>     <tr>       <td><code>rejected</code></td>       <td>The topup was rejected by an admin.</td>     </tr>   </tbody> </table> ", json_schema_extra={"examples": ["fully_credited"]})
+    created_at: Optional[datetime] = Field(default=None, description="Timestamp indicating when the topup object was created (when the request was made).", json_schema_extra={"examples": ["2025-05-30T15:07:23.72Z"]})
     fully_credited_at: Optional[datetime] = Field(default=None, description="Timestamp indicating when the topup amount was fully credited to the balance.")
     rejected_at: Optional[datetime] = Field(default=None, description="Timestamp indicating when the topup was rejected.")
-    reversed_at: Optional[datetime] = Field(default=None, description="Timestamp indicating when the topup was reversed.")
-    reversed_reason: Optional[StrictStr] = Field(default=None, description="A sentence explaining why the topup was reversed.")
-    idempotency_key: Optional[StrictStr] = Field(default=None, description="Idempotency key to prevent duplicate requests.")
-    instant_credit_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount credited to the balance immediately. Equals `amount` for non-ACH topups or ACH debits fully within instant funding limits. Can be 0 if nothing was credited instantly.")
-    settled_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount that will be available once the settlement period elapses. 0 if nothing is settling.")
+    reversed_at: Optional[datetime] = Field(default=None, description="Timestamp indicating when the topup was reversed.", json_schema_extra={"examples": ["2025-05-30T15:07:26.011Z"]})
+    reversed_reason: Optional[StrictStr] = Field(default=None, description="A sentence explaining why the topup was reversed.", json_schema_extra={"examples": ["Insufficient funds."]})
+    idempotency_key: Optional[StrictStr] = Field(default=None, description="Idempotency key to prevent duplicate requests.", json_schema_extra={"examples": ["unique-key"]})
+    instant_credit_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount credited to the balance immediately. Equals `amount` for non-ACH topups or ACH debits fully within instant funding limits. Can be 0 if nothing was credited instantly.", json_schema_extra={"examples": [200.35]})
+    settled_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Amount that will be available once the settlement period elapses. 0 if nothing is settling.", json_schema_extra={"examples": [0]})
     expected_settlement_at: Optional[date] = Field(default=None, description="Timestamp indicating when the pending amount will be credited to the balance. Null if the topup was fully credited immediately.")
     __properties: ClassVar[List[str]] = ["id", "amount", "currency_code", "processing_fee", "funding_source_id", "status", "created_at", "fully_credited_at", "rejected_at", "reversed_at", "reversed_reason", "idempotency_key", "instant_credit_amount", "settled_amount", "expected_settlement_at"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -58,8 +60,7 @@ class Topup(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

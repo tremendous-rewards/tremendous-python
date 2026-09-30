@@ -23,20 +23,22 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class GetFraudReview200ResponseFraudReviewRelatedRewards(BaseModel):
     """
     The related rewards associated with the fraud review.
     """ # noqa: E501
     ids: Optional[List[StrictStr]] = Field(default=None, description="The IDs of rewards that have similar attributes to the fraud reward. A maximum of 100 IDs is returned. ")
-    count: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="How many related rewards were found in total.")
-    blocked_count: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="How many related rewards have been blocked.")
-    aggregated_value: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total amount claimed by the related rewards, denominated in `currency_code`. ")
-    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the aggregated value. Always matches the organization's currency.")
+    count: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="How many related rewards were found in total.", json_schema_extra={"examples": [10]})
+    blocked_count: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="How many related rewards have been blocked.", json_schema_extra={"examples": [10]})
+    aggregated_value: Optional[Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]]] = Field(default=None, description="Total amount claimed by the related rewards, denominated in `currency_code`. ", json_schema_extra={"examples": [52.5]})
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the aggregated value. Always matches the organization's currency.", json_schema_extra={"examples": ["USD"]})
     __properties: ClassVar[List[str]] = ["ids", "count", "blocked_count", "aggregated_value", "currency_code"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -48,8 +50,7 @@ class GetFraudReview200ResponseFraudReviewRelatedRewards(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

@@ -43,7 +43,8 @@ docker run --rm \
   -g python \
   -o /output \
   -p packageName=tremendous,projectName=tremendous-python \
-  -t /output/tmp/templates/python
+  -t /output/tmp/templates/python \
+  --openapi-normalizer SIMPLIFY_ONEOF_ANYOF=false
 
 # The generator never deletes files it stops producing, so models removed
 # from the spec accumulate in the repo. Drop tracked model files that are

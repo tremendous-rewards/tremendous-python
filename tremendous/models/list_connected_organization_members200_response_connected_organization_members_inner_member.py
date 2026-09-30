@@ -24,30 +24,32 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListConnectedOrganizationMembers200ResponseConnectedOrganizationMembersInnerMember(BaseModel):
     """
     Associated `member`. `null` until the registration flow for the connected organization has been completed.
     """ # noqa: E501
-    id: Annotated[str, Field(strict=True)]
-    email: StrictStr = Field(description="Email address of the member")
-    name: Optional[StrictStr] = Field(description="Full name of the member")
-    active: Optional[StrictBool] = Field(default=None, description="Is this member currently active in the organization. If `false`, the member will not be able to access the organization. ")
+    id: Annotated[str, Field(strict=True)] = Field(json_schema_extra={"examples": ["SOMEIDSOMEID"]})
+    email: StrictStr = Field(description="Email address of the member", json_schema_extra={"examples": ["jane@example.com"]})
+    name: Optional[StrictStr] = Field(description="Full name of the member", json_schema_extra={"examples": ["Jane Doe"]})
+    active: Optional[StrictBool] = Field(default=None, description="Is this member currently active in the organization. If `false`, the member will not be able to access the organization. ", json_schema_extra={"examples": [True]})
     role: Optional[StrictStr] = Field(default=None, description="The role ID associated with the member within the organization. ")
-    status: StrictStr = Field(description="Current status of the member's account.  When creating a member it starts out in the status `INVITED`. As soon as that member open the invitation link and registers an account, the status switches to `REGISTERED`. ")
-    created_at: Optional[datetime] = Field(default=None, description="Timestamp when this member was created.  The `created_at` timestamp is **NOT** returned when retrieving a member (but is part of the response when listing or creating members). ")
-    last_login_at: Optional[datetime] = Field(default=None, description="Timestamp when this member most recently logged into the dashboard of the organization associated with this API key. ")
+    status: StrictStr = Field(description="Current status of the member's account.  When creating a member it starts out in the status `INVITED`. As soon as that member open the invitation link and registers an account, the status switches to `REGISTERED`. ", json_schema_extra={"examples": ["INVITED"]})
+    created_at: Optional[datetime] = Field(default=None, description="Timestamp when this member was created.  The `created_at` timestamp is **NOT** returned when retrieving a member (but is part of the response when listing or creating members). ", json_schema_extra={"examples": ["2021-08-02T11:05:59Z"]})
+    last_login_at: Optional[datetime] = Field(default=None, description="Timestamp when this member most recently logged into the dashboard of the organization associated with this API key. ", json_schema_extra={"examples": ["2021-08-02T11:05:59Z"]})
     __properties: ClassVar[List[str]] = ["id", "email", "name", "active", "role", "status", "created_at", "last_login_at"]
 
-    @field_validator('id')
+    @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
         """Validates the regular expression"""
-        if not re.match(r"[A-Z0-9]{4,20}", value):
+        if isinstance(value, str) and not re.match(r"[A-Z0-9]{4,20}", value):
             raise ValueError(r"must validate the regular expression /[A-Z0-9]{4,20}/")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -59,8 +61,7 @@ class ListConnectedOrganizationMembers200ResponseConnectedOrganizationMembersInn
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

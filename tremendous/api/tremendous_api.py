@@ -1,5 +1,3 @@
-# coding: utf-8
-
 """
     API Endpoints
 
@@ -11,6 +9,7 @@
 
     Do not edit the class manually.
 """  # noqa: E501
+
 
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
@@ -6618,7 +6617,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> bytearray:
+    ) -> bytes:
         """Retrieve invoice as PDF
 
         Generates a PDF version for an invoice 
@@ -6656,7 +6655,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "bytearray",
+            '200': "bytes",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '429': "ListRewards401Response",
@@ -6689,7 +6688,7 @@ class TremendousApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[bytearray]:
+    ) -> ApiResponse[bytes]:
         """Retrieve invoice as PDF
 
         Generates a PDF version for an invoice 
@@ -6727,7 +6726,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "bytearray",
+            '200': "bytes",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '429': "ListRewards401Response",
@@ -6798,7 +6797,7 @@ class TremendousApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "bytearray",
+            '200': "bytes",
             '401': "ListRewards401Response",
             '404': "ListRewards401Response",
             '429': "ListRewards401Response",

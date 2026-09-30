@@ -24,26 +24,28 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class InvoiceResponseInvoice(BaseModel):
     """
     Invoices are instruments to fund your Tremendous account's balance.  Invoices can be created by your organization programatically. Once we receive your payment, the invoice is marked as `PAID` and we add the respective funds to your account's balance. 
     """ # noqa: E501
-    id: StrictStr = Field(description="The invoice number")
-    po_number: Optional[StrictStr] = Field(default=None, description="Reference to the purchase order number within your organization")
-    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the invoice")
-    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the invoice")
-    currency: Optional[StrictStr] = Field(default=None, description="Deprecated: Use `currency_code` instead.")
-    international: Optional[StrictBool] = None
-    status: StrictStr = Field(description="Status of this invoice  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>DELETED</code></td>       <td>Invoice has been deleted by your organization</td>     </tr>     <tr>       <td><code>PAID</code></td>       <td>Invoice has been paid by your organization</td>     </tr>     <tr>       <td><code>OPEN</code></td>       <td>Invoice has been created by your organization but has not been paid, yet</td>     </tr>   </tbody> </table> ")
-    orders: Optional[List[Annotated[str, Field(strict=True)]]] = Field(default=None, description="List of orders related to the invoice (it doesn't apply to prefunding)")
-    rewards: Optional[List[Annotated[str, Field(strict=True)]]] = Field(default=None, description="List of rewards related to the invoice (it doesn't apply to prefunding)")
+    id: StrictStr = Field(description="The invoice number", json_schema_extra={"examples": ["PPS-26873"]})
+    po_number: Optional[StrictStr] = Field(default=None, description="Reference to the purchase order number within your organization", json_schema_extra={"examples": ["123-PO-EE"]})
+    amount: Union[StrictFloat, StrictInt] = Field(description="Amount of the invoice", json_schema_extra={"examples": [50.35]})
+    currency_code: Optional[StrictStr] = Field(default=None, description="Currency of the invoice", json_schema_extra={"examples": ["USD"]})
+    currency: Optional[StrictStr] = Field(default=None, description="Deprecated: Use `currency_code` instead.", json_schema_extra={"examples": ["USD"]})
+    international: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [False]})
+    status: StrictStr = Field(description="Status of this invoice  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>DELETED</code></td>       <td>Invoice has been deleted by your organization</td>     </tr>     <tr>       <td><code>PAID</code></td>       <td>Invoice has been paid by your organization</td>     </tr>     <tr>       <td><code>OPEN</code></td>       <td>Invoice has been created by your organization but has not been paid, yet</td>     </tr>   </tbody> </table> ", json_schema_extra={"examples": ["PAID"]})
+    orders: Optional[List[Annotated[str, Field(strict=True)]]] = Field(default=None, description="List of orders related to the invoice (it doesn't apply to prefunding)", json_schema_extra={"examples": [["ABC123456789", "DEF123456789"]]})
+    rewards: Optional[List[Annotated[str, Field(strict=True)]]] = Field(default=None, description="List of rewards related to the invoice (it doesn't apply to prefunding)", json_schema_extra={"examples": [["ABC123456789", "DEF123456789"]]})
     created_at: datetime = Field(description="Timestamp of when the invoice has been created. ")
     paid_at: Optional[datetime] = Field(description="Timestamp of when the invoice has been paid. ")
     __properties: ClassVar[List[str]] = ["id", "po_number", "amount", "currency_code", "currency", "international", "status", "orders", "rewards", "created_at", "paid_at"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -55,8 +57,7 @@ class InvoiceResponseInvoice(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

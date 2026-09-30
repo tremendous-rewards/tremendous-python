@@ -23,6 +23,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from tremendous.models.list_organizations200_response_organizations_inner import ListOrganizations200ResponseOrganizationsInner
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ListOrganizations200Response(BaseModel):
     """
@@ -32,7 +33,8 @@ class ListOrganizations200Response(BaseModel):
     __properties: ClassVar[List[str]] = ["organizations"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -44,8 +46,7 @@ class ListOrganizations200Response(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -74,8 +75,7 @@ class ListOrganizations200Response(BaseModel):
         _items = []
         if self.organizations:
             for _item_organizations in self.organizations:
-                if _item_organizations:
-                    _items.append(_item_organizations.to_dict())
+                _items.append(_item_organizations.to_dict() if _item_organizations is not None else None)
             _dict['organizations'] = _items
         return _dict
 

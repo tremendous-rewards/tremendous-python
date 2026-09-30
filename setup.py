@@ -23,7 +23,7 @@ setup(
     install_requires=[
         "urllib3 >= 2.1.0, < 3.0.0",
         "python-dateutil",
-        "pydantic >= 2",
+        "pydantic >= 2.11",
         "typing-extensions >= 4.7.1",
     ],
     packages=find_packages(exclude=["test"]),
