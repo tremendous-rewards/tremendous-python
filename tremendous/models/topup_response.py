@@ -19,17 +19,17 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
-from tremendous.models.inline_object1_reward import InlineObject1Reward
+from typing import Any, ClassVar, Dict, List, Optional
+from tremendous.models.list_topups200_response_topups_inner import ListTopups200ResponseTopupsInner
 from typing import Optional, Set
 from typing_extensions import Self
 
-class InlineObject1(BaseModel):
+class TopupResponse(BaseModel):
     """
-    InlineObject1
+    TopupResponse
     """ # noqa: E501
-    reward: InlineObject1Reward
-    __properties: ClassVar[List[str]] = ["reward"]
+    topup: Optional[ListTopups200ResponseTopupsInner] = None
+    __properties: ClassVar[List[str]] = ["topup"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +49,7 @@ class InlineObject1(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of InlineObject1 from a JSON string"""
+        """Create an instance of TopupResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -70,14 +70,14 @@ class InlineObject1(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of reward
-        if self.reward:
-            _dict['reward'] = self.reward.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of topup
+        if self.topup:
+            _dict['topup'] = self.topup.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of InlineObject1 from a dict"""
+        """Create an instance of TopupResponse from a dict"""
         if obj is None:
             return None
 
@@ -85,7 +85,7 @@ class InlineObject1(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "reward": InlineObject1Reward.from_dict(obj["reward"]) if obj.get("reward") is not None else None
+            "topup": ListTopups200ResponseTopupsInner.from_dict(obj["topup"]) if obj.get("topup") is not None else None
         })
         return _obj
 

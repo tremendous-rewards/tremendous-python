@@ -18,20 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Union
-from typing_extensions import Annotated
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from tremendous.models.create_report200_response_report import CreateReport200ResponseReport
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListProductsResponseProductsInnerSkusInner(BaseModel):
+class ReportResponse(BaseModel):
     """
-    ListProductsResponseProductsInnerSkusInner
+    ReportResponse
     """ # noqa: E501
-    min: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Minimum amount this product supports, in `currency_code`.")
-    max: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Maximum amount this product supports, in `currency_code`.")
-    currency_code: StrictStr = Field(description="Currency of `min` and `max`.")
-    __properties: ClassVar[List[str]] = ["min", "max", "currency_code"]
+    report: CreateReport200ResponseReport
+    message: Optional[StrictStr] = Field(default=None, description="Report status message")
+    __properties: ClassVar[List[str]] = ["report", "message"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +50,7 @@ class ListProductsResponseProductsInnerSkusInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListProductsResponseProductsInnerSkusInner from a JSON string"""
+        """Create an instance of ReportResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,11 +71,14 @@ class ListProductsResponseProductsInnerSkusInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of report
+        if self.report:
+            _dict['report'] = self.report.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListProductsResponseProductsInnerSkusInner from a dict"""
+        """Create an instance of ReportResponse from a dict"""
         if obj is None:
             return None
 
@@ -84,9 +86,8 @@ class ListProductsResponseProductsInnerSkusInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "min": obj.get("min"),
-            "max": obj.get("max"),
-            "currency_code": obj.get("currency_code")
+            "report": CreateReport200ResponseReport.from_dict(obj["report"]) if obj.get("report") is not None else None,
+            "message": obj.get("message")
         })
         return _obj
 

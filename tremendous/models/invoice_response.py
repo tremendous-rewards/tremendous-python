@@ -18,20 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Union
-from typing_extensions import Annotated
+from pydantic import BaseModel, ConfigDict
+from typing import Any, ClassVar, Dict, List
+from tremendous.models.invoice_response_invoice import InvoiceResponseInvoice
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ListProductsResponseProductsInnerSkusInner(BaseModel):
+class InvoiceResponse(BaseModel):
     """
-    ListProductsResponseProductsInnerSkusInner
+    InvoiceResponse
     """ # noqa: E501
-    min: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Minimum amount this product supports, in `currency_code`.")
-    max: Union[Annotated[float, Field(strict=True, ge=0)], Annotated[int, Field(strict=True, ge=0)]] = Field(description="Maximum amount this product supports, in `currency_code`.")
-    currency_code: StrictStr = Field(description="Currency of `min` and `max`.")
-    __properties: ClassVar[List[str]] = ["min", "max", "currency_code"]
+    invoice: InvoiceResponseInvoice
+    __properties: ClassVar[List[str]] = ["invoice"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +49,7 @@ class ListProductsResponseProductsInnerSkusInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListProductsResponseProductsInnerSkusInner from a JSON string"""
+        """Create an instance of InvoiceResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,11 +70,14 @@ class ListProductsResponseProductsInnerSkusInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of invoice
+        if self.invoice:
+            _dict['invoice'] = self.invoice.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListProductsResponseProductsInnerSkusInner from a dict"""
+        """Create an instance of InvoiceResponse from a dict"""
         if obj is None:
             return None
 
@@ -84,9 +85,7 @@ class ListProductsResponseProductsInnerSkusInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "min": obj.get("min"),
-            "max": obj.get("max"),
-            "currency_code": obj.get("currency_code")
+            "invoice": InvoiceResponseInvoice.from_dict(obj["invoice"]) if obj.get("invoice") is not None else None
         })
         return _obj
 
