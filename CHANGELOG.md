@@ -1,5 +1,43 @@
 # Changelog
 
+## [6.0.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.21.0...tremendous-python-v6.0.0) (2026-10-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* require pydantic >= 2.11 (bump openapi-generator to 7.25.0) ([#152](https://github.com/tremendous-rewards/tremendous-python/issues/152))
+
+### Features
+
+* add `CAD` to connected org currency support ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* add `CampaignBaseProductsInner` model ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* add `id` filter param to list products endpoint ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* add connected org member/session responses ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* add response models for invoices, reports, ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* add response models for members, orgs ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* add response models for webhooks, topups, ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* add structured response models for rewards, ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+
+
+### Bug Fixes
+
+* delete fraud rule now returns `FraudRule200Response` ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* remove `DeleteFraudRule200Response` model ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* remove `FraudRule400Response`, `FraudRule422Response` ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* remove `GenerateRewardLink403Response` model ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* remove `InlineObject1` and `InlineObject1Reward` ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* remove `ListRewards429Response` model ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* remove `OrderWithoutLinkRewardsInner` model ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* remove `ResendReward422Response` model ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* remove `UpdateFraudRuleList200Response` model ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+* require pydantic &gt;= 2.11 (bump openapi-generator to 7.25.0) ([#152](https://github.com/tremendous-rewards/tremendous-python/issues/152)) ([5d29470](https://github.com/tremendous-rewards/tremendous-python/commit/5d2947087fc94c2ff761b6f05bf2850ad39d26b4))
+* unify error responses to single error model ([0271884](https://github.com/tremendous-rewards/tremendous-python/commit/02718840549dfff581f409910e9c3d22ba270b77))
+
+
+### Documentation
+
+* update `RELEASING.md` for the automated SDK regeneration ([#154](https://github.com/tremendous-rewards/tremendous-python/issues/154)) ([5da798a](https://github.com/tremendous-rewards/tremendous-python/commit/5da798afbe3016e15c9483d906fde9dca66e3a74))
+
 ## [5.21.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.20.0...tremendous-python-v5.21.0) (2026-07-31)
 
 
