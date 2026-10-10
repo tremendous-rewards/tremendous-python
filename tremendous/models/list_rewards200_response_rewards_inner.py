@@ -40,7 +40,7 @@ class ListRewards200ResponseRewardsInner(BaseModel):
     expires_at: Optional[datetime] = Field(default=None, description="Expiration date of the reward. If null, the reward does not expire.")
     value: Optional[ListRewards200ResponseRewardsInnerValue] = None
     recipient: Optional[ListRewards200ResponseRewardsInnerRecipient] = None
-    deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.", json_schema_extra={"examples": ["2023-12-31"]})
+    deliver_at: Optional[date] = Field(default=None, description="Date of reward delivery, within the next year. The reward is delivered at 12pm in your organization's time zone on that date, or at 12pm Eastern Time when the organization has no time zone set. Note that if date-time is provided, the time values will be ignored.", json_schema_extra={"examples": ["2023-12-31"]})
     custom_fields: Optional[List[ListRewards200ResponseRewardsInnerCustomFieldsInner]] = None
     delivery: Optional[ListRewards200ResponseRewardsInnerDelivery] = None
     __properties: ClassVar[List[str]] = ["id", "order_id", "created_at", "expires_at", "value", "recipient", "deliver_at", "custom_fields", "delivery"]

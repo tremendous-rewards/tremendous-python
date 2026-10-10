@@ -42,7 +42,7 @@ class RewardForOrderCreate(BaseModel):
     products: Optional[Annotated[List[Annotated[str, Field(strict=True)]], Field(min_length=1)]] = Field(default=None, description="List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.  Providing a `products` array will override the products made available by the campaign specified using the `campaign_id` property unless the `products` array is empty. It will _not_ override other campaign attributes, like the message and customization of the look and feel. ")
     value: Optional[ListRewards200ResponseRewardsInnerValue] = None
     recipient: Optional[ListRewards200ResponseRewardsInnerRecipient] = None
-    deliver_at: Optional[date] = Field(default=None, description="Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.", json_schema_extra={"examples": ["2023-12-31"]})
+    deliver_at: Optional[date] = Field(default=None, description="Date of reward delivery, within the next year. The reward is delivered at 12pm in your organization's time zone on that date, or at 12pm Eastern Time when the organization has no time zone set. Note that if date-time is provided, the time values will be ignored.", json_schema_extra={"examples": ["2023-12-31"]})
     custom_fields: Optional[List[RewardBaseCustomFieldsInner]] = None
     language: Optional[StrictStr] = Field(default=None, description="Set this to translate the redemption experience for this reward. Pass a 2-letter [ISO-639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the desired language. Defaults to `en`. ", json_schema_extra={"examples": ["de"]})
     delivery: Optional[SingleRewardOrderRewardDelivery] = None
