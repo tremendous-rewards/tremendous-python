@@ -69,7 +69,6 @@ class CurrencyCodes(str, Enum):
     GTQ = 'GTQ'
     HKD = 'HKD'
     HNL = 'HNL'
-    HRK = 'HRK'
     HUF = 'HUF'
     IDR = 'IDR'
     ILS = 'ILS'
