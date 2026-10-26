@@ -1,5 +1,30 @@
 # Changelog
 
+## [7.0.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v6.0.0...tremendous-python-v7.0.0) (2026-10-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for Python 3.10 ([#159](https://github.com/tremendous-rewards/tremendous-python/issues/159))
+
+### Features
+
+* add `payment_id` field to balance transactions ([531b695](https://github.com/tremendous-rewards/tremendous-python/commit/531b6952b4813ecb0fe0d0c8e8ed481e542e78df))
+* drop support for Python 3.10 ([#159](https://github.com/tremendous-rewards/tremendous-python/issues/159)) ([b08db09](https://github.com/tremendous-rewards/tremendous-python/commit/b08db092a3c10221039e530a3bf8fa866be62dab))
+
+
+### Bug Fixes
+
+* remove `HRK` currency code ([531b695](https://github.com/tremendous-rewards/tremendous-python/commit/531b6952b4813ecb0fe0d0c8e8ed481e542e78df))
+
+
+### Documentation
+
+* clarify `external_id` lookup precedence for orders ([531b695](https://github.com/tremendous-rewards/tremendous-python/commit/531b6952b4813ecb0fe0d0c8e8ed481e542e78df))
+* document pending card payment behavior for orders ([531b695](https://github.com/tremendous-rewards/tremendous-python/commit/531b6952b4813ecb0fe0d0c8e8ed481e542e78df))
+* update `deliver_at` description with timezone details ([531b695](https://github.com/tremendous-rewards/tremendous-python/commit/531b6952b4813ecb0fe0d0c8e8ed481e542e78df))
+* update fraud review `reasons` descriptions ([531b695](https://github.com/tremendous-rewards/tremendous-python/commit/531b6952b4813ecb0fe0d0c8e8ed481e542e78df))
+
 ## [6.0.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v5.21.0...tremendous-python-v6.0.0) (2026-10-02)
 
 
