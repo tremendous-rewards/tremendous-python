@@ -36,8 +36,9 @@ class BalanceTransaction(BaseModel):
     balance: Union[StrictFloat, StrictInt] = Field(description="The updated total after the transaction, denominated in `currency_code`. Note that this running balance may be delayed and contain `null`.", json_schema_extra={"examples": [92.48]})
     action: StrictStr = Field(description="The action that was performed", json_schema_extra={"examples": ["Deposit"]})
     description: StrictStr = Field(description="A brief description of the transaction")
+    payment_id: Optional[StrictStr] = Field(default=None, description="ID of the payment behind the transaction, shown as \"Payment ID\" in the dashboard's balance transactions export and as \"Prefund confirmation\" on deposit receipts. Use it to match deposits, including auto-reloads, against your bank or card statements.  Only present on transactions tied to a payment into your balance, such as deposits, the credit recorded when an order is paid by card or bank transfer, and transfers between organizations. Omitted otherwise, for example on the debit for an order paid from your balance. ", json_schema_extra={"examples": ["PAYMENTID123"]})
     order: Optional[BalanceTransactionOrder] = None
-    __properties: ClassVar[List[str]] = ["created_at", "amount", "currency_code", "balance", "action", "description", "order"]
+    __properties: ClassVar[List[str]] = ["created_at", "amount", "currency_code", "balance", "action", "description", "payment_id", "order"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -99,6 +100,7 @@ class BalanceTransaction(BaseModel):
             "balance": obj.get("balance"),
             "action": obj.get("action"),
             "description": obj.get("description"),
+            "payment_id": obj.get("payment_id"),
             "order": BalanceTransactionOrder.from_dict(obj["order"]) if obj.get("order") is not None else None
         })
         return _obj
