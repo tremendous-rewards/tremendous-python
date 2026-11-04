@@ -34,9 +34,10 @@ class ConnectedOrganizationOrganization(BaseModel):
     name: StrictStr = Field(description="Name of the organization", json_schema_extra={"examples": ["ACME Inc."]})
     website: StrictStr = Field(description="URL of the website of that organization", json_schema_extra={"examples": ["https://www.example.com/some-org"]})
     currency_code: Optional[StrictStr] = Field(default=None, description="Currency used for this organization's balances, orders, and transactions.", json_schema_extra={"examples": ["USD"]})
+    timezone: Optional[StrictStr] = Field(default=None, description="The organization's time zone as a canonical IANA identifier. Returns `null` if not configured.", json_schema_extra={"examples": ["America/New_York"]})
     status: Optional[StrictStr] = Field(default=None, description="Status of the organization. Organizations need to be approved to be able to use them to send out rewards.", json_schema_extra={"examples": ["APPROVED"]})
     created_at: Optional[date] = Field(default=None, description="Timestamp of when the organization has been created.  *This field is only returned when creating an organization.* It is not returned anymore when retrieving or listing organizations. ", json_schema_extra={"examples": ["2021-08-02"]})
-    __properties: ClassVar[List[str]] = ["id", "name", "website", "currency_code", "status", "created_at"]
+    __properties: ClassVar[List[str]] = ["id", "name", "website", "currency_code", "timezone", "status", "created_at"]
 
     @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
@@ -93,6 +94,11 @@ class ConnectedOrganizationOrganization(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if timezone (nullable) is None
+        # and model_fields_set contains the field
+        if self.timezone is None and "timezone" in self.model_fields_set:
+            _dict['timezone'] = None
+
         return _dict
 
     @classmethod
@@ -109,6 +115,7 @@ class ConnectedOrganizationOrganization(BaseModel):
             "name": obj.get("name"),
             "website": obj.get("website"),
             "currency_code": obj.get("currency_code"),
+            "timezone": obj.get("timezone"),
             "status": obj.get("status"),
             "created_at": obj.get("created_at")
         })

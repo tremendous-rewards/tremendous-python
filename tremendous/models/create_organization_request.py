@@ -35,7 +35,8 @@ class CreateOrganizationRequest(BaseModel):
     copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
     phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).", json_schema_extra={"examples": ["123-456-7890"]})
     currency_code: Optional[StrictStr] = Field(default=None, description="Currency code for the new organization. Defaults to the current organization's currency if not provided.", json_schema_extra={"examples": ["USD"]})
-    __properties: ClassVar[List[str]] = ["name", "website", "with_api_key", "copy_settings", "phone", "currency_code"]
+    timezone: Optional[StrictStr] = Field(default=None, description="IANA time zone identifier for the new organization, such as America/New_York or Europe/London. Aliases such as US/Eastern are accepted and converted to their canonical identifier (America/New_York). Defaults to the time zone of the organization associated with the API key used for the request if omitted or blank. If that organization has no time zone, the new organization remains unset.", json_schema_extra={"examples": ["America/New_York"]})
+    __properties: ClassVar[List[str]] = ["name", "website", "with_api_key", "copy_settings", "phone", "currency_code", "timezone"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -96,7 +97,8 @@ class CreateOrganizationRequest(BaseModel):
             "with_api_key": obj.get("with_api_key"),
             "copy_settings": CreateOrganizationRequestCopySettings.from_dict(obj["copy_settings"]) if obj.get("copy_settings") is not None else None,
             "phone": obj.get("phone"),
-            "currency_code": obj.get("currency_code")
+            "currency_code": obj.get("currency_code"),
+            "timezone": obj.get("timezone")
         })
         return _obj
 

@@ -37,9 +37,10 @@ class CreateOrganization200ResponseOrganization(BaseModel):
     copy_settings: Optional[CreateOrganizationRequestCopySettings] = None
     phone: Optional[StrictStr] = Field(default=None, description="Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).", json_schema_extra={"examples": ["123-456-7890"]})
     currency_code: Optional[StrictStr] = Field(default=None, description="Currency code for the new organization. Defaults to the current organization's currency if not provided.", json_schema_extra={"examples": ["USD"]})
+    timezone: Optional[StrictStr] = Field(default=None, description="The organization's time zone as a canonical IANA identifier. Returns `null` if not configured.", json_schema_extra={"examples": ["America/New_York"]})
     created_at: Optional[date] = Field(default=None, description="Timestamp of when the organization has been created. ")
     api_key: Optional[StrictStr] = Field(default=None, description="The API key for the created organization. This property is only returned when `api_key` is set to `true`. ")
-    __properties: ClassVar[List[str]] = ["id", "name", "website", "copy_settings", "phone", "currency_code", "created_at", "api_key"]
+    __properties: ClassVar[List[str]] = ["id", "name", "website", "copy_settings", "phone", "currency_code", "timezone", "created_at", "api_key"]
 
     @field_validator('id', mode="before")
     def id_validate_regular_expression(cls, value):
@@ -98,6 +99,11 @@ class CreateOrganization200ResponseOrganization(BaseModel):
         if self.phone is None and "phone" in self.model_fields_set:
             _dict['phone'] = None
 
+        # set to None if timezone (nullable) is None
+        # and model_fields_set contains the field
+        if self.timezone is None and "timezone" in self.model_fields_set:
+            _dict['timezone'] = None
+
         return _dict
 
     @classmethod
@@ -116,6 +122,7 @@ class CreateOrganization200ResponseOrganization(BaseModel):
             "copy_settings": CreateOrganizationRequestCopySettings.from_dict(obj["copy_settings"]) if obj.get("copy_settings") is not None else None,
             "phone": obj.get("phone"),
             "currency_code": obj.get("currency_code"),
+            "timezone": obj.get("timezone"),
             "created_at": obj.get("created_at"),
             "api_key": obj.get("api_key")
         })

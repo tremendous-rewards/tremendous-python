@@ -31,8 +31,9 @@ class CreateReportRequest(BaseModel):
     """ # noqa: E501
     report_type: StrictStr = Field(description="Type of report for retrieval. <table> <thead> <tr> <th>Report type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>digital_rewards</code></td> <td>Report for Tremendous digital reward history</td> </tr> </tbody> </table>", json_schema_extra={"examples": ["digital_rewards"]})
     format: StrictStr = Field(description="Format the report will be generated in. <table> <thead> <tr> <th>Format</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>csv</code></td> <td>CSV format for report</td> </tr> </tbody> </table>", json_schema_extra={"examples": ["csv"]})
+    timezone: Optional[StrictStr] = Field(default=None, description="Time zone used to interpret date filters and display timestamps in the generated report. Accepts IANA time zone identifiers such as America/New_York or Europe/London, and UTC. Aliases such as US/Eastern are accepted and normalized to their canonical identifier (America/New_York). Defaults to UTC when omitted, null, or blank. Reports created through the API do not inherit your organization's dashboard time zone.", json_schema_extra={"examples": ["America/New_York"]})
     filters: Optional[CreateReportRequestFilters] = None
-    __properties: ClassVar[List[str]] = ["report_type", "format", "filters"]
+    __properties: ClassVar[List[str]] = ["report_type", "format", "timezone", "filters"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -76,6 +77,11 @@ class CreateReportRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of filters
         if self.filters:
             _dict['filters'] = self.filters.to_dict()
+        # set to None if timezone (nullable) is None
+        # and model_fields_set contains the field
+        if self.timezone is None and "timezone" in self.model_fields_set:
+            _dict['timezone'] = None
+
         # set to None if filters (nullable) is None
         # and model_fields_set contains the field
         if self.filters is None and "filters" in self.model_fields_set:
@@ -95,6 +101,7 @@ class CreateReportRequest(BaseModel):
         _obj = cls.model_validate({
             "report_type": obj.get("report_type"),
             "format": obj.get("format"),
+            "timezone": obj.get("timezone"),
             "filters": CreateReportRequestFilters.from_dict(obj["filters"]) if obj.get("filters") is not None else None
         })
         return _obj
