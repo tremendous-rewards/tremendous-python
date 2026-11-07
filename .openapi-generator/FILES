@@ -27,8 +27,6 @@ tremendous/models/connected_organization_member_session_response_connected_organ
 tremendous/models/connected_organization_organization.py
 tremendous/models/connected_organization_response.py
 tremendous/models/connected_organization_response_connected_organization.py
-tremendous/models/create_api_key200_response.py
-tremendous/models/create_api_key_request.py
 tremendous/models/create_campaign200_response.py
 tremendous/models/create_campaign_request.py
 tremendous/models/create_connected_organization200_response.py
