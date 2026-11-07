@@ -50,8 +50,6 @@ __all__ = [
     "ConnectedOrganizationOrganization",
     "ConnectedOrganizationResponse",
     "ConnectedOrganizationResponseConnectedOrganization",
-    "CreateApiKey200Response",
-    "CreateApiKeyRequest",
     "CreateCampaign200Response",
     "CreateCampaignRequest",
     "CreateConnectedOrganization200Response",
@@ -319,8 +317,6 @@ from tremendous.models.connected_organization_member_session_response_connected_
 from tremendous.models.connected_organization_organization import ConnectedOrganizationOrganization as ConnectedOrganizationOrganization
 from tremendous.models.connected_organization_response import ConnectedOrganizationResponse as ConnectedOrganizationResponse
 from tremendous.models.connected_organization_response_connected_organization import ConnectedOrganizationResponseConnectedOrganization as ConnectedOrganizationResponseConnectedOrganization
-from tremendous.models.create_api_key200_response import CreateApiKey200Response as CreateApiKey200Response
-from tremendous.models.create_api_key_request import CreateApiKeyRequest as CreateApiKeyRequest
 from tremendous.models.create_campaign200_response import CreateCampaign200Response as CreateCampaign200Response
 from tremendous.models.create_campaign_request import CreateCampaignRequest as CreateCampaignRequest
 from tremendous.models.create_connected_organization200_response import CreateConnectedOrganization200Response as CreateConnectedOrganization200Response
