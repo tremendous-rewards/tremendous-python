@@ -1,5 +1,29 @@
 # Changelog
 
+## [8.0.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v7.0.0...tremendous-python-v8.0.0) (2026-11-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove create API key endpoint
+
+### Features
+
+* add `crypto_currency` product category ([5d30195](https://github.com/tremendous-rewards/tremendous-python/commit/5d30195d1a058efc1d5e350721ac3791211e4535))
+* add `timezone` to create organization request ([02876f9](https://github.com/tremendous-rewards/tremendous-python/commit/02876f968165f9b3928c43073c84c791c288b740))
+* add `timezone` to create report request ([02876f9](https://github.com/tremendous-rewards/tremendous-python/commit/02876f968165f9b3928c43073c84c791c288b740))
+* add nullable `timezone` field to Organization ([02876f9](https://github.com/tremendous-rewards/tremendous-python/commit/02876f968165f9b3928c43073c84c791c288b740))
+
+
+### Bug Fixes
+
+* remove create API key endpoint ([5d30195](https://github.com/tremendous-rewards/tremendous-python/commit/5d30195d1a058efc1d5e350721ac3791211e4535))
+
+
+### Documentation
+
+* update member docs to reference dashboard ([5d30195](https://github.com/tremendous-rewards/tremendous-python/commit/5d30195d1a058efc1d5e350721ac3791211e4535))
+
 ## [7.0.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v6.0.0...tremendous-python-v7.0.0) (2026-10-26)
 
 
