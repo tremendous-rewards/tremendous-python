@@ -5506,7 +5506,7 @@ class TremendousApi:
     ) -> None:
         """Delete member
 
-        Removes an existing member from the organization, identified by the given `id` in the URL.  The member loses access to the organization and a `MEMBERS.DELETED` webhook event is emitted. 
+        Removes an existing member from the organization, identified by the given `id` in the URL.  The member loses access to the organization and a `MEMBERS.DELETED` webhook event is emitted.  Admins can't be removed through the API. Remove an Admin in the Tremendous dashboard instead. 
 
         :param id: ID of the member to delete (required)
         :type id: str
@@ -5578,7 +5578,7 @@ class TremendousApi:
     ) -> ApiResponse[None]:
         """Delete member
 
-        Removes an existing member from the organization, identified by the given `id` in the URL.  The member loses access to the organization and a `MEMBERS.DELETED` webhook event is emitted. 
+        Removes an existing member from the organization, identified by the given `id` in the URL.  The member loses access to the organization and a `MEMBERS.DELETED` webhook event is emitted.  Admins can't be removed through the API. Remove an Admin in the Tremendous dashboard instead. 
 
         :param id: ID of the member to delete (required)
         :type id: str
@@ -5650,7 +5650,7 @@ class TremendousApi:
     ) -> RESTResponseType:
         """Delete member
 
-        Removes an existing member from the organization, identified by the given `id` in the URL.  The member loses access to the organization and a `MEMBERS.DELETED` webhook event is emitted. 
+        Removes an existing member from the organization, identified by the given `id` in the URL.  The member loses access to the organization and a `MEMBERS.DELETED` webhook event is emitted.  Admins can't be removed through the API. Remove an Admin in the Tremendous dashboard instead. 
 
         :param id: ID of the member to delete (required)
         :type id: str
