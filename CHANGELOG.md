@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.1.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v8.0.1...tremendous-python-v8.1.0) (2026-11-25)
+
+
+### Features
+
+* add `total_count` to list campaigns response ([ee0412d](https://github.com/tremendous-rewards/tremendous-python/commit/ee0412dd945dcd976e99f577892ee9edcabe1392))
+* add pagination to list campaigns endpoint ([ee0412d](https://github.com/tremendous-rewards/tremendous-python/commit/ee0412dd945dcd976e99f577892ee9edcabe1392))
+
 ## [8.0.1](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v8.0.0...tremendous-python-v8.0.1) (2026-11-25)
 
 
