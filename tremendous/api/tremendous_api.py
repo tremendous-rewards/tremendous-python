@@ -11318,6 +11318,8 @@ class TremendousApi:
     @validate_call
     def list_campaigns(
         self,
+        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of campaigns listed. The maximum value is 500. Without a limit, every campaign is returned.")] = None,
+        offset: Annotated[Optional[StrictInt], Field(description="Offsets the returned list by the given number of campaigns. Campaigns come back in the same order on every page.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11335,6 +11337,10 @@ class TremendousApi:
 
         Retrieve a list of all campaigns created in your account 
 
+        :param limit: Limits the number of campaigns listed. The maximum value is 500. Without a limit, every campaign is returned.
+        :type limit: int
+        :param offset: Offsets the returned list by the given number of campaigns. Campaigns come back in the same order on every page.
+        :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -11358,6 +11364,8 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._list_campaigns_serialize(
+            limit=limit,
+            offset=offset,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -11384,6 +11392,8 @@ class TremendousApi:
     @validate_call
     def list_campaigns_with_http_info(
         self,
+        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of campaigns listed. The maximum value is 500. Without a limit, every campaign is returned.")] = None,
+        offset: Annotated[Optional[StrictInt], Field(description="Offsets the returned list by the given number of campaigns. Campaigns come back in the same order on every page.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11401,6 +11411,10 @@ class TremendousApi:
 
         Retrieve a list of all campaigns created in your account 
 
+        :param limit: Limits the number of campaigns listed. The maximum value is 500. Without a limit, every campaign is returned.
+        :type limit: int
+        :param offset: Offsets the returned list by the given number of campaigns. Campaigns come back in the same order on every page.
+        :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -11424,6 +11438,8 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._list_campaigns_serialize(
+            limit=limit,
+            offset=offset,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -11450,6 +11466,8 @@ class TremendousApi:
     @validate_call
     def list_campaigns_without_preload_content(
         self,
+        limit: Annotated[Optional[StrictInt], Field(description="Limits the number of campaigns listed. The maximum value is 500. Without a limit, every campaign is returned.")] = None,
+        offset: Annotated[Optional[StrictInt], Field(description="Offsets the returned list by the given number of campaigns. Campaigns come back in the same order on every page.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11467,6 +11485,10 @@ class TremendousApi:
 
         Retrieve a list of all campaigns created in your account 
 
+        :param limit: Limits the number of campaigns listed. The maximum value is 500. Without a limit, every campaign is returned.
+        :type limit: int
+        :param offset: Offsets the returned list by the given number of campaigns. Campaigns come back in the same order on every page.
+        :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -11490,6 +11512,8 @@ class TremendousApi:
         """ # noqa: E501
 
         _param = self._list_campaigns_serialize(
+            limit=limit,
+            offset=offset,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -11511,6 +11535,8 @@ class TremendousApi:
 
     def _list_campaigns_serialize(
         self,
+        limit,
+        offset,
         _request_auth,
         _content_type,
         _headers,
@@ -11533,6 +11559,14 @@ class TremendousApi:
 
         # process the path parameters
         # process the query parameters
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
+        if offset is not None:
+            
+            _query_params.append(('offset', offset))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter

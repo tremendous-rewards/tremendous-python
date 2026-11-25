@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List
 from tremendous.models.list_campaigns200_response_campaigns_inner import ListCampaigns200ResponseCampaignsInner
 from typing import Optional, Set
@@ -30,7 +30,8 @@ class ListCampaigns200Response(BaseModel):
     ListCampaigns200Response
     """ # noqa: E501
     campaigns: List[ListCampaigns200ResponseCampaignsInner]
-    __properties: ClassVar[List[str]] = ["campaigns"]
+    total_count: StrictInt = Field(description="The total number of campaigns across all pages", json_schema_extra={"examples": [1]})
+    __properties: ClassVar[List[str]] = ["campaigns", "total_count"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -89,7 +90,8 @@ class ListCampaigns200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "campaigns": [ListCampaigns200ResponseCampaignsInner.from_dict(_item) for _item in obj["campaigns"]] if obj.get("campaigns") is not None else None
+            "campaigns": [ListCampaigns200ResponseCampaignsInner.from_dict(_item) for _item in obj["campaigns"]] if obj.get("campaigns") is not None else None,
+            "total_count": obj.get("total_count")
         })
         return _obj
 
