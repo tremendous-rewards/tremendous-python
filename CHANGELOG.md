@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.0.1](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v8.0.0...tremendous-python-v8.0.1) (2026-11-25)
+
+
+### Documentation
+
+* clarify admin deletion restriction on DELETE member ([ab82e26](https://github.com/tremendous-rewards/tremendous-python/commit/ab82e26f4d4759b32b227c8c5c09fca1a86afe8b))
+
 ## [8.0.0](https://github.com/tremendous-rewards/tremendous-python/compare/tremendous-python-v7.0.0...tremendous-python-v8.0.0) (2026-11-07)
 
 
