@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tremendous"
-version = "8.0.1"
+version = "8.1.0"
 long_description="Python API client for Tremendous"
 description = "Python API client for Tremendous"
 authors = ["API Support <developers@tremendous.com>"]
